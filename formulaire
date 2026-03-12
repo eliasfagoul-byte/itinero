@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>Itinesio | Configuration du Séjour</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@500;800;900&family=Playfair+Display:ital,wght@1,600&family=Inter:wght@400;500;600&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FDFDFD;
+            color: #1E293B;
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .font-tagline {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+        }
+
+        .bg-hero {
+            background: radial-gradient(circle at top right, rgba(79, 70, 229, 0.05), transparent),
+                        radial-gradient(circle at bottom left, rgba(245, 158, 11, 0.05), transparent);
+        }
+
+        .input-card {
+            background: white;
+            border: 1px solid #F1F5F9;
+            border-radius: 2.5rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .choice-pill {
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid #F1F5F9;
+            background: #FBFBFC;
+        }
+
+        .choice-pill.selected {
+            background: #4F46E5;
+            color: white;
+            border-color: #4F46E5;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
+        }
+
+        .btn-primary {
+            background: #4F46E5;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: #4338CA;
+            transform: scale(1.02);
+            box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.4);
+        }
+
+        .selection-box {
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .selection-box:has(input:checked) {
+            border-color: #4F46E5;
+            background-color: #F8FAFC;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #4F46E5 !important;
+        }
+    </style>
+</head>
+<body class="antialiased bg-hero">
+
+    <nav class="fixed w-full z-50 px-6 py-5 bg-white/60 backdrop-blur-xl border-b border-slate-50">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-baseline gap-1">
+                <span class="text-3xl font-[900] tracking-tighter text-slate-900">Itinesio</span>
+                <span class="w-1.5 h-1.5 bg-indigo-600 rounded-full"></span>
+            </div>
+            <a href="index.html" class="text-[11px] font-bold text-slate-400 uppercase tracking-widest hover:text-indigo-600 transition flex items-center gap-2">
+                <i class="fas fa-chevron-left text-[9px]"></i> Retour
+            </a>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto pt-40 pb-20 px-6">
+        
+        <header class="mb-20 text-center md:text-left">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 border border-slate-200 mb-4">
+                <i class="fas fa-sliders-h text-slate-500 text-[10px]"></i>
+                <span class="text-[10px] font-bold text-slate-600 uppercase tracking-widest">Paramètres de l'itinéraire</span>
+            </div>
+            <h1 class="text-5xl md:text-6xl font-[900] text-slate-900 tracking-tight leading-none mb-6">
+                Définissez votre <span class="text-indigo-600">expérience.</span>
+            </h1>
+            <p class="font-tagline text-xl text-slate-500 italic">
+                "Le voyage est une invitation à la découverte et au dépassement de soi."
+            </p>
+        </header>
+
+        <form class="space-y-12">
+            
+            <div class="input-card p-8 md:p-12 relative overflow-hidden">
+                <div class="flex items-center gap-4 mb-10">
+                    <div class="w-12 h-12 bg-slate-900 text-white rounded-2xl flex items-center justify-center shadow-lg shadow-slate-100">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold">Votre Profil</h3>
+                        <p class="text-xs text-slate-400 font-medium uppercase tracking-wider">Informations personnelles</p>
+                    </div>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-10">
+                    <div class="space-y-3">
+                        <label class="text-[10px] font-bold uppercase text-slate-400 tracking-widest ml-1">Prénom</label>
+                        <input type="text" placeholder="Prénom" class="w-full py-4 border-b-2 border-slate-100 focus:border-indigo-600 transition text-slate-800 font-medium bg-transparent">
+                    </div>
+                    <div class="space-y-3">
+                        <label class="text-[10px] font-bold uppercase text-slate-400 tracking-widest ml-1">Nom</label>
+                        <input type="text" placeholder="Nom" class="w-full py-4 border-b-2 border-slate-100 focus:border-indigo-600 transition text-slate-800 font-medium bg-transparent">
+                    </div>
+                    <div class="md:col-span-2 space-y-3">
+                        <label class="text-[10px] font-bold uppercase text-slate-400 tracking-widest ml-1">Adresse électronique</label>
+                        <input type="email" placeholder="email@exemple.com" class="w-full py-4 border-b-2 border-slate-100 focus:border-indigo-600 transition text-slate-800 font-medium bg-transparent">
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-card p-8 md:p-12">
+                <div class="flex items-center gap-4 mb-10">
+                    <div class="w-12 h-12 bg-indigo-600 text-white rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-100">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold">Logistique & Hébergement</h3>
+                        <p class="text-xs text-slate-400 font-medium uppercase tracking-wider">Calendrier et point de chute</p>
+                    </div>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-8 mb-12">
+                    <div class="space-y-3">
+                        <label class="text-[10px] font-bold uppercase text-slate-400 tracking-widest ml-1">Date d'arrivée</label>
+                        <input type="date" class="w-full py-4 border-b-2 border-slate-100 focus:border-indigo-600 transition text-slate-800 font-medium bg-transparent">
+                    </div>
+                    <div class="space-y-3">
+                        <label class="text-[10px] font-bold uppercase text-slate-400 tracking-widest ml-1">Nombre de nuits</label>
+                        <input type="number" placeholder="7" class="w-full py-4 border-b-2 border-slate-100 focus:border-indigo-600 transition text-slate-800 font-medium bg-transparent">
+                    </div>
+                    <div class="space-y-3">
+                        <label class="text-[10px] font-bold uppercase text-slate-400 tracking-widest ml-1">Nombre de voyageurs</label>
+                        <input type="number" placeholder="2" class="w-full py-4 border-b-2 border-slate-100 focus:border-indigo-600 transition text-slate-800 font-medium bg-transparent">
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <label class="text-[10px] font-bold uppercase text-slate-400 tracking-widest ml-1">Statut de l'hébergement</label>
+                    
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <label class="selection-box flex items-center gap-5 p-6 bg-white border border-slate-100 rounded-3xl cursor-pointer hover:border-indigo-100 transition group">
+                            <div class="w-12 h-12 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-400 group-hover:text-indigo-600 shadow-sm transition">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-sm font-bold text-slate-900">J'ai déjà mon hôtel</p>
+                                <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider leading-tight">L'itinéraire sera centré sur votre adresse</p>
+                            </div>
