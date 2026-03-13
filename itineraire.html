@@ -5,41 +5,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <title>Itinero | Votre Itinéraire Premium</title>
+    <title>Itinesio | Votre Itinéraire IA Premium</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@500;800;900&family=Playfair+Display:ital,wght@1,600&family=Inter:wght@400;500;600&display=swap');
         
-        body { font-family: 'Inter', sans-serif; background-color: #FDFDFD; color: #1E293B; }
-        h1, h2, h3, h4 { font-family: 'Outfit', sans-serif; }
-        .font-tagline { font-family: 'Playfair Display', serif; font-style: italic; }
-        .bg-hero { background: radial-gradient(circle at top right, rgba(79, 70, 229, 0.04), transparent), radial-gradient(circle at bottom left, rgba(224, 122, 95, 0.04), transparent); }
-        
-        .loading-animation { animation: pulse 2s infinite; }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
-        /* Effet de flou pour le contenu premium */
-.premium-blur {
-    filter: blur(5px);
-    user-select: none;
-    pointer-events: none;
-    mask-image: linear-gradient(to bottom, black 20%, transparent 90%);
-    -webkit-mask-image: linear-gradient(to bottom, black 20%, transparent 90%);
-}
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FDFDFD;
+            color: #1E293B;
+        }
 
-.timeline-dot {
-    position: relative;
-    padding-left: 2rem;
-}
+        h1, h2, h3, h4 {
+            font-family: 'Outfit', sans-serif;
+        }
 
-.timeline-dot::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0.5rem;
-    width: 10px;
-    height: 10px;
-    background: #4F46E5;
-    border-radius: 50%;
-}
+        .font-tagline {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+        }
+
+        .bg-hero {
+            background: radial-gradient(circle at top right, rgba(79, 70, 229, 0.04), transparent),
+                        radial-gradient(circle at bottom left, rgba(224, 122, 95, 0.04), transparent);
+        }
+
+        /* Animation de chargement */
+        .loading-animation {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .5; }
+        }
+
+        /* Styles Premium & Timeline */
+        .premium-blur {
+            filter: blur(5px);
+            user-select: none;
+            pointer-events: none;
+            mask-image: linear-gradient(to bottom, black 20%, transparent 90%);
+            -webkit-mask-image: linear-gradient(to bottom, black 20%, transparent 90%);
+        }
+
+        .timeline-dot {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline-dot::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            width: 10px;
+            height: 10px;
+            background: #4F46E5;
+            border-radius: 50%;
+        }
     </style>
 </head>
 <body class="antialiased bg-hero min-h-screen">
@@ -47,7 +69,7 @@
     <nav class="w-full px-6 py-5">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
             <div class="flex items-baseline gap-1">
-                <span class="text-3xl font-[900] tracking-tighter text-slate-900">Itinero</span>
+                <span class="text-3xl font-[900] tracking-tighter text-slate-900">Itinesio</span>
                 <span class="w-1.5 h-1.5 bg-indigo-600 rounded-full"></span>
             </div>
         </div>
@@ -60,14 +82,15 @@
                 <i class="fas fa-compass text-3xl"></i>
             </div>
             <p class="font-tagline text-3xl text-indigo-500 mb-2">Confection de votre carnet...</p>
-            <h2 class="text-xl font-bold text-slate-800 uppercase tracking-widest">L'IA Itinero analyse les meilleures sources</h2>
+            <h2 class="text-xl font-bold text-slate-800 uppercase tracking-widest">L'IA Itinesio analyse les meilleures sources</h2>
+            <p class="text-slate-500 mt-4 text-sm">Tripadvisor, Michelin, et blogs d'experts...</p>
         </div>
 
         <div id="result" class="hidden space-y-12">
             
             <div class="text-center space-y-4">
-                <p class="font-tagline text-3xl text-indigo-500" id="out-accroche"></p>
-                <h1 id="out-ville" class="text-6xl lg:text-8xl font-[900] text-slate-900 tracking-tightest leading-none uppercase"></h1>
+                <p class="font-tagline text-3xl text-indigo-500" id="out-accroche">Votre expérience Itinesio</p>
+                <h1 id="out-ville" class="text-6xl lg:text-8xl font-[900] text-slate-900 tracking-tightest leading-none uppercase">DESTINATION</h1>
                 <div class="flex justify-center gap-6 text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] pt-4">
                     <span><i class="fas fa-map-marker-alt text-indigo-500 mr-2"></i>Sur-mesure</span>
                     <span><i class="fas fa-calendar-alt text-indigo-500 mr-2"></i>IA Verified</span>
@@ -78,11 +101,11 @@
                 <div class="lg:col-span-5 space-y-8">
                     <div class="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm">
                         <h3 class="text-xs font-black text-indigo-600 uppercase tracking-widest mb-4">Analyse du profil</h3>
-                        <p id="out-profil" class="text-slate-600 leading-relaxed italic font-medium"></p>
+                        <p id="out-profil" class="text-slate-700 leading-relaxed italic font-medium"></p>
                     </div>
 
-                    <div class="p-6 bg-slate-900 rounded-[2rem] text-white">
-                        <p class="text-[10px] font-bold text-indigo-300 uppercase tracking-[0.2em] mb-4 text-center text-center">Sources optimisées</p>
+                    <div class="p-6 bg-slate-950 rounded-[2rem] text-white/90">
+                        <p class="text-[10px] font-bold text-indigo-300 uppercase tracking-[0.2em] mb-4 text-center">Sources optimisées</p>
                         <div class="grid grid-cols-2 gap-4 text-[9px] uppercase font-bold opacity-80">
                             <div class="flex items-center gap-2"><i class="fas fa-utensils text-indigo-400"></i> Michelin</div>
                             <div class="flex items-center gap-2"><i class="fas fa-star text-indigo-400"></i> Tripadvisor</div>
@@ -97,44 +120,42 @@
                         <div class="absolute top-0 right-0 p-8 opacity-5">
                             <i class="fas fa-quote-right text-6xl"></i>
                         </div>
+                        
                         <h3 class="text-2xl font-extrabold text-slate-900 mb-8 tracking-tight">Votre Programme.</h3>
+                        
                         <div id="out-itineraire" class="text-slate-600 leading-relaxed space-y-6 text-lg">
-    <div class="space-y-4">
-        <div class="flex items-center gap-3 text-indigo-600 font-bold">
-            <i class="fas fa-hotel"></i>
-            <h4 class="text-sm uppercase tracking-widest">Hébergement suggéré</h4>
-        </div>
-        <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 text-sm">
-            <p class="font-bold text-slate-900">MIMARU Tokyo Ueno North (ou similaire)</p>
-            <p class="text-slate-500 italic">"Parfait pour une immersion familiale avec tout le confort moderne."</p>
-        </div>
+                            <div class="space-y-4">
+                                <div class="flex items-center gap-3 text-indigo-600 font-bold">
+                                    <i class="fas fa-hotel"></i>
+                                    <h4 class="text-sm uppercase tracking-widest">Hébergement suggéré</h4>
+                                </div>
+                                <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 text-sm">
+                                    <p class="font-bold text-slate-900">MIMARU Tokyo Ueno North (ou similaire)</p>
+                                    <p class="text-slate-500 italic text-xs">"Parfait pour une immersion familiale avec tout le confort moderne."</p>
+                                </div>
 
-        <div class="flex items-center gap-3 text-indigo-600 font-bold pt-4">
-            <i class="fas fa-map-marked-alt"></i>
-            <h4 class="text-sm uppercase tracking-widest">Aperçu du Jour 1</h4>
-        </div>
-        
-        <div class="timeline-dot space-y-3">
-            <p class="text-sm font-semibold text-slate-900">Matin : Arrivée et immersion à Ueno</p>
-            <p class="text-sm text-slate-500">Balade dans le parc et premières découvertes culinaires de rue.</p>
-        </div>
-    </div>
+                                <div class="flex items-center gap-3 text-indigo-600 font-bold pt-4">
+                                    <i class="fas fa-map-marked-alt"></i>
+                                    <h4 class="text-sm uppercase tracking-widest">Aperçu du Jour 1</h4>
+                                </div>
+                                
+                                <div class="timeline-dot space-y-1">
+                                    <p class="text-sm font-semibold text-slate-900">Matin : Arrivée et immersion à Ueno</p>
+                                    <p class="text-xs text-slate-500">Balade dans le parc et premières découvertes culinaires de rue.</p>
+                                </div>
+                            </div>
 
-    <div class="premium-blur space-y-4 pt-4 border-t border-slate-100">
-        <div class="timeline-dot">
-            <p class="text-sm font-bold">Midi : Déjeuner secret chez [MASQUÉ]</p>
-            <p class="text-xs text-slate-400 italic text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-        </div>
-        <div class="timeline-dot">
-            <p class="text-sm font-bold">Après-midi : Exploration de [Lieu Privé]</p>
-            <p class="text-xs text-slate-400 italic text-justify">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis.</p>
-        </div>
-        <div class="timeline-dot">
-            <p class="text-sm font-bold">Soir : Dîner gastronomique [Michelin *]</p>
-            <p class="text-xs text-slate-400 italic text-justify">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi.</p>
-        </div>
-    </div>
-</div>
+                            <div class="premium-blur space-y-4 pt-4 border-t border-slate-100">
+                                <div class="timeline-dot">
+                                    <p class="text-sm font-bold">Midi : Déjeuner secret chez [MASQUÉ]</p>
+                                    <p class="text-[10px] text-slate-400 italic">Expérience gastronomique exclusive dans un cadre traditionnel.</p>
+                                </div>
+                                <div class="timeline-dot">
+                                    <p class="text-sm font-bold">Après-midi : Exploration de [Lieu Privé]</p>
+                                    <p class="text-[10px] text-slate-400 italic">Visite guidée hors des sentiers battus pour découvrir l'âme de la ville.</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -150,6 +171,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
 
         <div id="error" class="hidden text-center p-12 bg-red-50 rounded-[2.5rem] border border-red-100 mt-10">
@@ -182,19 +204,18 @@
 
                 const data = await response.json();
                 
-                // Remplissage des données avec les nouveaux IDs
                 document.getElementById('out-ville').innerText = data.ville || "Voyage";
-                document.getElementById('out-accroche').innerText = data.phrase_accroche || "Votre expérience Itinero";
-                document.getElementById('out-profil').innerText = data.profil_resume || "Analyse personnalisée en cours...";
+                document.getElementById('out-accroche').innerText = data.phrase_accroche || "Votre expérience Itinesio";
+                document.getElementById('out-profil').innerText = data.profil_resume || "";
                 
-                const itineraireRaw = data.itineraire || data.desc_1 || "Itinéraire en préparation...";
-               // On insère l'itinéraire de l'IA juste AVANT la partie floutée
-        const container = document.getElementById('out-itineraire');
-        const blurPart = container.querySelector('.premium-blur');
-        const itineraireHTML = `<div class="space-y-4 mb-6">${itineraireRaw.replace(/\n/g, '<br>')}</div>`;
+                // Logique pour insérer le texte IA tout en gardant l'effet de flou en bas
+                const container = document.getElementById('out-itineraire');
+                const blurPart = container.querySelector('.premium-blur');
+                const itineraireRaw = data.itineraire || data.desc_1 || "Itinéraire prêt !";
+                const itineraireHTML = `<div class="space-y-4 mb-6 text-slate-700">${itineraireRaw.replace(/\n/g, '<br>')}</div>`;
 
-        container.innerHTML = itineraireHTML + (blurPart ? blurPart.outerHTML : '');
-                // Switch Loader -> Resultat
+                container.innerHTML = itineraireHTML + (blurPart ? blurPart.outerHTML : '');
+
                 document.getElementById('loader').classList.add('hidden');
                 document.getElementById('result').classList.remove('hidden');
 
@@ -202,7 +223,7 @@
                 console.error(err);
                 document.getElementById('loader').classList.add('hidden');
                 document.getElementById('error').classList.remove('hidden');
-                document.getElementById('error-details').innerText = "Vérifiez votre connexion n8n ou l'URL du Webhook.";
+                document.getElementById('error-details').innerText = "Vérifiez la connexion avec n8n.";
             }
         }
 
