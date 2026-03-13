@@ -3,279 +3,226 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Votre Voyage Personnalisé - PerfectTrip IA</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <title>Itinero | Smart AI, Real Memories</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@500;800;900&family=Playfair+Display:ital,wght@1,600&family=Inter:wght@400;500;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
         
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #FDFDFD;
-            color: #1E293B;
-            scroll-behavior: smooth;
+            background-color: #f8fafc;
         }
 
-        h1, h2, h3 {
-            font-family: 'Outfit', sans-serif;
+        .timeline-line {
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #e2e8f0;
+            z-index: 0;
         }
 
-        .font-tagline {
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
+        .premium-card {
+            background: #0f172a;
+            color: white;
         }
 
-        .bg-hero {
-            background: radial-gradient(circle at top right, rgba(79, 70, 229, 0.04), transparent),
-                        radial-gradient(circle at bottom left, rgba(224, 122, 95, 0.04), transparent);
-        }
-
-        .btn-primary {
-            background: #4F46E5;
-            transition: all 0.3s ease;
-        }
-
-        .btn-primary:hover {
-            background: #4338CA;
-            transform: translateY(-1px);
-        }
-
-        .search-container {
-            max-width: 480px;
-            transition: all 0.3s ease;
-        }
-
-        .image-float {
-            border-radius: 2rem;
-            object-fit: cover;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
-            transition: transform 0.5s ease;
-        }
-        
-        .image-float:hover {
-            transform: scale(1.02);
-        }
-
-        .testimonial-card {
+        .review-card {
             background: white;
-            border: 1px solid #F1F5F9;
-            transition: all 0.3s ease;
-        }
-
-        .testimonial-card:hover {
-            border-color: #4F46E5;
-            box-shadow: 0 10px 30px -10px rgba(79, 70, 229, 0.1);
+            border: 1px solid #f1f5f9;
         }
     </style>
 </head>
-<body class="antialiased bg-hero">
+<body class="p-4 md:p-8 max-w-2xl mx-auto">
 
-    <!-- Navigation -->
-    <nav class="fixed w-full z-50 px-6 py-5">
-        <div class="max-w-7xl mx-auto flex items-center justify-between">
-            <div class="flex items-baseline gap-1">
-                <span class="text-3xl font-[900] tracking-tighter text-slate-900">Itinero</span>
-                <span class="w-1.5 h-1.5 bg-indigo-600 rounded-full"></span>
+    <!-- Section Header avec Variables -->
+    <header class="mb-8">
+        <div class="inline-block bg-indigo-50 text-indigo-600 text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full mb-4">
+            Analyse Complétée
+        </div>
+        <h1 class="text-4xl font-extrabold text-slate-900 mb-2">
+            Votre voyage à <span id="destination" class="text-indigo-600">Rome</span>
+        </h1>
+        <p class="text-slate-500 italic text-lg leading-tight mb-8">
+            "L'alliance parfaite entre gastronomie locale et trésors cachés."
+        </p>
+
+        <!-- Stats Grid Dynamique -->
+        <div class="space-y-3">
+            <div class="bg-white p-4 rounded-3xl shadow-sm border border-slate-100 flex items-center gap-4">
+                <div class="w-12 h-12 bg-indigo-50 rounded-2xl flex items-center justify-center text-indigo-500">
+                    <i class="fa-solid fa-users"></i>
+                </div>
+                <div>
+                    <p class="text-[10px] uppercase tracking-wider text-slate-400 font-bold">Votre Profil</p>
+                    <p id="user-profile" class="text-slate-700 font-semibold">7 Jours • 2 Adultes • Confort</p>
+                </div>
             </div>
-            
-            <div class="hidden md:flex items-center gap-10 text-[13px] font-bold text-slate-500 uppercase tracking-widest">
-                <a href="#objectif" class="hover:text-indigo-600 transition">Objectif</a>
-                <a href="#sources" class="hover:text-indigo-600 transition">Expertise</a>
-                <a href="#avis" class="hover:text-indigo-600 transition">Avis</a>
-                <a href="#" class="bg-slate-900 text-white px-6 py-2.5 rounded-full hover:bg-indigo-600 transition">Démarrer</a>
+
+            <div class="bg-white p-4 rounded-3xl shadow-sm border border-slate-100 flex items-center gap-4">
+                <div class="w-12 h-12 bg-orange-50 rounded-2xl flex items-center justify-center text-orange-400">
+                    <i class="fa-solid fa-sun text-xl"></i>
+                </div>
+                <div>
+                    <p class="text-[10px] uppercase tracking-wider text-slate-400 font-bold">Météo Locale</p>
+                    <p id="local-weather" class="text-slate-700 font-semibold">22°C • Ciel Dégagé</p>
+                </div>
             </div>
         </div>
-    </nav>
+    </header>
 
-    <!-- Hero Section -->
-    <section class="relative pt-48 pb-32 px-6">
-        <div class="max-w-7xl mx-auto grid lg:grid-cols-12 gap-12 items-center">
-            
-            <div class="lg:col-span-7">
-                <p class="font-tagline text-2xl lg:text-3xl text-indigo-500 mb-2">Your journey, perfectly crafted.</p>
-                <h1 class="text-7xl lg:text-9xl font-[900] text-slate-900 tracking-tightest leading-[0.9] mb-8">
-                    Itinero
-                </h1>
-                
-                <p class="text-lg text-slate-500 mb-8 max-w-lg leading-relaxed">
-                    L'IA qui transforme vos envies en souvenirs réels. Nous fusionnons la précision technologique avec l'âme des plus grands guides.
+    <!-- Section Recommandations (Contenu qui changerait selon la destination) -->
+    <section class="mb-12">
+        <div class="flex items-start gap-4 mb-8">
+            <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-indigo-200">
+                <i class="fa-solid fa-map-location-dot"></i>
+            </div>
+            <h2 class="text-2xl font-bold text-slate-800 leading-tight">
+                Vos 5<br>recommandations<br>gratuites
+            </h2>
+        </div>
+
+        <div class="relative space-y-12 pl-4">
+            <div class="timeline-line"></div>
+
+            <!-- Exemple de Recommandation 1 -->
+            <div class="relative pl-10">
+                <div class="absolute left-[2px] top-2 w-4 h-4 rounded-full bg-blue-500 border-4 border-white shadow-sm z-10"></div>
+                <div class="flex justify-between items-start mb-2">
+                    <div class="flex items-center gap-3">
+                        <span class="text-2xl">🏨</span>
+                        <h3 class="text-xl font-bold text-slate-800">Quartier Monti</h3>
+                    </div>
+                    <div class="bg-blue-50 px-3 py-1 rounded-xl text-right">
+                        <p class="text-[11px] font-bold text-blue-600">9.2/10</p>
+                        <p class="text-[9px] text-blue-400 font-semibold uppercase">Booking</p>
+                    </div>
+                </div>
+                <p class="text-slate-600 leading-relaxed text-sm">
+                    L'IA a sélectionné ce quartier pour son authenticité et sa proximité avec les monuments sans l'agitation touristique habituelle.
                 </p>
-
-                <!-- Recherche Compacte -->
-                <div class="search-container flex items-center bg-white border border-slate-200 p-1.5 rounded-2xl mb-4 shadow-sm">
-                    <div class="flex-1 flex items-center px-4 gap-3">
-                        <i class="fas fa-search text-slate-300 text-sm"></i>
-                        <input type="text" placeholder="Où voulez-vous aller ?" class="w-full py-3 text-sm font-medium text-slate-700 focus:outline-none bg-transparent">
-                    </div>
-                    <button class="btn-primary text-white text-xs font-bold px-6 py-3 rounded-xl">
-                        Explorer
-                    </button>
-                </div>
-                
-                <!-- Sources & Météo sous la barre -->
-                <div class="flex flex-wrap items-center gap-x-4 gap-y-2 text-[9px] font-bold text-slate-400 uppercase tracking-[0.15em] px-2">
-                    <span class="flex items-center gap-1.5"><i class="fas fa-check text-indigo-400"></i> Tripadvisor</span>
-                    <span class="flex items-center gap-1.5"><i class="fas fa-check text-indigo-400"></i> Michelin</span>
-                    <span class="flex items-center gap-1.5"><i class="fas fa-check text-indigo-400"></i> Blogs de professionnels</span>
-                    <span class="text-slate-200 hidden sm:inline">|</span>
-                    <span class="flex items-center gap-1.5 text-slate-500"><i class="fas fa-cloud-sun text-indigo-500"></i> Météo en temps réel</span>
-                </div>
             </div>
 
-            <!-- Galerie d'images -->
-            <div class="lg:col-span-5 relative grid grid-cols-2 gap-4">
-                <div class="space-y-4 pt-12">
-                    <img src="https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=400&q=80" class="image-float w-full aspect-[3/4]" alt="[Image d'un paysage en Grèce]">
-                    <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" class="image-float w-full aspect-square" alt="[Image d'une nature sauvage]">
+            <!-- Exemple de Recommandation 2 -->
+            <div class="relative pl-10">
+                <div class="absolute left-[2px] top-2 w-4 h-4 rounded-full bg-emerald-500 border-4 border-white shadow-sm z-10"></div>
+                <div class="flex justify-between items-start mb-2">
+                    <div class="flex items-center gap-3">
+                        <span class="text-2xl">🍃</span>
+                        <h3 class="text-xl font-bold text-slate-800">Villa Doria Pamphili</h3>
+                    </div>
+                    <div class="bg-slate-50 px-3 py-1 rounded-xl text-right">
+                        <p class="text-[11px] font-bold text-slate-700">4.7/5</p>
+                        <p class="text-[9px] text-slate-400 font-semibold uppercase">Google</p>
+                    </div>
                 </div>
-                <div class="space-y-4">
-                    <img src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=400&q=80" class="image-float w-full aspect-square" alt="[Image d'une rue en Italie]">
-                    <img src="https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=400&q=80" class="image-float w-full aspect-[3/4]" alt="[Image d'un paysage au Vietnam]">
-                </div>
+                <p class="text-slate-600 leading-relaxed text-sm">
+                    Un immense parc parfait pour votre profil "Confort", offrant calme et sérénité.
+                </p>
             </div>
         </div>
     </section>
 
-    <!-- Objectif -->
-    <section id="objectif" class="py-24 px-6 bg-white border-y border-slate-100">
-        <div class="max-w-5xl mx-auto">
-            <div class="grid md:grid-cols-2 gap-20">
-                <div>
-                    <h2 class="text-4xl font-extrabold mb-6 tracking-tight">Notre Objectif.</h2>
-                    <p class="text-slate-500 leading-relaxed text-lg italic serif-italic font-tagline">
-                        "Libérer l'esprit du voyageur pour ne laisser place qu'à l'émotion."
-                    </p>
+    <!-- Section Pack Premium -->
+    <section class="premium-card rounded-[40px] p-8 shadow-2xl mb-12 relative overflow-hidden">
+        <div class="relative z-10">
+            <div class="inline-block bg-slate-800 text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-lg mb-6 border border-slate-700 text-slate-400">
+                Pack Voyageur
+            </div>
+            <h2 class="text-4xl font-extrabold italic mb-6">Votre voyage clé en main</h2>
+            <div class="flex items-baseline gap-3 mb-8">
+                <span class="text-6xl font-black">5€</span>
+                <span class="text-2xl text-slate-500 line-through">19€</span>
+            </div>
+            <button class="w-full bg-indigo-500 hover:bg-indigo-400 text-white font-black py-5 rounded-2xl flex items-center justify-center gap-3 transition-all uppercase tracking-wider">
+                <i class="fa-solid fa-cart-shopping"></i>
+                Débloquer mon pack
+            </button>
+        </div>
+        <div class="absolute -bottom-20 -right-20 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl"></div>
+    </section>
+
+    <!-- NOUVELLE SECTION : AVIS CLIENTS -->
+    <section class="mb-12">
+        <h3 class="text-center text-slate-400 text-[10px] font-bold tracking-[0.3em] uppercase mb-8">Ce qu'ils en disent</h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Avis 1 -->
+            <div class="review-card p-5 rounded-3xl shadow-sm">
+                <div class="flex items-center gap-3 mb-3">
+                    <div class="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center text-slate-400">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm font-bold text-slate-800">Marc D.</p>
+                        <div class="flex text-amber-400 text-[10px]">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                    </div>
                 </div>
-                <div class="space-y-6">
-                    <p class="text-slate-600 leading-relaxed">
-                        Chez Itinero, nous pensons que la planification ne devrait pas être une corvée. Notre objectif est de vous offrir un itinéraire clé en main qui respecte votre rythme, vos goûts et les imprévus.
-                    </p>
-                    <p class="text-slate-600 leading-relaxed">
-                        Nous ne vous donnons pas juste une liste de lieux, nous construisons une expérience cohérente basée sur la réalité du terrain et vos envies profondes.
-                    </p>
+                <p class="text-xs text-slate-500 leading-relaxed">
+                    "Incroyable ! Les spots secrets à Rome étaient magnifiques. Le pack à 5€ m'a fait gagner des heures."
+                </p>
+            </div>
+
+            <!-- Avis 2 -->
+            <div class="review-card p-5 rounded-3xl shadow-sm">
+                <div class="flex items-center gap-3 mb-3">
+                    <div class="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center text-slate-400">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm font-bold text-slate-800">Sophie L.</p>
+                        <div class="flex text-amber-400 text-[10px]">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                    </div>
                 </div>
+                <p class="text-xs text-slate-500 leading-relaxed">
+                    "La sélection des restos était parfaite. On s'est sentis comme des locaux, pas des touristes."
+                </p>
             </div>
         </div>
     </section>
 
-    <!-- Sources -->
-    <section id="sources" class="py-24 px-6 bg-slate-50">
-        <div class="max-w-6xl mx-auto">
-            <div class="mb-16">
-                <h2 class="text-3xl font-extrabold tracking-tight mb-2 text-slate-900">L'intelligence des sources.</h2>
-                <p class="text-slate-500">Une synthèse parfaite des autorités mondiales du voyage.</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="p-10 bg-white rounded-[2rem] shadow-sm border border-slate-100">
-                    <div class="flex items-center gap-3 mb-6">
-                        <div class="w-10 h-10 bg-red-50 text-red-500 rounded-xl flex items-center justify-center">
-                            <i class="fas fa-utensils"></i>
-                        </div>
-                        <h4 class="font-bold uppercase text-[10px] tracking-widest">Guide Michelin</h4>
-                    </div>
-                    <p class="text-sm text-slate-500 leading-relaxed">Nous intégrons les sélections gastronomiques et hôtelières les plus rigoureuses au monde.</p>
-                </div>
-
-                <div class="p-10 bg-white rounded-[2rem] shadow-sm border border-slate-100">
-                    <div class="flex items-center gap-3 mb-6">
-                        <div class="w-10 h-10 bg-orange-50 text-orange-500 rounded-xl flex items-center justify-center">
-                            <i class="fas fa-map-signs"></i>
-                        </div>
-                        <h4 class="font-bold uppercase text-[10px] tracking-widest">Le Routard</h4>
-                    </div>
-                    <p class="text-sm text-slate-500 leading-relaxed">Pour l'authenticité, les prix justes et les conseils de terrain que seul l'humain peut offrir.</p>
-                </div>
-
-                <div class="p-10 bg-white rounded-[2rem] shadow-sm border border-slate-100">
-                    <div class="flex items-center gap-3 mb-6">
-                        <div class="w-10 h-10 bg-indigo-50 text-indigo-500 rounded-xl flex items-center justify-center">
-                            <i class="fas fa-user-tie"></i>
-                        </div>
-                        <h4 class="font-bold uppercase text-[10px] tracking-widest">Blogs Pro</h4>
-                    </div>
-                    <p class="text-sm text-slate-500 leading-relaxed">La vision d'experts et de journalistes spécialisés pour dénicher les adresses confidentielles.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Avis Clients -->
-    <section id="avis" class="py-24 px-6 bg-white">
-        <div class="max-w-6xl mx-auto">
-            <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
-                <div>
-                    <h2 class="text-3xl font-extrabold tracking-tight mb-2">Ils voyagent avec nous.</h2>
-                    <p class="text-slate-500">Ceux qui ont laissé Itinero dessiner leurs souvenirs.</p>
-                </div>
-                <div class="flex items-center gap-2 bg-indigo-50 px-4 py-2 rounded-full">
-                    <div class="flex text-amber-400 text-[10px]">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                    </div>
-                    <span class="text-xs font-bold text-indigo-600">4.9/5 sur 12 000 avis</span>
-                </div>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="testimonial-card p-8 rounded-[2rem]">
-                    <div class="flex text-amber-400 text-[10px] mb-4">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                    </div>
-                    <p class="text-slate-600 text-sm leading-relaxed mb-8 italic">"Le mix entre les notes Michelin et les avis Tripadvisor m'a permis de manger dans des endroits incroyables sans jamais être déçue."</p>
-                    <div class="flex items-center gap-3 border-t border-slate-50 pt-6">
-                        <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center font-bold text-slate-400 text-xs">SL</div>
-                        <div>
-                            <p class="text-xs font-bold text-slate-900">Sophie L.</p>
-                            <p class="text-[9px] text-slate-400 uppercase tracking-wider font-bold">Séjour à Lisbonne</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="testimonial-card p-8 rounded-[2rem]">
-                    <div class="flex text-amber-400 text-[10px] mb-4">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                    </div>
-                    <p class="text-slate-600 text-sm leading-relaxed mb-8 italic">"L'adaptation météo est un game changer. Il a plu le mardi à Londres et Itinero a décalé toutes mes visites en intérieur sans que je stresse."</p>
-                    <div class="flex items-center gap-3 border-t border-slate-50 pt-6">
-                        <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center font-bold text-slate-400 text-xs">MA</div>
-                        <div>
-                            <p class="text-xs font-bold text-slate-900">Marc A.</p>
-                            <p class="text-[9px] text-slate-400 uppercase tracking-wider font-bold">Voyage à Londres</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="testimonial-card p-8 rounded-[2rem]">
-                    <div class="flex text-amber-400 text-[10px] mb-4">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                    </div>
-                    <p class="text-slate-600 text-sm leading-relaxed mb-8 italic">"J'ai rempli mes envies et Itinero a fait le reste. J'ai eu l'impression d'avoir un guide privé 24/7 dans ma poche."</p>
-                    <div class="flex items-center gap-3 border-t border-slate-50 pt-6">
-                        <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center font-bold text-slate-400 text-xs">EJ</div>
-                        <div>
-                            <p class="text-xs font-bold text-slate-900">Emma J.</p>
-                            <p class="text-[9px] text-slate-400 uppercase tracking-wider font-bold">Trip en Islande</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="py-20 px-6 bg-slate-50 text-center border-t border-slate-100">
-        <div class="flex flex-col items-center gap-4">
-            <div class="flex items-baseline gap-1">
-                <span class="text-4xl font-[900] tracking-tighter text-slate-900">Itinero</span>
-                <span class="w-1.5 h-1.5 bg-indigo-600 rounded-full"></span>
-            </div>
-            <span class="text-[10px] font-bold text-indigo-500 uppercase tracking-[0.4em]">Smart AI, Real Memories</span>
-            <div class="h-px w-20 bg-slate-200 my-4"></div>
-            <p class="text-slate-400 text-[10px] font-bold uppercase tracking-widest">Planifier • Découvrir • Ressentir</p>
-        </div>
+    <footer class="mt-12 mb-8 text-center">
+        <p class="text-[10px] font-bold tracking-[0.2em] text-slate-300 uppercase">
+            PerfectTrip IA • 2024
+        </p>
     </footer>
+
+    <!-- Script pour la logique des variables -->
+    <script>
+        // Exemple de la manière dont on injecterait les données du formulaire
+        const formData = {
+            ville: "Rome",
+            duree: "7 Jours",
+            voyageurs: "2 Adultes",
+            standing: "Confort",
+            temperature: "22°C",
+            meteo: "Ciel Dégagé"
+        };
+
+        // Fonction pour mettre à jour l'interface (à lier à ton backend plus tard)
+        function updateUI() {
+            document.getElementById('destination').innerText = formData.ville;
+            document.getElementById('user-profile').innerText = `${formData.duree} • ${formData.voyageurs} • ${formData.standing}`;
+            document.getElementById('local-weather').innerText = `${formData.temperature} • ${formData.meteo}`;
+        }
+
+        // Appel initial
+        updateUI();
+    </script>
 
 </body>
 </html>
-
-
