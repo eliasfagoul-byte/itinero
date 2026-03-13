@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PerfectTrip - Votre Itinéraire IA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .loading-animation { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen">
+
+    <div id="app" class="max-w-2xl mx-auto px-6 py-12">
+        
+        <div id="loader" class="bg-white rounded-3xl p-10 shadow-xl text-center border border-slate-100">
+            <div class="w-20 h-20 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mx-auto mb-6 loading-animation">
+                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+            </div>
+            <h2 class="text-2xl font-bold text-slate-800">Génération en cours...</h2>
+            <p class="text-slate-500 mt-2">L'IA PerfectTrip crée votre itinéraire sur-mesure. <br>Cela prend environ 15 à 20 secondes.</p>
+        </div>
+
+        <div id="result" class="hidden space-y-6">
+            <div class="bg-white rounded-3xl shadow-2xl overflow-hidden border border-slate-100">
+                <div class="bg-indigo-600 p-8 text-white">
+                    <h1 id="out-ville" class="text-4xl font-black italic uppercase tracking-tighter">DESTINATION</h1>
+                    <p id="out-accroche" class="text-indigo-100 mt-2 font-medium opacity-90"></p>
+                </div>
+                
+                <div class="p-8">
+                    <div class="mb-8">
+                        <h3 class="text-[10px] font-black text-indigo-400 uppercase tracking-[0.2em] mb-2">Analyse du Profil</h3>
+                        <p id="out-profil" class="text-slate-700 leading-relaxed"></p>
+                    </div>
+
+                    <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100">
+                        <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4">Aperçu de l'itinéraire</h3>
+                        <div id="out-itineraire" class="text-slate-600 space-y-2">
+                            </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gradient-to-r from-amber-400 to-orange-500 rounded-2xl p-1 shadow-lg">
+                <div class="bg-white rounded-[14px] p-6 text-center">
+                    <p class="text-slate-800 font-bold mb-3">Débloquez les adresses secrètes et les réservations</p>
+                    <button class="w-full bg-slate-900 text-white font-black py-4 rounded-xl uppercase tracking-widest text-xs hover:bg-slate-800 transition-all">
+                        Passer au Carnet Premium
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="error" class="hidden text-center p-10 bg-red-50 rounded-3xl border border-red-100">
+            <p class="text-red-600 font-bold">Désolé, la connexion avec n8n a échoué.</p>
+            <p id="error-details" class="text-red-500 text-sm mt-2"></p>
+            <button onclick="window.location.reload()" class="mt-4 px-6 py-2 bg-slate-900 text-white rounded-lg">Réessayer</button>
+        </div>
+    </div>
+
+    <script>
+        // --- CONFIGURATION ---
+        // REMPLACE "https://fagoul.app.n8n.cloud/webhook/test" par ton lien n8n (Production URL)
+        const N8N_WEBHOOK_URL = "VOTRE_URL_WEBHOOK_PRODUCTION_ICI";
+
+        async function startGeneration() {
+            const params = new URLSearchParams(window.location.search);
+            const payload = {
+                destination: params.get('destination') || "Japon",
+                duree: params.get('duree') || "14 jours"
+            };
+
+            try {
+                const response = await fetch(N8N_WEBHOOK_URL, {
+                    method: 'POST',
+                    mode: 'cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) throw new Error(`Erreur: ${response.status}`);
+
+                const data = await response.json();
+                
+                // Remplissage des données
+                document.getElementById('out-ville').innerText = data.ville || "Voyage sur-mesure";
+                document.getElementById('out-accroche').innerText = data.phrase_accroche || "";
+                document.getElementById('out-profil').innerText = data.profil_resume || "";
+                
+                const itineraireText = data.itineraire || data.desc_1 || "Itinéraire prêt !";
+                document.getElementById('out-itineraire').innerHTML = itineraireText.replace(/\n/g, '<br>');
+
+                // Affichage final
+                document.getElementById('loader').classList.add('hidden');
+                document.getElementById('result').classList.remove('hidden');
+
+            } catch (err) {
+                console.error(err);
+                document.getElementById('loader').classList.add('hidden');
+                document.getElementById('error').classList.remove('hidden');
+                if(N8N_WEBHOOK_URL.includes("VOTRE_URL")) {
+                    document.getElementById('error-details').innerText = "L'URL du Webhook n8n n'est pas configurée.";
+                }
+            }
+        }
+
+        window.onload = startGeneration;
+    </script>
+</body>
+</html>
