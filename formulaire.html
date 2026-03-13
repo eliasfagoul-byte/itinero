@@ -63,7 +63,6 @@
             border-color: #4F46E5 !important;
         }
 
-        /* Custom style for range inputs */
         input[type="range"] {
             accent-color: #4F46E5;
         }
@@ -258,44 +257,27 @@
         const form = document.getElementById('itinesio-form');
         const btn = document.getElementById('submit-btn');
 
-        form.addEventListener('submit', async (e) => {
+        form.addEventListener('submit', (e) => {
             e.preventDefault();
             
-            // État de chargement
+            // État de chargement visuel immédiat
             const originalContent = btn.innerHTML;
-            btn.innerHTML = '<span>Analyse de vos préférences...</span><i class="fas fa-circle-notch fa-spin"></i>';
+            btn.innerHTML = '<span>Préparation du voyage...</span><i class="fas fa-circle-notch fa-spin"></i>';
             btn.style.opacity = '0.7';
             btn.disabled = true;
 
-            // Collecte des données
+            // Collecte des données pour les passer à la page suivante
             const formData = new FormData(form);
             const data = Object.fromEntries(formData.entries());
 
-            try {
-                // Envoi vers le Webhook n8n
-                const response = await fetch('https://fagoul.app.n8n.cloud/webhook/test', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
-                });
+            // On construit les paramètres d'URL (destination, prénom, etc.)
+            const searchParams = new URLSearchParams();
+            searchParams.append('destination', data.destination);
+            searchParams.append('nom', data.prenom);
+            searchParams.append('duree', (data.nb_nuits || "7") + " jours");
 
-                if (response.ok) {
-                    alert('Parfait ! Vos préférences ont été transmises à notre IA. Votre itinéraire arrive.');
-                    form.reset();
-                } else {
-                    alert('Une erreur est survenue lors de l\'envoi (Code: ' + response.status + ')');
-                }
-            } catch (error) {
-                console.error('Erreur:', error);
-                alert('Impossible de joindre le serveur. Vérifiez votre connexion internet.');
-            } finally {
-                // Reset bouton
-                btn.innerHTML = originalContent;
-                btn.style.opacity = '1';
-                btn.disabled = false;
-            }
+            // Redirection vers itineraire.html
+            window.location.href = `itineraire.html?${searchParams.toString()}`;
         });
     </script>
 
