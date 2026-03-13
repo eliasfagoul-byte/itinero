@@ -98,8 +98,43 @@
                             <i class="fas fa-quote-right text-6xl"></i>
                         </div>
                         <h3 class="text-2xl font-extrabold text-slate-900 mb-8 tracking-tight">Votre Programme.</h3>
-                        <div id="out-itineraire" class="text-slate-600 leading-relaxed space-y-4 text-lg">
-                            </div>
+                        <div id="out-itineraire" class="text-slate-600 leading-relaxed space-y-6 text-lg">
+    <div class="space-y-4">
+        <div class="flex items-center gap-3 text-indigo-600 font-bold">
+            <i class="fas fa-hotel"></i>
+            <h4 class="text-sm uppercase tracking-widest">Hébergement suggéré</h4>
+        </div>
+        <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 text-sm">
+            <p class="font-bold text-slate-900">MIMARU Tokyo Ueno North (ou similaire)</p>
+            <p class="text-slate-500 italic">"Parfait pour une immersion familiale avec tout le confort moderne."</p>
+        </div>
+
+        <div class="flex items-center gap-3 text-indigo-600 font-bold pt-4">
+            <i class="fas fa-map-marked-alt"></i>
+            <h4 class="text-sm uppercase tracking-widest">Aperçu du Jour 1</h4>
+        </div>
+        
+        <div class="timeline-dot space-y-3">
+            <p class="text-sm font-semibold text-slate-900">Matin : Arrivée et immersion à Ueno</p>
+            <p class="text-sm text-slate-500">Balade dans le parc et premières découvertes culinaires de rue.</p>
+        </div>
+    </div>
+
+    <div class="premium-blur space-y-4 pt-4 border-t border-slate-100">
+        <div class="timeline-dot">
+            <p class="text-sm font-bold">Midi : Déjeuner secret chez [MASQUÉ]</p>
+            <p class="text-xs text-slate-400 italic text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+        </div>
+        <div class="timeline-dot">
+            <p class="text-sm font-bold">Après-midi : Exploration de [Lieu Privé]</p>
+            <p class="text-xs text-slate-400 italic text-justify">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis.</p>
+        </div>
+        <div class="timeline-dot">
+            <p class="text-sm font-bold">Soir : Dîner gastronomique [Michelin *]</p>
+            <p class="text-xs text-slate-400 italic text-justify">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi.</p>
+        </div>
+    </div>
+</div>
                     </div>
                 </div>
             </div>
@@ -153,8 +188,12 @@
                 document.getElementById('out-profil').innerText = data.profil_resume || "Analyse personnalisée en cours...";
                 
                 const itineraireRaw = data.itineraire || data.desc_1 || "Itinéraire en préparation...";
-                document.getElementById('out-itineraire').innerHTML = itineraireRaw.replace(/\n/g, '<br>');
+               // On insère l'itinéraire de l'IA juste AVANT la partie floutée
+        const container = document.getElementById('out-itineraire');
+        const blurPart = container.querySelector('.premium-blur');
+        const itineraireHTML = `<div class="space-y-4 mb-6">${itineraireRaw.replace(/\n/g, '<br>')}</div>`;
 
+        container.innerHTML = itineraireHTML + (blurPart ? blurPart.outerHTML : '');
                 // Switch Loader -> Resultat
                 document.getElementById('loader').classList.add('hidden');
                 document.getElementById('result').classList.remove('hidden');
