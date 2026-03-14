@@ -72,12 +72,12 @@
     </header>
 
     <section class="mb-12">
-        <div class="flex items-start gap-4 mb-8">
+        <div class="flex items-start gap-4 mb-10">
             <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-indigo-200">
                 <i class="fa-solid fa-map-location-dot"></i>
             </div>
             <h2 class="text-2xl font-bold text-slate-800 leading-tight">
-                Vos recommandations<br>pour <span class="text-indigo-600" id="dest-recap">...</span>
+                Vos 5 recommandations<br>gratuites pour <span class="text-indigo-600" id="dest-recap">...</span>
             </h2>
         </div>
 
@@ -88,12 +88,33 @@
                 <div class="absolute left-[2px] top-2 w-4 h-4 rounded-full bg-blue-500 border-4 border-white shadow-sm z-10"></div>
                 <div class="flex justify-between items-start mb-2">
                     <div class="flex items-center gap-3">
-                        <span class="text-2xl">🏨</span>
-                        <h3 class="text-xl font-bold text-slate-800">Hébergement suggéré</h3>
+                        <span class="text-xl text-blue-500"><i class="fa-solid fa-bed"></i></span>
+                        <h3 class="text-xl font-bold text-slate-800 leading-tight">Quartier Monti</h3>
+                    </div>
+                    <div class="bg-blue-50 px-3 py-1 rounded-xl text-right border border-blue-100">
+                        <p class="text-[11px] font-bold text-blue-600">9.2/10</p>
+                        <p class="text-[9px] text-blue-400 font-semibold uppercase italic">Booking</p>
                     </div>
                 </div>
-                <p id="hotel-reco" class="text-slate-600 leading-relaxed text-sm">
-                    Analyse de votre demande en cours...
+                <p class="text-slate-600 leading-relaxed text-sm">
+                    Évitez les zones trop touristiques. L'IA a sélectionné ce quartier d'artisans : parfait pour un boutique-hôtel avec terrasse secrète offrant une vue imprenable.
+                </p>
+            </div>
+
+            <div class="relative pl-10">
+                <div class="absolute left-[2px] top-2 w-4 h-4 rounded-full bg-orange-500 border-4 border-white shadow-sm z-10"></div>
+                <div class="flex justify-between items-start mb-2">
+                    <div class="flex items-center gap-3">
+                        <span class="text-xl text-orange-500"><i class="fa-solid fa-utensils"></i></span>
+                        <h3 class="text-xl font-bold text-slate-800 leading-tight">Osteria du Testaccio</h3>
+                    </div>
+                    <div class="bg-emerald-50 px-3 py-1 rounded-xl text-right border border-emerald-100">
+                        <p class="text-[11px] font-bold text-emerald-600">4.8/5</p>
+                        <p class="text-[9px] text-emerald-400 font-semibold uppercase italic">TripAdvisor</p>
+                    </div>
+                </div>
+                <p class="text-slate-600 leading-relaxed text-sm">
+                    Testaccio est l'âme culinaire de la ville. On y trouve une trattoria familiale historique où la Carbonara est une religion.
                 </p>
             </div>
 
@@ -101,12 +122,50 @@
                 <div class="absolute left-[2px] top-2 w-4 h-4 rounded-full bg-emerald-500 border-4 border-white shadow-sm z-10"></div>
                 <div class="flex justify-between items-start mb-2">
                     <div class="flex items-center gap-3">
-                        <span class="text-2xl">🍃</span>
-                        <h3 class="text-xl font-bold text-slate-800">Activité Incontournable</h3>
+                        <span class="text-xl text-emerald-500"><i class="fa-solid fa-leaf"></i></span>
+                        <h3 class="text-xl font-bold text-slate-800 leading-tight">Villa Doria Pamphili</h3>
+                    </div>
+                    <div class="bg-slate-50 px-3 py-1 rounded-xl text-right border border-slate-200">
+                        <p class="text-[11px] font-bold text-slate-600">4.7/5 Avis</p>
+                        <p class="text-[9px] text-slate-400 font-semibold uppercase italic">Google</p>
                     </div>
                 </div>
-                <p id="activity-reco" class="text-slate-600 leading-relaxed text-sm">
-                    Sélection d'une activité adaptée à votre budget...
+                <p class="text-slate-600 leading-relaxed text-sm">
+                    Un parc immense, bien plus calme que la Villa Borghese. Parfait pour un pique-nique improvisé avec vue sur les coupoles, loin du bruit.
+                </p>
+            </div>
+
+            <div class="relative pl-10">
+                <div class="absolute left-[2px] top-2 w-4 h-4 rounded-full bg-purple-500 border-4 border-white shadow-sm z-10"></div>
+                <div class="flex justify-between items-start mb-2">
+                    <div class="flex items-center gap-3">
+                        <span class="text-xl text-purple-500"><i class="fa-solid fa-pen-nib"></i></span>
+                        <h3 class="text-xl font-bold text-slate-800 leading-tight">Quartier Coppedè</h3>
+                    </div>
+                    <div class="bg-purple-50 px-3 py-1 rounded-xl text-right border border-purple-100">
+                        <p class="text-[11px] font-bold text-purple-600">Top 1%</p>
+                        <p class="text-[9px] text-purple-400 font-semibold uppercase italic text-center">Rome</p>
+                    </div>
+                </div>
+                <p class="text-slate-600 leading-relaxed text-sm">
+                    Une pépite architecturale Art Nouveau totalement hors des sentiers battus. Un décor de film à ciel ouvert, idéal pour des photos uniques.
+                </p>
+            </div>
+
+            <div class="relative pl-10">
+                <div class="absolute left-[2px] top-2 w-4 h-4 rounded-full bg-red-500 border-4 border-white shadow-sm z-10"></div>
+                <div class="flex justify-between items-start mb-2">
+                    <div class="flex items-center gap-3">
+                        <span class="text-xl text-red-500"><i class="fa-solid fa-ghost"></i></span>
+                        <h3 class="text-xl font-bold text-slate-800 leading-tight">Crypte Secrète</h3>
+                    </div>
+                    <div class="bg-orange-50 px-3 py-1 rounded-xl text-right border border-orange-100">
+                        <p class="text-[11px] font-bold text-orange-600">Élu</p>
+                        <p class="text-[9px] text-orange-400 font-semibold uppercase italic">Le Routard</p>
+                    </div>
+                </div>
+                <p class="text-slate-600 leading-relaxed text-sm">
+                    Une expérience mystique et insolite recommandée par nos experts pour ceux qui veulent découvrir l'histoire souterraine de la ville.
                 </p>
             </div>
         </div>
@@ -166,16 +225,14 @@
 
     <script>
         function updateUI() {
-            // 1. Récupérer les données de l'URL
             const params = new URLSearchParams(window.location.search);
             
             const destination = params.get('destination') || "votre destination";
-            const prenom = params.get('nom') || "Voyageur"; // 'nom' est utilisé dans ton script de formulaire
+            const prenom = params.get('nom') || "Voyageur";
             const nuits = params.get('duree') || "7 jours";
             const voyageurs = params.get('voyageurs') || "2 voyageurs";
             const style = params.get('style') || "Découverte";
 
-            // 2. Traduire les codes de style en texte lisible
             const stylesMap = {
                 'decouverte': 'Gastronomie & Culture',
                 'romantique': 'Lune de miel',
@@ -185,26 +242,18 @@
                 'insolite': 'Expériences insolites'
             };
 
-            // 3. Injection dans le HTML
             document.getElementById('destination').innerText = destination;
             document.getElementById('dest-recap').innerText = destination;
             document.getElementById('dest-price').innerText = destination;
             document.getElementById('client-name').innerText = prenom;
             document.getElementById('trip-style-text').innerText = stylesMap[style] || style;
             
-            // Profil complet
             document.getElementById('user-profile').innerText = `${nuits} • ${voyageurs} • ${stylesMap[style] || style}`;
 
-            // Simulation Météo simple
-            const temp = Math.floor(Math.random() * (28 - 18 + 1)) + 18; // Température aléatoire entre 18 et 28
+            const temp = Math.floor(Math.random() * (28 - 18 + 1)) + 18;
             document.getElementById('local-weather').innerText = `${temp}°C • Ciel Dégagé`;
-
-            // Adaptation du texte de recommandation
-            document.getElementById('hotel-reco').innerText = `L'IA Itinesio a sélectionné les meilleurs quartiers de ${destination} adaptés à un séjour "${stylesMap[style] || style}".`;
-            document.getElementById('activity-reco').innerText = `Pour votre profil, nous recommandons une immersion locale loin de la foule habituelle de ${destination}.`;
         }
 
-        // Lancement au chargement
         window.onload = updateUI;
     </script>
 </body>
