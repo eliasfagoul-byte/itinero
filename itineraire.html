@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Votre Voyage Personnalisé - PerfectTrip IA</title>
+    <title>Votre Voyage Personnalisé - Itinesio IA</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -37,19 +37,17 @@
 </head>
 <body class="p-4 md:p-8 max-w-2xl mx-auto">
 
-    <!-- Section Header avec Variables -->
     <header class="mb-8">
         <div class="inline-block bg-indigo-50 text-indigo-600 text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full mb-4">
-            Analyse Complétée
+            Analyse Complétée pour <span id="client-name">Voyageur</span>
         </div>
         <h1 class="text-4xl font-extrabold text-slate-900 mb-2">
-            Votre voyage à <span id="destination" class="text-indigo-600">Rome</span>
+            Votre voyage à <span id="destination" class="text-indigo-600">...</span>
         </h1>
         <p class="text-slate-500 italic text-lg leading-tight mb-8">
-            "L'alliance parfaite entre gastronomie locale et trésors cachés."
+            "L'alliance parfaite entre <span id="trip-style-text">votre style</span> et les trésors cachés."
         </p>
 
-        <!-- Stats Grid Dynamique -->
         <div class="space-y-3">
             <div class="bg-white p-4 rounded-3xl shadow-sm border border-slate-100 flex items-center gap-4">
                 <div class="w-12 h-12 bg-indigo-50 rounded-2xl flex items-center justify-center text-indigo-500">
@@ -57,7 +55,7 @@
                 </div>
                 <div>
                     <p class="text-[10px] uppercase tracking-wider text-slate-400 font-bold">Votre Profil</p>
-                    <p id="user-profile" class="text-slate-700 font-semibold">7 Jours • 2 Adultes • Confort</p>
+                    <p id="user-profile" class="text-slate-700 font-semibold">Chargement...</p>
                 </div>
             </div>
 
@@ -67,71 +65,59 @@
                 </div>
                 <div>
                     <p class="text-[10px] uppercase tracking-wider text-slate-400 font-bold">Météo Locale</p>
-                    <p id="local-weather" class="text-slate-700 font-semibold">22°C • Ciel Dégagé</p>
+                    <p id="local-weather" class="text-slate-700 font-semibold">Calcul en cours...</p>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- Section Recommandations (Contenu qui changerait selon la destination) -->
     <section class="mb-12">
         <div class="flex items-start gap-4 mb-8">
             <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-indigo-200">
                 <i class="fa-solid fa-map-location-dot"></i>
             </div>
             <h2 class="text-2xl font-bold text-slate-800 leading-tight">
-                Vos 5<br>recommandations<br>gratuites
+                Vos recommandations<br>pour <span class="text-indigo-600" id="dest-recap">...</span>
             </h2>
         </div>
 
         <div class="relative space-y-12 pl-4">
             <div class="timeline-line"></div>
 
-            <!-- Exemple de Recommandation 1 -->
             <div class="relative pl-10">
                 <div class="absolute left-[2px] top-2 w-4 h-4 rounded-full bg-blue-500 border-4 border-white shadow-sm z-10"></div>
                 <div class="flex justify-between items-start mb-2">
                     <div class="flex items-center gap-3">
                         <span class="text-2xl">🏨</span>
-                        <h3 class="text-xl font-bold text-slate-800">Quartier Monti</h3>
-                    </div>
-                    <div class="bg-blue-50 px-3 py-1 rounded-xl text-right">
-                        <p class="text-[11px] font-bold text-blue-600">9.2/10</p>
-                        <p class="text-[9px] text-blue-400 font-semibold uppercase">Booking</p>
+                        <h3 class="text-xl font-bold text-slate-800">Hébergement suggéré</h3>
                     </div>
                 </div>
-                <p class="text-slate-600 leading-relaxed text-sm">
-                    L'IA a sélectionné ce quartier pour son authenticité et sa proximité avec les monuments sans l'agitation touristique habituelle.
+                <p id="hotel-reco" class="text-slate-600 leading-relaxed text-sm">
+                    Analyse de votre demande en cours...
                 </p>
             </div>
 
-            <!-- Exemple de Recommandation 2 -->
             <div class="relative pl-10">
                 <div class="absolute left-[2px] top-2 w-4 h-4 rounded-full bg-emerald-500 border-4 border-white shadow-sm z-10"></div>
                 <div class="flex justify-between items-start mb-2">
                     <div class="flex items-center gap-3">
                         <span class="text-2xl">🍃</span>
-                        <h3 class="text-xl font-bold text-slate-800">Villa Doria Pamphili</h3>
-                    </div>
-                    <div class="bg-slate-50 px-3 py-1 rounded-xl text-right">
-                        <p class="text-[11px] font-bold text-slate-700">4.7/5</p>
-                        <p class="text-[9px] text-slate-400 font-semibold uppercase">Google</p>
+                        <h3 class="text-xl font-bold text-slate-800">Activité Incontournable</h3>
                     </div>
                 </div>
-                <p class="text-slate-600 leading-relaxed text-sm">
-                    Un immense parc parfait pour votre profil "Confort", offrant calme et sérénité.
+                <p id="activity-reco" class="text-slate-600 leading-relaxed text-sm">
+                    Sélection d'une activité adaptée à votre budget...
                 </p>
             </div>
         </div>
     </section>
 
-    <!-- Section Pack Premium -->
     <section class="premium-card rounded-[40px] p-8 shadow-2xl mb-12 relative overflow-hidden">
         <div class="relative z-10">
             <div class="inline-block bg-slate-800 text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-lg mb-6 border border-slate-700 text-slate-400">
                 Pack Voyageur
             </div>
-            <h2 class="text-4xl font-extrabold italic mb-6">Votre voyage clé en main</h2>
+            <h2 class="text-4xl font-extrabold italic mb-6">Votre itinéraire complet à <span id="dest-price">...</span></h2>
             <div class="flex items-baseline gap-3 mb-8">
                 <span class="text-6xl font-black">5€</span>
                 <span class="text-2xl text-slate-500 line-through">19€</span>
@@ -144,12 +130,9 @@
         <div class="absolute -bottom-20 -right-20 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl"></div>
     </section>
 
-    <!-- NOUVELLE SECTION : AVIS CLIENTS -->
     <section class="mb-12">
         <h3 class="text-center text-slate-400 text-[10px] font-bold tracking-[0.3em] uppercase mb-8">Ce qu'ils en disent</h3>
-        
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <!-- Avis 1 -->
             <div class="review-card p-5 rounded-3xl shadow-sm">
                 <div class="flex items-center gap-3 mb-3">
                     <div class="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center text-slate-400">
@@ -157,21 +140,11 @@
                     </div>
                     <div>
                         <p class="text-sm font-bold text-slate-800">Marc D.</p>
-                        <div class="flex text-amber-400 text-[10px]">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                        </div>
+                        <div class="flex text-amber-400 text-[10px]"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
                     </div>
                 </div>
-                <p class="text-xs text-slate-500 leading-relaxed">
-                    "Incroyable ! Les spots secrets à Rome étaient magnifiques. Le pack à 5€ m'a fait gagner des heures."
-                </p>
+                <p class="text-xs text-slate-500 leading-relaxed">"Incroyable ! Les spots secrets étaient magnifiques."</p>
             </div>
-
-            <!-- Avis 2 -->
             <div class="review-card p-5 rounded-3xl shadow-sm">
                 <div class="flex items-center gap-3 mb-3">
                     <div class="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center text-slate-400">
@@ -179,50 +152,60 @@
                     </div>
                     <div>
                         <p class="text-sm font-bold text-slate-800">Sophie L.</p>
-                        <div class="flex text-amber-400 text-[10px]">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                        </div>
+                        <div class="flex text-amber-400 text-[10px]"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
                     </div>
                 </div>
-                <p class="text-xs text-slate-500 leading-relaxed">
-                    "La sélection des restos était parfaite. On s'est sentis comme des locaux, pas des touristes."
-                </p>
+                <p class="text-xs text-slate-500 leading-relaxed">"On s'est sentis comme des locaux, pas des touristes."</p>
             </div>
         </div>
     </section>
 
     <footer class="mt-12 mb-8 text-center">
-        <p class="text-[10px] font-bold tracking-[0.2em] text-slate-300 uppercase">
-            PerfectTrip IA • 2024
-        </p>
+        <p class="text-[10px] font-bold tracking-[0.2em] text-slate-300 uppercase">Itinesio AI • 2026</p>
     </footer>
 
-    <!-- Script pour la logique des variables -->
     <script>
-        // Exemple de la manière dont on injecterait les données du formulaire
-        const formData = {
-            ville: "Rome",
-            duree: "7 Jours",
-            voyageurs: "2 Adultes",
-            standing: "Confort",
-            temperature: "22°C",
-            meteo: "Ciel Dégagé"
-        };
-
-        // Fonction pour mettre à jour l'interface (à lier à ton backend plus tard)
         function updateUI() {
-            document.getElementById('destination').innerText = formData.ville;
-            document.getElementById('user-profile').innerText = `${formData.duree} • ${formData.voyageurs} • ${formData.standing}`;
-            document.getElementById('local-weather').innerText = `${formData.temperature} • ${formData.meteo}`;
+            // 1. Récupérer les données de l'URL
+            const params = new URLSearchParams(window.location.search);
+            
+            const destination = params.get('destination') || "votre destination";
+            const prenom = params.get('nom') || "Voyageur"; // 'nom' est utilisé dans ton script de formulaire
+            const nuits = params.get('duree') || "7 jours";
+            const voyageurs = params.get('voyageurs') || "2 voyageurs";
+            const style = params.get('style') || "Découverte";
+
+            // 2. Traduire les codes de style en texte lisible
+            const stylesMap = {
+                'decouverte': 'Gastronomie & Culture',
+                'romantique': 'Lune de miel',
+                'aventure': 'Sport & Nature',
+                'chill': 'Détente absolue',
+                'gastronomique': 'Gastronomie',
+                'insolite': 'Expériences insolites'
+            };
+
+            // 3. Injection dans le HTML
+            document.getElementById('destination').innerText = destination;
+            document.getElementById('dest-recap').innerText = destination;
+            document.getElementById('dest-price').innerText = destination;
+            document.getElementById('client-name').innerText = prenom;
+            document.getElementById('trip-style-text').innerText = stylesMap[style] || style;
+            
+            // Profil complet
+            document.getElementById('user-profile').innerText = `${nuits} • ${voyageurs} • ${stylesMap[style] || style}`;
+
+            // Simulation Météo simple
+            const temp = Math.floor(Math.random() * (28 - 18 + 1)) + 18; // Température aléatoire entre 18 et 28
+            document.getElementById('local-weather').innerText = `${temp}°C • Ciel Dégagé`;
+
+            // Adaptation du texte de recommandation
+            document.getElementById('hotel-reco').innerText = `L'IA Itinesio a sélectionné les meilleurs quartiers de ${destination} adaptés à un séjour "${stylesMap[style] || style}".`;
+            document.getElementById('activity-reco').innerText = `Pour votre profil, nous recommandons une immersion locale loin de la foule habituelle de ${destination}.`;
         }
 
-        // Appel initial
-        updateUI();
+        // Lancement au chargement
+        window.onload = updateUI;
     </script>
-
 </body>
 </html>
