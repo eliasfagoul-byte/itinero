@@ -5,37 +5,87 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <title>Itinesio | Configuration du Séjour</title>
+    <title>Itinesio | Configuration Voyage</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@500;800;900&family=Playfair+Display:ital,wght@1,600&family=Inter:wght@400;500;600&display=swap');
         
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #FDFDFD;
+            background-color: #F8FAFC;
             color: #1E293B;
-            scroll-behavior: smooth;
         }
 
-        h1, h2, h3 {
-            font-family: 'Outfit', sans-serif;
-        }
+        h1, h2, h3 { font-family: 'Outfit', sans-serif; }
+        .font-tagline { font-family: 'Playfair Display', serif; font-style: italic; }
 
-        .font-tagline {
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-        }
-
-        .bg-hero {
-            background: radial-gradient(circle at top right, rgba(79, 70, 229, 0.05), transparent),
-                        radial-gradient(circle at bottom left, rgba(245, 158, 11, 0.05), transparent);
-        }
-
-        .input-card {
+        .glass-card {
             background: white;
-            border: 1px solid #F1F5F9;
-            border-radius: 2.5rem;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid #E2E8F0;
+            border-radius: 2rem;
+            transition: all 0.3s ease;
         }
+
+        /* Style de base pour les cartes de style */
+        .style-card {
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid transparent;
+        }
+
+        .style-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+        }
+
+        /* --- IDENTITÉS COLORÉES PAR MOOD --- */
+        
+        /* 1. Romantique - Rose */
+        .mood-romantique i { color: #F472B6; } /* Rose clair par défaut */
+        input[value="romantique"]:checked + .style-card {
+            border-color: #EC4899;
+            background-color: #FDF2F8;
+        }
+        input[value="romantique"]:checked + .style-card i { color: #DB2777; }
+
+        /* 2. Aventure - Vert */
+        .mood-aventure i { color: #34D399; } /* Vert clair par défaut */
+        input[value="aventure"]:checked + .style-card {
+            border-color: #10B981;
+            background-color: #ECFDF5;
+        }
+        input[value="aventure"]:checked + .style-card i { color: #059669; }
+
+        /* 3. Détente - Bleu */
+        .mood-chill i { color: #38BDF8; } /* Bleu clair par défaut */
+        input[value="chill"]:checked + .style-card {
+            border-color: #0EA5E9;
+            background-color: #F0F9FF;
+        }
+        input[value="chill"]:checked + .style-card i { color: #0284C7; }
+
+        /* 4. Gastronomie - Orange */
+        .mood-gastronomie i { color: #FB923C; } /* Orange par défaut */
+        input[value="gastronomique"]:checked + .style-card {
+            border-color: #F97316;
+            background-color: #FFF7ED;
+        }
+        input[value="gastronomique"]:checked + .style-card i { color: #EA580C; }
+
+        /* 5. Culture - Ocre/Ambre */
+        .mood-culture i { color: #FBBF24; } /* Ambre par défaut */
+        input[value="culture"]:checked + .style-card {
+            border-color: #D97706;
+            background-color: #FFFBEB;
+        }
+        input[value="culture"]:checked + .style-card i { color: #B45309; }
+
+        /* 6. Insolite - Indigo */
+        .mood-insolite i { color: #818CF8; } /* Indigo clair par défaut */
+        input[value="insolite"]:checked + .style-card {
+            border-color: #6366F1;
+            background-color: #EEF2FF;
+        }
+        input[value="insolite"]:checked + .style-card i { color: #4F46E5; }
 
         .btn-primary {
             background: #4F46E5;
@@ -43,213 +93,136 @@
         }
 
         .btn-primary:hover {
-            background: #4338CA;
             transform: scale(1.02);
-            box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.4);
-        }
-
-        .selection-box {
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-
-        .selection-box:has(input:checked) {
-            border-color: #4F46E5;
-            background-color: #F8FAFC;
-        }
-
-        input:focus, select:focus, textarea:focus {
-            outline: none;
-            border-color: #4F46E5 !important;
-        }
-
-        input[type="range"] {
-            accent-color: #4F46E5;
+            box-shadow: 0 20px 25px -5px rgba(79, 70, 229, 0.3);
         }
     </style>
 </head>
-<body class="antialiased bg-hero">
+<body class="antialiased">
 
-    <nav class="fixed w-full z-50 px-6 py-5 bg-white/60 backdrop-blur-xl border-b border-slate-50">
-        <div class="max-w-7xl mx-auto flex items-center justify-between">
+    <nav class="fixed w-full z-50 px-6 py-4 bg-white/80 backdrop-blur-md border-b border-slate-100">
+        <div class="max-w-5xl mx-auto flex items-center justify-between">
             <div class="flex items-baseline gap-1">
-                <span class="text-3xl font-[900] tracking-tighter text-slate-900">Itinesio</span>
+                <span class="text-2xl font-[900] tracking-tighter text-slate-900">Itinesio</span>
                 <span class="w-1.5 h-1.5 bg-indigo-600 rounded-full"></span>
             </div>
-            <a href="index.html" class="text-[11px] font-bold text-slate-400 uppercase tracking-widest hover:text-indigo-600 transition flex items-center gap-2">
-                <i class="fas fa-chevron-left text-[9px]"></i> Retour
+            <a href="index.html" class="text-xs font-bold text-slate-400 uppercase tracking-widest hover:text-indigo-600 transition">
+                <i class="fas fa-arrow-left mr-2"></i>Retour
             </a>
         </div>
     </nav>
 
-    <main class="max-w-4xl mx-auto pt-40 pb-20 px-6">
-        
-        <header class="mb-20 text-center md:text-left">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 border border-slate-200 mb-4">
-                <i class="fas fa-sliders-h text-slate-500 text-[10px]"></i>
-                <span class="text-[10px] font-bold text-slate-600 uppercase tracking-widest">Configuration de votre voyage</span>
-            </div>
-            <h1 class="text-5xl md:text-6xl font-[900] text-slate-900 tracking-tight leading-none mb-6">
-                Créez votre <span class="text-indigo-600">évasion.</span>
+    <main class="max-w-3xl mx-auto pt-32 pb-20 px-6">
+        <header class="mb-12 text-center">
+            <h1 class="text-4xl md:text-5xl font-[900] text-slate-900 tracking-tight mb-4">
+                Prêt pour l' <span class="text-indigo-600 italic">aventure ?</span>
             </h1>
-            <p class="font-tagline text-xl text-slate-500 italic">
-                "Chaque détail compte pour rendre votre itinéraire unique."
-            </p>
+            <p class="font-tagline text-lg text-slate-500">Choisissez votre ambiance, on crée la magie.</p>
         </header>
 
-        <form id="itinesio-form" class="space-y-12">
+        <form id="itinesio-form" class="space-y-10">
             
-            <div class="input-card p-8 md:p-12 relative overflow-hidden">
-                <div class="flex items-center gap-4 mb-10">
-                    <div class="w-12 h-12 bg-slate-900 text-white rounded-2xl flex items-center justify-center shadow-lg">
-                        <i class="fas fa-user"></i>
+            <!-- SECTION IDENTITÉ -->
+            <div class="glass-card p-8 shadow-sm">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <label class="text-[11px] font-bold uppercase text-slate-400 tracking-wider ml-1">Prénom</label>
+                        <input type="text" name="prenom" required placeholder="Votre prénom" class="w-full px-5 py-4 rounded-2xl bg-slate-50 border border-slate-100 focus:bg-white focus:ring-2 focus:ring-indigo-100 transition outline-none font-medium">
                     </div>
-                    <div>
-                        <h3 class="text-2xl font-bold">Qui voyage ?</h3>
-                        <p class="text-xs text-slate-400 font-medium uppercase tracking-wider">Identité et contact</p>
-                    </div>
-                </div>
-                
-                <div class="grid md:grid-cols-2 gap-10">
-                    <div class="space-y-3">
-                        <label class="text-[10px] font-bold uppercase text-slate-400 tracking-widest ml-1">Prénom</label>
-                        <input type="text" name="prenom" required placeholder="Jean" class="w-full py-4 border-b-2 border-slate-100 focus:border-indigo-600 transition text-slate-800 font-medium bg-transparent">
-                    </div>
-                    <div class="space-y-3">
-                        <label class="text-[10px] font-bold uppercase text-slate-400 tracking-widest ml-1">Nom</label>
-                        <input type="text" name="nom" required placeholder="Dupont" class="w-full py-4 border-b-2 border-slate-100 focus:border-indigo-600 transition text-slate-800 font-medium bg-transparent">
-                    </div>
-                    <div class="md:col-span-2 space-y-3">
-                        <label class="text-[10px] font-bold uppercase text-slate-400 tracking-widest ml-1">Adresse électronique</label>
-                        <input type="email" name="email" required placeholder="jean.dupont@exemple.com" class="w-full py-4 border-b-2 border-slate-100 focus:border-indigo-600 transition text-slate-800 font-medium bg-transparent">
+                    <div class="space-y-2">
+                        <label class="text-[11px] font-bold uppercase text-slate-400 tracking-wider ml-1">Destination</label>
+                        <input type="text" name="destination" required placeholder="Ex: Tokyo, Islande..." class="w-full px-5 py-4 rounded-2xl bg-slate-50 border border-slate-100 focus:bg-white focus:ring-2 focus:ring-indigo-100 transition outline-none font-medium">
                     </div>
                 </div>
             </div>
 
-            <div class="input-card p-8 md:p-12">
-                <div class="flex items-center gap-4 mb-10">
-                    <div class="w-12 h-12 bg-indigo-600 text-white rounded-2xl flex items-center justify-center shadow-lg">
-                        <i class="fas fa-plane"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-2xl font-bold">Destination & Style</h3>
-                        <p class="text-xs text-slate-400 font-medium uppercase tracking-wider">Où et comment ?</p>
-                    </div>
-                </div>
+            <!-- SECTION MOOD (COLORÉE) -->
+            <div class="space-y-4">
+                <label class="text-[11px] font-bold uppercase text-slate-400 tracking-wider ml-5">Quel est votre "Mood" ?</label>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    <!-- Romantique -->
+                    <label class="relative cursor-pointer">
+                        <input type="radio" name="type_sejour" value="romantique" class="peer hidden" checked>
+                        <div class="style-card mood-romantique p-6 glass-card flex flex-col items-center text-center gap-3">
+                            <i class="fas fa-heart text-3xl transition-colors"></i>
+                            <span class="text-sm font-bold text-slate-700">Romantique</span>
+                        </div>
+                    </label>
 
-                <div class="grid md:grid-cols-1 gap-10 mb-10">
-                    <div class="space-y-3">
-                        <label class="text-[10px] font-bold uppercase text-slate-400 tracking-widest ml-1">Destination de rêve</label>
-                        <input type="text" id="dest_input" name="destination" required placeholder="Ex: Tokyo, Islande, Côte d'Azur..." class="w-full py-4 border-b-2 border-slate-100 focus:border-indigo-600 transition text-slate-800 font-medium bg-transparent text-xl">
-                    </div>
-                </div>
+                    <!-- Aventure -->
+                    <label class="relative cursor-pointer">
+                        <input type="radio" name="type_sejour" value="aventure" class="peer hidden">
+                        <div class="style-card mood-aventure p-6 glass-card flex flex-col items-center text-center gap-3">
+                            <i class="fas fa-mountain text-3xl transition-colors"></i>
+                            <span class="text-sm font-bold text-slate-700">Aventure</span>
+                        </div>
+                    </label>
 
-                <div class="space-y-4">
-                    <label class="text-[10px] font-bold uppercase text-slate-400 tracking-widest ml-1">Ambiance du séjour</label>
-                    <select name="type_sejour" class="w-full py-4 border-b-2 border-slate-100 focus:border-indigo-600 transition text-slate-800 font-medium bg-transparent">
-                        <option value="decouverte">Culture & Découverte</option>
-                        <option value="romantique">Romantique / Lune de miel</option>
-                        <option value="aventure">Aventure & Sport</option>
-                        <option value="chill">Chill & Détente</option>
-                        <option value="gastronomique">Gastronomique</option>
-                        <option value="insolite">Insolite</option>
-                    </select>
+                    <!-- Détente -->
+                    <label class="relative cursor-pointer">
+                        <input type="radio" name="type_sejour" value="chill" class="peer hidden">
+                        <div class="style-card mood-chill p-6 glass-card flex flex-col items-center text-center gap-3">
+                            <i class="fas fa-umbrella-beach text-3xl transition-colors"></i>
+                            <span class="text-sm font-bold text-slate-700">Détente</span>
+                        </div>
+                    </label>
+
+                    <!-- Gastronomie -->
+                    <label class="relative cursor-pointer">
+                        <input type="radio" name="type_sejour" value="gastronomique" class="peer hidden">
+                        <div class="style-card mood-gastronomie p-6 glass-card flex flex-col items-center text-center gap-3">
+                            <i class="fas fa-utensils text-3xl transition-colors"></i>
+                            <span class="text-sm font-bold text-slate-700">Gastro</span>
+                        </div>
+                    </label>
+
+                    <!-- Culture -->
+                    <label class="relative cursor-pointer">
+                        <input type="radio" name="type_sejour" value="culture" class="peer hidden">
+                        <div class="style-card mood-culture p-6 glass-card flex flex-col items-center text-center gap-3">
+                            <i class="fas fa-landmark text-3xl transition-colors"></i>
+                            <span class="text-sm font-bold text-slate-700">Culture</span>
+                        </div>
+                    </label>
+
+                    <!-- Insolite -->
+                    <label class="relative cursor-pointer">
+                        <input type="radio" name="type_sejour" value="insolite" class="peer hidden">
+                        <div class="style-card mood-insolite p-6 glass-card flex flex-col items-center text-center gap-3">
+                            <i class="fas fa-rocket text-3xl transition-colors"></i>
+                            <span class="text-sm font-bold text-slate-700">Insolite</span>
+                        </div>
+                    </label>
                 </div>
             </div>
 
-            <div class="input-card p-8 md:p-12">
-                <div class="flex items-center gap-4 mb-10">
-                    <div class="w-12 h-12 bg-indigo-600 text-white rounded-2xl flex items-center justify-center shadow-lg">
-                        <i class="fas fa-calendar-alt"></i>
+            <!-- SECTION LOGISTIQUE -->
+            <div class="glass-card p-8 shadow-sm space-y-6">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-calendar-day text-indigo-600"></i>
+                            <h4 class="font-bold">Quand ?</h4>
+                        </div>
+                        <div class="flex gap-2">
+                            <input type="date" name="date_depart" required class="w-1/2 p-3 rounded-xl bg-slate-50 border border-slate-100 text-xs outline-none">
+                            <input type="date" name="date_retour" required class="w-1/2 p-3 rounded-xl bg-slate-50 border border-slate-100 text-xs outline-none">
+                        </div>
                     </div>
-                    <div>
-                        <h3 class="text-2xl font-bold">Logistique</h3>
-                        <p class="text-xs text-slate-400 font-medium uppercase tracking-wider">Calendrier et voyageurs</p>
-                    </div>
-                </div>
-                
-                <div class="grid md:grid-cols-2 gap-8 mb-12">
-                    <div class="space-y-3">
-                        <label class="text-[10px] font-bold uppercase text-slate-400 tracking-widest ml-1">Date de départ</label>
-                        <input type="date" name="date_depart" required class="w-full py-4 border-b-2 border-slate-100 focus:border-indigo-600 transition text-slate-800 font-medium bg-transparent">
-                    </div>
-                    <div class="space-y-3">
-                        <label class="text-[10px] font-bold uppercase text-slate-400 tracking-widest ml-1">Date de retour</label>
-                        <input type="date" name="date_retour" required class="w-full py-4 border-b-2 border-slate-100 focus:border-indigo-600 transition text-slate-800 font-medium bg-transparent">
-                    </div>
-                    <div class="space-y-3">
-                        <label class="text-[10px] font-bold uppercase text-slate-400 tracking-widest ml-1">Nombre de nuits</label>
-                        <input type="number" name="nb_nuits" placeholder="7" class="w-full py-4 border-b-2 border-slate-100 focus:border-indigo-600 transition text-slate-800 font-medium bg-transparent">
-                    </div>
-                    <div class="space-y-3">
-                        <label class="text-[10px] font-bold uppercase text-slate-400 tracking-widest ml-1">Nombre de voyageurs</label>
-                        <input type="number" name="nb_voyageurs" placeholder="2" class="w-full py-4 border-b-2 border-slate-100 focus:border-indigo-600 transition text-slate-800 font-medium bg-transparent">
-                    </div>
-                </div>
-
-                <div class="space-y-4">
-                    <label class="text-[10px] font-bold uppercase text-slate-400 tracking-widest ml-1">Hébergement</label>
-                    <div class="grid md:grid-cols-2 gap-4">
-                        <label class="selection-box flex items-center gap-5 p-6 bg-white border border-slate-100 rounded-3xl cursor-pointer hover:border-indigo-100 transition group">
-                            <input type="radio" name="statut_hotel" value="deja_reserve" class="hidden" checked>
-                            <div class="w-12 h-12 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-400 group-hover:text-indigo-600 shadow-sm transition">
-                                <i class="fas fa-hotel"></i>
-                            </div>
-                            <div class="flex-1">
-                                <p class="text-sm font-bold text-slate-900">Déjà réservé</p>
-                                <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider leading-tight">J'ai déjà mon hôtel</p>
-                            </div>
-                        </label>
-
-                        <label class="selection-box flex items-center gap-5 p-6 bg-white border border-slate-100 rounded-3xl cursor-pointer hover:border-indigo-100 transition group">
-                            <input type="radio" name="statut_hotel" value="a_proposer" class="hidden">
-                            <div class="w-12 h-12 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-400 group-hover:text-indigo-600 shadow-sm transition">
-                                <i class="fas fa-concierge-bell"></i>
-                            </div>
-                            <div class="flex-1">
-                                <p class="text-sm font-bold text-slate-900">À proposer</p>
-                                <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider leading-tight">Suggérez-moi un lieu</p>
-                            </div>
-                        </label>
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-euro-sign text-indigo-600"></i>
+                            <h4 class="font-bold">Budget</h4>
+                        </div>
+                        <input type="number" name="budget_total" placeholder="Ex: 2000" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-100 outline-none font-bold text-indigo-600">
                     </div>
                 </div>
             </div>
 
-            <div class="input-card p-8 md:p-12">
-                <div class="flex items-center gap-4 mb-10">
-                    <div class="w-12 h-12 bg-indigo-600 text-white rounded-2xl flex items-center justify-center shadow-lg">
-                        <i class="fas fa-wallet"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-2xl font-bold">Budget & Détails</h3>
-                        <p class="text-xs text-slate-400 font-medium uppercase tracking-wider">Maîtrise des coûts</p>
-                    </div>
-                </div>
-
-                <div class="grid md:grid-cols-2 gap-10 mb-10">
-                    <div class="space-y-3">
-                        <label class="text-[10px] font-bold uppercase text-slate-400 tracking-widest ml-1">Budget Max / personne (€)</label>
-                        <input type="number" name="budget_max_pers" placeholder="1500" class="w-full py-4 border-b-2 border-slate-100 focus:border-indigo-600 transition text-slate-800 font-medium bg-transparent">
-                    </div>
-                    <div class="space-y-3">
-                        <label class="text-[10px] font-bold uppercase text-slate-400 tracking-widest ml-1">Budget Total (Restaurants inclus)</label>
-                        <input type="number" name="budget_total_restos" placeholder="4000" class="w-full py-4 border-b-2 border-slate-100 focus:border-indigo-600 transition text-slate-800 font-medium bg-transparent">
-                    </div>
-                </div>
-
-                <div class="space-y-3">
-                    <label class="text-[10px] font-bold uppercase text-slate-400 tracking-widest ml-1">Demandes ou restrictions particulières</label>
-                    <textarea name="restrictions" rows="4" placeholder="Allergies, PMR, préférence pour le train, animaux bienvenus..." class="w-full p-6 bg-slate-50 border border-slate-100 rounded-3xl focus:border-indigo-600 transition text-slate-800 font-medium"></textarea>
-                </div>
-            </div>
-
-            <div class="flex flex-col items-center gap-6">
-                <button type="submit" id="submit-btn" class="btn-primary w-full md:w-auto px-12 py-6 rounded-3xl text-white font-bold text-lg flex items-center justify-center gap-4 group">
-                    <span>Générer mon itinéraire sur-mesure</span>
-                    <i class="fas fa-magic text-sm transition group-hover:rotate-12"></i>
-                </button>
-                <p class="text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em]">Données envoyées à Itinesio AI</p>
-            </div>
+            <button type="submit" id="submit-btn" class="btn-primary w-full py-6 rounded-3xl text-white font-black text-xl flex items-center justify-center gap-4 group">
+                <span>Générer l'itinéraire</span>
+                <i class="fas fa-wand-magic-sparkles transition group-hover:rotate-12"></i>
+            </button>
         </form>
     </main>
 
@@ -259,47 +232,36 @@
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
-            
-            // 1. État de chargement
-            btn.innerHTML = '<span>Synchronisation IA...</span><i class="fas fa-circle-notch fa-spin"></i>';
-            btn.style.opacity = '0.7';
+            btn.innerHTML = '<span>IA en action...</span><i class="fas fa-spinner fa-spin"></i>';
             btn.disabled = true;
 
-            // 2. Collecte des données
             const formData = new FormData(form);
             const data = Object.fromEntries(formData.entries());
 
-            // 3. ENVOI AU WEBHOOK n8n (C'est ici que ça se joue !)
             try {
-                // Remplacer par ton URL de production n8n quand tu seras prêt
-                const webhookUrl = "https://fagoul.app.n8n.cloud/webhook/test"; 
-                
-                // On envoie les données en tâche de fond
-                // On ne bloque pas l'utilisateur s'il y a un petit délai
-                fetch(webhookUrl, {
+                // Envoi vers le Webhook
+                fetch("https://fagoul.app.n8n.cloud/webhook/test", {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data)
-                }).catch(err => console.error("Erreur d'envoi Webhook:", err));
+                }).catch(err => console.error(err));
 
-                // 4. Préparation de la redirection
-                const searchParams = new URLSearchParams();
-                searchParams.append('destination', data.destination);
-                searchParams.append('nom', data.prenom);
-                searchParams.append('duree', (data.nb_nuits || "7") + " jours");
-
-                // On attend une micro-seconde pour être sûr que le fetch est parti
+                // Redirection
+                const params = new URLSearchParams({
+                    destination: data.destination,
+                    nom: data.prenom,
+                    duree: "7 jours"
+                });
+                
                 setTimeout(() => {
-                    window.location.href = `itineraire.html?${searchParams.toString()}`;
-                }, 500);
+                    window.location.href = `itineraire.html?${params.toString()}`;
+                }, 1000);
 
             } catch (error) {
-                console.error("Erreur critique:", error);
-                btn.innerHTML = '<span>Erreur, réessayez</span>';
+                btn.innerHTML = '<span>Erreur</span>';
                 btn.disabled = false;
             }
         });
     </script>
-
 </body>
 </html>
