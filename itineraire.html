@@ -88,7 +88,7 @@
 
         <div class="relative space-y-12 pl-4" id="dynamic-recommendations">
             <div class="timeline-line"></div>
-        </div>
+            </div>
     </section>
 
     <section class="premium-card rounded-[40px] p-8 shadow-2xl mb-16 relative overflow-hidden">
@@ -163,86 +163,86 @@
     </footer>
 
     <script>
-        const recommendationsDB = {
-            "rome": [
-                { theme: "blue", icon: "fa-bed", title: "Quartier Monti", note: "9.2/10", source: "Booking", desc: "Évitez les zones trop touristiques. Quartier d'artisans, parfait pour un boutique-hôtel." },
-                { theme: "orange", icon: "fa-utensils", title: "Osteria du Testaccio", note: "4.8/5", source: "TripAdvisor", desc: "Testaccio est l'âme culinaire de la ville. On y trouve la meilleure Carbonara historique." },
-                { theme: "emerald", icon: "fa-leaf", title: "Villa Doria Pamphili", note: "4.7/5", source: "Google", desc: "Un parc immense, bien plus calme que la Villa Borghese pour un pique-nique sans bruit." }
-            ],
-            "tokyo": [
-                { theme: "blue", icon: "fa-bed", title: "Quartier Shimokitazawa", note: "9.5/10", source: "Locaux", desc: "Le quartier bohème et vintage de Tokyo, parfait pour s'imprégner de la culture loin des néons." },
-                { theme: "orange", icon: "fa-utensils", title: "Ramen Street", note: "4.9/5", source: "Google", desc: "Située sous la gare de Tokyo, une sélection des meilleurs bouillons du pays." },
-                { theme: "purple", icon: "fa-ticket", title: "TeamLab Planets", note: "Top 1%", source: "Guides", desc: "Une expérience sensorielle et visuelle hors du commun où l'on marche littéralement dans l'eau." }
-            ],
-            "islande": [
-                { theme: "purple", icon: "fa-car", title: "Route Circulaire (Sud)", note: "Top 1%", source: "Guide", desc: "Idéal pour l'aventure. Cascades secrètes, glaciers et plages de sable noir au programme." },
-                { theme: "blue", icon: "fa-house", title: "Guesthouse Vik", note: "9.0/10", source: "Booking", desc: "Un hébergement chaleureux en pleine nature pour vous reposer après vos journées de découverte." },
-                { theme: "emerald", icon: "fa-water", title: "Source chaude secrète", note: "Secret", source: "Itinesio", desc: "Oubliez le Blue Lagoon trop touristique. L'IA a trouvé une source naturelle sans personne." }
-            ]
-        };
-
-        function getTheme(themeName) {
+        // 1. GESTION DES THÈMES ET DU DESIGN DES RECOS
+        function getTheme(rec) {
+            const source = rec.source.toLowerCase();
             const themes = {
-                blue: { dot: "bg-blue-500", icon: "text-blue-500", bgBadge: "bg-blue-50", borderBadge: "border-blue-100", textNote: "text-blue-600", textSource: "text-blue-400" },
-                orange: { dot: "bg-orange-500", icon: "text-orange-500", bgBadge: "bg-orange-50", borderBadge: "border-orange-100", textNote: "text-orange-600", textSource: "text-orange-400" },
-                emerald: { dot: "bg-emerald-500", icon: "text-emerald-500", bgBadge: "bg-emerald-50", borderBadge: "border-emerald-100", textNote: "text-emerald-600", textSource: "text-emerald-400" },
-                purple: { dot: "bg-purple-500", icon: "text-purple-500", bgBadge: "bg-purple-50", borderBadge: "border-purple-100", textNote: "text-purple-600", textSource: "text-purple-400" }
+                blue: { dot: "bg-blue-500", icon: "text-blue-500", bgBadge: "bg-blue-50", borderBadge: "border-blue-100", textNote: "text-blue-600", textSource: "text-blue-500" },
+                orange: { dot: "bg-orange-500", icon: "text-orange-500", bgBadge: "bg-orange-50", borderBadge: "border-orange-100", textNote: "text-orange-600", textSource: "text-orange-500" },
+                purple: { dot: "bg-purple-600", icon: "text-purple-600", bgBadge: "bg-purple-50", borderBadge: "border-purple-100", textNote: "text-purple-700", textSource: "text-purple-500" },
+                red: { dot: "bg-red-600", icon: "text-red-600", bgBadge: "bg-red-50", borderBadge: "border-red-100", textNote: "text-red-700", textSource: "text-red-600" }
             };
-            return themes[themeName] || themes.blue;
+
+            if (source.includes("michelin")) return themes.red;
+            if (source.includes("booking")) return themes.blue;
+            if (source.includes("google")) return themes.orange;
+            return themes[rec.theme] || themes.blue;
         }
 
         function buildRecommendation(rec) {
-            const t = getTheme(rec.theme);
+            const t = getTheme(rec);
             return `
             <div class="relative pl-10">
                 <div class="absolute left-[2px] top-2 w-4 h-4 rounded-full ${t.dot} border-4 border-white shadow-sm z-10"></div>
-                <div class="flex justify-between items-start mb-2">
+                <div class="flex justify-between items-start mb-2 gap-2">
                     <div class="flex items-center gap-3">
                         <span class="text-xl ${t.icon}"><i class="fa-solid ${rec.icon}"></i></span>
-                        <h3 class="text-xl font-bold text-slate-800 leading-tight">${rec.title}</h3>
+                        <h3 class="text-lg font-bold text-slate-800 leading-tight">${rec.title}</h3>
                     </div>
-                    <div class="${t.bgBadge} px-3 py-1 rounded-xl text-right border ${t.borderBadge}">
-                        <p class="text-[11px] font-bold ${t.textNote}">${rec.note}</p>
-                        <p class="text-[9px] ${t.textSource} font-semibold uppercase italic">${rec.source}</p>
+                    <div class="${t.bgBadge} px-2 py-1 rounded-lg text-right border ${t.borderBadge} min-w-[85px]">
+                        <p class="text-[10px] font-black ${t.textNote}">${rec.note}</p>
+                        <p class="text-[8px] ${t.textSource} font-bold uppercase tracking-tighter italic">${rec.source}</p>
                     </div>
                 </div>
                 <p class="text-slate-600 leading-relaxed text-sm">${rec.desc}</p>
             </div>`;
         }
 
-        function updateUI() {
+        // 2. FONCTION D'APPEL N8N
+        async function updateUI() {
             const urlParams = new URLSearchParams(window.location.search);
-            const data = {
-                destination: urlParams.get('destination') || "votre destination",
-                prenom: urlParams.get('nom') || "Voyageur",
-                duree: urlParams.get('duree') || "7 jours",
-                style: "Culture & Découverte" 
-            };
+            const destination = urlParams.get('destination') || "votre destination";
+            const prenom = urlParams.get('nom') || "Voyageur";
+            const duree = urlParams.get('duree') || "7 jours";
 
-            document.getElementById('destination').innerText = data.destination;
-            document.getElementById('dest-recap').innerText = data.destination;
-            document.getElementById('dest-price').innerText = data.destination;
-            document.getElementById('client-name').innerText = data.prenom;
-            document.getElementById('user-profile').innerText = `${data.duree} • 2 voyageurs • ${data.style}`;
-            document.getElementById('user-budget').innerText = `1500€/pers • Recherche d'hôtel`;
+            // Mise à jour immédiate des textes statiques
+            document.getElementById('destination').innerText = destination;
+            document.getElementById('dest-recap').innerText = destination;
+            document.getElementById('dest-price').innerText = destination;
+            document.getElementById('client-name').innerText = prenom;
+            document.getElementById('user-profile').innerText = `${duree} • 2 voyageurs • Sur-mesure`;
+            document.getElementById('user-budget').innerText = `Analyse du budget en cours...`;
 
             const container = document.getElementById('dynamic-recommendations');
-            const searchKey = data.destination.toLowerCase().trim();
-            let userRecs = recommendationsDB[searchKey];
+            container.innerHTML = '<div class="text-slate-400 text-sm italic p-4">Analyse IA des meilleures adresses en cours...</div>';
 
-            if (!userRecs) {
-                userRecs = [
-                    { theme: "blue", icon: "fa-plane-arrival", title: `Arrivée à ${data.destination}`, note: "Top", source: "Itinesio", desc: `Commencez votre séjour par une immersion totale dans l'atmosphère locale de ${data.destination}.` },
-                    { theme: "orange", icon: "fa-compass", title: "Exploration sur-mesure", note: "Secret", source: "Local", desc: `Nous avons déniché des pépites parfaites pour votre séjour de ${data.duree}.` },
-                    { theme: "emerald", icon: "fa-star", title: "Activité Incontournable", note: "5/5", source: "Guide", desc: "Une expérience unique sélectionnée par notre IA." }
-                ];
+            try {
+                // https://fagoul.app.n8n.cloud/webhook/test
+                const response = await fetch('https://ton-n8n.instance.com/webhook/identifiant-voyage', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        ville: destination,
+                        prenom: prenom,
+                        duree: duree
+                    })
+                });
+
+                if (!response.ok) throw new Error('Erreur réseau');
+
+                const userRecs = await response.json();
+
+                let htmlContent = '<div class="timeline-line"></div>';
+                userRecs.forEach(rec => {
+                    htmlContent += buildRecommendation(rec);
+                });
+                container.innerHTML = htmlContent;
+                document.getElementById('user-budget').innerText = `Optimisé pour ${destination}`;
+
+            } catch (error) {
+                console.error("Erreur n8n:", error);
+                container.innerHTML = '<p class="text-red-500 p-4 text-xs italic text-center">Oups ! Connexion à l\'IA momentanément interrompue. Veuillez rafraîchir la page.</p>';
             }
-
-            let htmlContent = '<div class="timeline-line"></div>';
-            userRecs.forEach(rec => {
-                htmlContent += buildRecommendation(rec);
-            });
-            container.innerHTML = htmlContent;
         }
 
         window.onload = updateUI;
