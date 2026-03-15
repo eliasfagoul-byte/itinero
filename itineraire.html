@@ -28,9 +28,19 @@
             background: #0f172a;
             color: white;
         }
+
+        .review-card {
+            background: white;
+            border: 1px solid #f1f5f9;
+            transition: transform 0.3s ease;
+        }
+        
+        .review-card:hover {
+            transform: translateY(-5px);
+        }
     </style>
 </head>
-<body class="p-4 md:p-8 max-w-2xl mx-auto">
+<body class="p-4 md:p-8 max-w-2xl mx-auto pb-20">
 
     <header class="mb-8">
         <div class="inline-block bg-indigo-50 text-indigo-600 text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full mb-4">
@@ -78,10 +88,10 @@
 
         <div class="relative space-y-12 pl-4" id="dynamic-recommendations">
             <div class="timeline-line"></div>
-            </div>
+        </div>
     </section>
 
-    <section class="premium-card rounded-[40px] p-8 shadow-2xl mb-12 relative overflow-hidden">
+    <section class="premium-card rounded-[40px] p-8 shadow-2xl mb-16 relative overflow-hidden">
         <div class="relative z-10">
             <div class="inline-block bg-slate-800 text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-lg mb-6 border border-slate-700 text-slate-400">
                 Pack Voyageur
@@ -99,8 +109,60 @@
         <div class="absolute -bottom-20 -right-20 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl"></div>
     </section>
 
+    <section class="mb-12">
+        <div class="text-center mb-10">
+            <h3 class="text-xl font-bold text-slate-800">Ils ont voyagé avec Itinesio</h3>
+            <p class="text-slate-400 text-sm">Plus de 1,200 itinéraires créés ce mois-ci</p>
+        </div>
+
+        <div class="grid gap-4">
+            <div class="review-card p-6 rounded-3xl shadow-sm">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-slate-200 rounded-full overflow-hidden">
+                            <img src="https://i.pravatar.cc/100?u=sarah" alt="Avatar">
+                        </div>
+                        <div>
+                            <p class="font-bold text-slate-900 text-sm">Sarah L.</p>
+                            <p class="text-[10px] text-slate-400 uppercase font-bold">Itinéraire : Tokyo</p>
+                        </div>
+                    </div>
+                    <div class="flex text-orange-400 text-[10px]">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <p class="text-slate-600 text-sm leading-relaxed">
+                    "Incroyable ! L'IA a trouvé des restaurants à Shimokitazawa que je n'aurais jamais vus dans les guides classiques. Un gain de temps fou."
+                </p>
+            </div>
+
+            <div class="review-card p-6 rounded-3xl shadow-sm">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-slate-200 rounded-full overflow-hidden">
+                            <img src="https://i.pravatar.cc/100?u=marc" alt="Avatar">
+                        </div>
+                        <div>
+                            <p class="font-bold text-slate-900 text-sm">Marc-Antoine</p>
+                            <p class="text-[10px] text-slate-400 uppercase font-bold">Itinéraire : Rome</p>
+                        </div>
+                    </div>
+                    <div class="flex text-orange-400 text-[10px]">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <p class="text-slate-600 text-sm leading-relaxed">
+                    "Pour 5€, c'est vraiment donné. Les conseils sur le quartier Testaccio étaient parfaits pour notre week-end en amoureux."
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="text-center text-[10px] text-slate-400 uppercase tracking-[0.2em] font-bold">
+        © 2026 Itinesio AI - Tous droits réservés
+    </footer>
+
     <script>
-        // --- 1. BASE DE DONNÉES FICTIVE ---
         const recommendationsDB = {
             "rome": [
                 { theme: "blue", icon: "fa-bed", title: "Quartier Monti", note: "9.2/10", source: "Booking", desc: "Évitez les zones trop touristiques. Quartier d'artisans, parfait pour un boutique-hôtel." },
@@ -148,20 +210,15 @@
             </div>`;
         }
 
-        // --- LOGIQUE DE RÉCUPÉRATION DES DONNÉES ---
         function updateUI() {
-            // On récupère les paramètres directement depuis l'URL
             const urlParams = new URLSearchParams(window.location.search);
-            
             const data = {
                 destination: urlParams.get('destination') || "votre destination",
                 prenom: urlParams.get('nom') || "Voyageur",
                 duree: urlParams.get('duree') || "7 jours",
-                // On pourrait ajouter d'autres params ici si tu modifies ton formulaire
                 style: "Culture & Découverte" 
             };
 
-            // Mise à jour de l'en-tête
             document.getElementById('destination').innerText = data.destination;
             document.getElementById('dest-recap').innerText = data.destination;
             document.getElementById('dest-price').innerText = data.destination;
@@ -169,7 +226,6 @@
             document.getElementById('user-profile').innerText = `${data.duree} • 2 voyageurs • ${data.style}`;
             document.getElementById('user-budget').innerText = `1500€/pers • Recherche d'hôtel`;
 
-            // Injection des recommandations
             const container = document.getElementById('dynamic-recommendations');
             const searchKey = data.destination.toLowerCase().trim();
             let userRecs = recommendationsDB[searchKey];
@@ -178,7 +234,7 @@
                 userRecs = [
                     { theme: "blue", icon: "fa-plane-arrival", title: `Arrivée à ${data.destination}`, note: "Top", source: "Itinesio", desc: `Commencez votre séjour par une immersion totale dans l'atmosphère locale de ${data.destination}.` },
                     { theme: "orange", icon: "fa-compass", title: "Exploration sur-mesure", note: "Secret", source: "Local", desc: `Nous avons déniché des pépites parfaites pour votre séjour de ${data.duree}.` },
-                    { theme: "emerald", icon: "fa-star", title: "Activité Incontournable", note: "5/5", source: "Guide", desc: "Une expérience unique sélectionnée par notre IA selon vos préférences." }
+                    { theme: "emerald", icon: "fa-star", title: "Activité Incontournable", note: "5/5", source: "Guide", desc: "Une expérience unique sélectionnée par notre IA." }
                 ];
             }
 
