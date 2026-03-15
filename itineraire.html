@@ -42,10 +42,10 @@
             Analyse Complétée pour <span id="client-name">Voyageur</span>
         </div>
         <h1 class="text-4xl font-extrabold text-slate-900 mb-2">
-            Votre voyage à <span id="destination" class="text-indigo-600">...</span>
+            Votre voyage à <span id="destination" class="text-indigo-600 capitalize">...</span>
         </h1>
         <p class="text-slate-500 italic text-lg leading-tight mb-8">
-            "L'alliance parfaite entre <span id="trip-style-text">votre style</span> et les trésors cachés."
+            "L'alliance parfaite entre <span id="trip-style-text" class="font-semibold text-slate-700">votre style</span> et les trésors cachés."
         </p>
 
         <div class="space-y-3">
@@ -61,11 +61,11 @@
 
             <div class="bg-white p-4 rounded-3xl shadow-sm border border-slate-100 flex items-center gap-4">
                 <div class="w-12 h-12 bg-orange-50 rounded-2xl flex items-center justify-center text-orange-400">
-                    <i class="fa-solid fa-sun text-xl"></i>
+                    <i class="fa-solid fa-wallet text-xl"></i>
                 </div>
                 <div>
-                    <p class="text-[10px] uppercase tracking-wider text-slate-400 font-bold">Météo Locale</p>
-                    <p id="local-weather" class="text-slate-700 font-semibold">Calcul en cours...</p>
+                    <p class="text-[10px] uppercase tracking-wider text-slate-400 font-bold">Budget & Infos</p>
+                    <p id="user-budget" class="text-slate-700 font-semibold">Chargement...</p>
                 </div>
             </div>
         </div>
@@ -73,101 +73,16 @@
 
     <section class="mb-12">
         <div class="flex items-start gap-4 mb-10">
-            <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-indigo-200">
+            <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-indigo-200 z-10">
                 <i class="fa-solid fa-map-location-dot"></i>
             </div>
             <h2 class="text-2xl font-bold text-slate-800 leading-tight">
-                Vos 5 recommandations<br>gratuites pour <span class="text-indigo-600" id="dest-recap">...</span>
+                Vos recommandations générées<br>pour <span class="text-indigo-600 capitalize" id="dest-recap">...</span>
             </h2>
         </div>
 
-        <div class="relative space-y-12 pl-4">
+        <div class="relative space-y-12 pl-4" id="dynamic-recommendations">
             <div class="timeline-line"></div>
-
-            <div class="relative pl-10">
-                <div class="absolute left-[2px] top-2 w-4 h-4 rounded-full bg-blue-500 border-4 border-white shadow-sm z-10"></div>
-                <div class="flex justify-between items-start mb-2">
-                    <div class="flex items-center gap-3">
-                        <span class="text-xl text-blue-500"><i class="fa-solid fa-bed"></i></span>
-                        <h3 class="text-xl font-bold text-slate-800 leading-tight">Quartier Monti</h3>
-                    </div>
-                    <div class="bg-blue-50 px-3 py-1 rounded-xl text-right border border-blue-100">
-                        <p class="text-[11px] font-bold text-blue-600">9.2/10</p>
-                        <p class="text-[9px] text-blue-400 font-semibold uppercase italic">Booking</p>
-                    </div>
-                </div>
-                <p class="text-slate-600 leading-relaxed text-sm">
-                    Évitez les zones trop touristiques. L'IA a sélectionné ce quartier d'artisans : parfait pour un boutique-hôtel avec terrasse secrète offrant une vue imprenable.
-                </p>
-            </div>
-
-            <div class="relative pl-10">
-                <div class="absolute left-[2px] top-2 w-4 h-4 rounded-full bg-orange-500 border-4 border-white shadow-sm z-10"></div>
-                <div class="flex justify-between items-start mb-2">
-                    <div class="flex items-center gap-3">
-                        <span class="text-xl text-orange-500"><i class="fa-solid fa-utensils"></i></span>
-                        <h3 class="text-xl font-bold text-slate-800 leading-tight">Osteria du Testaccio</h3>
-                    </div>
-                    <div class="bg-emerald-50 px-3 py-1 rounded-xl text-right border border-emerald-100">
-                        <p class="text-[11px] font-bold text-emerald-600">4.8/5</p>
-                        <p class="text-[9px] text-emerald-400 font-semibold uppercase italic">TripAdvisor</p>
-                    </div>
-                </div>
-                <p class="text-slate-600 leading-relaxed text-sm">
-                    Testaccio est l'âme culinaire de la ville. On y trouve une trattoria familiale historique où la Carbonara est une religion.
-                </p>
-            </div>
-
-            <div class="relative pl-10">
-                <div class="absolute left-[2px] top-2 w-4 h-4 rounded-full bg-emerald-500 border-4 border-white shadow-sm z-10"></div>
-                <div class="flex justify-between items-start mb-2">
-                    <div class="flex items-center gap-3">
-                        <span class="text-xl text-emerald-500"><i class="fa-solid fa-leaf"></i></span>
-                        <h3 class="text-xl font-bold text-slate-800 leading-tight">Villa Doria Pamphili</h3>
-                    </div>
-                    <div class="bg-slate-50 px-3 py-1 rounded-xl text-right border border-slate-200">
-                        <p class="text-[11px] font-bold text-slate-600">4.7/5 Avis</p>
-                        <p class="text-[9px] text-slate-400 font-semibold uppercase italic">Google</p>
-                    </div>
-                </div>
-                <p class="text-slate-600 leading-relaxed text-sm">
-                    Un parc immense, bien plus calme que la Villa Borghese. Parfait pour un pique-nique improvisé avec vue sur les coupoles, loin du bruit.
-                </p>
-            </div>
-
-            <div class="relative pl-10">
-                <div class="absolute left-[2px] top-2 w-4 h-4 rounded-full bg-purple-500 border-4 border-white shadow-sm z-10"></div>
-                <div class="flex justify-between items-start mb-2">
-                    <div class="flex items-center gap-3">
-                        <span class="text-xl text-purple-500"><i class="fa-solid fa-pen-nib"></i></span>
-                        <h3 class="text-xl font-bold text-slate-800 leading-tight">Quartier Coppedè</h3>
-                    </div>
-                    <div class="bg-purple-50 px-3 py-1 rounded-xl text-right border border-purple-100">
-                        <p class="text-[11px] font-bold text-purple-600">Top 1%</p>
-                        <p class="text-[9px] text-purple-400 font-semibold uppercase italic text-center">Rome</p>
-                    </div>
-                </div>
-                <p class="text-slate-600 leading-relaxed text-sm">
-                    Une pépite architecturale Art Nouveau totalement hors des sentiers battus. Un décor de film à ciel ouvert, idéal pour des photos uniques.
-                </p>
-            </div>
-
-            <div class="relative pl-10">
-                <div class="absolute left-[2px] top-2 w-4 h-4 rounded-full bg-red-500 border-4 border-white shadow-sm z-10"></div>
-                <div class="flex justify-between items-start mb-2">
-                    <div class="flex items-center gap-3">
-                        <span class="text-xl text-red-500"><i class="fa-solid fa-ghost"></i></span>
-                        <h3 class="text-xl font-bold text-slate-800 leading-tight">Crypte Secrète</h3>
-                    </div>
-                    <div class="bg-orange-50 px-3 py-1 rounded-xl text-right border border-orange-100">
-                        <p class="text-[11px] font-bold text-orange-600">Élu</p>
-                        <p class="text-[9px] text-orange-400 font-semibold uppercase italic">Le Routard</p>
-                    </div>
-                </div>
-                <p class="text-slate-600 leading-relaxed text-sm">
-                    Une expérience mystique et insolite recommandée par nos experts pour ceux qui veulent découvrir l'histoire souterraine de la ville.
-                </p>
-            </div>
         </div>
     </section>
 
@@ -176,7 +91,7 @@
             <div class="inline-block bg-slate-800 text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-lg mb-6 border border-slate-700 text-slate-400">
                 Pack Voyageur
             </div>
-            <h2 class="text-4xl font-extrabold italic mb-6">Votre itinéraire complet à <span id="dest-price">...</span></h2>
+            <h2 class="text-4xl font-extrabold italic mb-6">Votre itinéraire complet à <span id="dest-price" class="capitalize">...</span></h2>
             <div class="flex items-baseline gap-3 mb-8">
                 <span class="text-6xl font-black">5€</span>
                 <span class="text-2xl text-slate-500 line-through">19€</span>
@@ -189,71 +104,135 @@
         <div class="absolute -bottom-20 -right-20 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl"></div>
     </section>
 
-    <section class="mb-12">
-        <h3 class="text-center text-slate-400 text-[10px] font-bold tracking-[0.3em] uppercase mb-8">Ce qu'ils en disent</h3>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="review-card p-5 rounded-3xl shadow-sm">
-                <div class="flex items-center gap-3 mb-3">
-                    <div class="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center text-slate-400">
-                        <i class="fa-solid fa-user"></i>
-                    </div>
-                    <div>
-                        <p class="text-sm font-bold text-slate-800">Marc D.</p>
-                        <div class="flex text-amber-400 text-[10px]"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                    </div>
-                </div>
-                <p class="text-xs text-slate-500 leading-relaxed">"Incroyable ! Les spots secrets étaient magnifiques."</p>
-            </div>
-            <div class="review-card p-5 rounded-3xl shadow-sm">
-                <div class="flex items-center gap-3 mb-3">
-                    <div class="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center text-slate-400">
-                        <i class="fa-solid fa-user"></i>
-                    </div>
-                    <div>
-                        <p class="text-sm font-bold text-slate-800">Sophie L.</p>
-                        <div class="flex text-amber-400 text-[10px]"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                    </div>
-                </div>
-                <p class="text-xs text-slate-500 leading-relaxed">"On s'est sentis comme des locaux, pas des touristes."</p>
-            </div>
-        </div>
-    </section>
-
-    <footer class="mt-12 mb-8 text-center">
-        <p class="text-[10px] font-bold tracking-[0.2em] text-slate-300 uppercase">Itinesio AI • 2026</p>
-    </footer>
-
     <script>
-        function updateUI() {
-            const params = new URLSearchParams(window.location.search);
-            
-            const destination = params.get('destination') || "votre destination";
-            const prenom = params.get('nom') || "Voyageur";
-            const nuits = params.get('duree') || "7 jours";
-            const voyageurs = params.get('voyageurs') || "2 voyageurs";
-            const style = params.get('style') || "Découverte";
+        // --- 1. NOTRE FAUSSE BASE DE DONNÉES ---
+        // Dans une vraie appli, ces données viendraient d'une vraie IA (OpenAI, Gemini) via un serveur.
+        const recommendationsDB = {
+            "rome": [
+                { theme: "blue", icon: "fa-bed", title: "Quartier Monti", note: "9.2/10", source: "Booking", desc: "Évitez les zones trop touristiques. Quartier d'artisans, parfait pour un boutique-hôtel." },
+                { theme: "orange", icon: "fa-utensils", title: "Osteria du Testaccio", note: "4.8/5", source: "TripAdvisor", desc: "Testaccio est l'âme culinaire de la ville. On y trouve la meilleure Carbonara historique." },
+                { theme: "emerald", icon: "fa-leaf", title: "Villa Doria Pamphili", note: "4.7/5", source: "Google", desc: "Un parc immense, bien plus calme que la Villa Borghese pour un pique-nique sans bruit." }
+            ],
+            "tokyo": [
+                { theme: "blue", icon: "fa-bed", title: "Quartier Shimokitazawa", note: "9.5/10", source: "Locaux", desc: "Le quartier bohème et vintage de Tokyo, parfait pour s'imprégner de la culture loin des néons." },
+                { theme: "orange", icon: "fa-utensils", title: "Ramen Street", note: "4.9/5", source: "Google", desc: "Située sous la gare de Tokyo, une sélection des meilleurs bouillons du pays." },
+                { theme: "purple", icon: "fa-ticket", title: "TeamLab Planets", note: "Top 1%", source: "Guides", desc: "Une expérience sensorielle et visuelle hors du commun où l'on marche littéralement dans l'eau." }
+            ],
+            "islande": [
+                { theme: "purple", icon: "fa-car", title: "Route Circulaire (Sud)", note: "Top 1%", source: "Guide", desc: "Idéal pour l'aventure. Cascades secrètes, glaciers et plages de sable noir au programme." },
+                { theme: "blue", icon: "fa-house", title: "Guesthouse Vik", note: "9.0/10", source: "Booking", desc: "Un hébergement chaleureux en pleine nature pour vous reposer après vos journées de découverte." },
+                { theme: "emerald", icon: "fa-water", title: "Source chaude secrète", note: "Secret", source: "Itinesio", desc: "Oubliez le Blue Lagoon trop touristique. L'IA a trouvé une source naturelle sans personne." }
+            ]
+        };
 
-            const stylesMap = {
-                'decouverte': 'Gastronomie & Culture',
-                'romantique': 'Lune de miel',
-                'aventure': 'Sport & Nature',
-                'chill': 'Détente absolue',
-                'gastronomique': 'Gastronomie',
-                'insolite': 'Expériences insolites'
+        // Fonction utilitaire pour gérer les couleurs Tailwind dynamiquement
+        function getTheme(themeName) {
+            const themes = {
+                blue: { dot: "bg-blue-500", icon: "text-blue-500", bgBadge: "bg-blue-50", borderBadge: "border-blue-100", textNote: "text-blue-600", textSource: "text-blue-400" },
+                orange: { dot: "bg-orange-500", icon: "text-orange-500", bgBadge: "bg-orange-50", borderBadge: "border-orange-100", textNote: "text-orange-600", textSource: "text-orange-400" },
+                emerald: { dot: "bg-emerald-500", icon: "text-emerald-500", bgBadge: "bg-emerald-50", borderBadge: "border-emerald-100", textNote: "text-emerald-600", textSource: "text-emerald-400" },
+                purple: { dot: "bg-purple-500", icon: "text-purple-500", bgBadge: "bg-purple-50", borderBadge: "border-purple-100", textNote: "text-purple-600", textSource: "text-purple-400" }
             };
-
-            document.getElementById('destination').innerText = destination;
-            document.getElementById('dest-recap').innerText = destination;
-            document.getElementById('dest-price').innerText = destination;
-            document.getElementById('client-name').innerText = prenom;
-            document.getElementById('trip-style-text').innerText = stylesMap[style] || style;
-            
-            document.getElementById('user-profile').innerText = `${nuits} • ${voyageurs} • ${stylesMap[style] || style}`;
-
-            const temp = Math.floor(Math.random() * (28 - 18 + 1)) + 18;
-            document.getElementById('local-weather').innerText = `${temp}°C • Ciel Dégagé`;
+            return themes[themeName] || themes.blue;
         }
 
+        // Fonction pour fabriquer un bloc HTML de recommandation
+        function buildRecommendation(rec) {
+            const t = getTheme(rec.theme);
+            return `
+            <div class="relative pl-10">
+                <div class="absolute left-[2px] top-2 w-4 h-4 rounded-full ${t.dot} border-4 border-white shadow-sm z-10"></div>
+                <div class="flex justify-between items-start mb-2">
+                    <div class="flex items-center gap-3">
+                        <span class="text-xl ${t.icon}"><i class="fa-solid ${rec.icon}"></i></span>
+                        <h3 class="text-xl font-bold text-slate-800 leading-tight">${rec.title}</h3>
+                    </div>
+                    <div class="${t.bgBadge} px-3 py-1 rounded-xl text-right border ${t.borderBadge}">
+                        <p class="text-[11px] font-bold ${t.textNote}">${rec.note}</p>
+                        <p class="text-[9px] ${t.textSource} font-semibold uppercase italic">${rec.source}</p>
+                    </div>
+                </div>
+                <p class="text-slate-600 leading-relaxed text-sm">${rec.desc}</p>
+            </div>`;
+        }
+
+        // --- 2. LOGIQUE PRINCIPALE ---
+        function updateUI() {
+            // Récupération des données du formulaire stockées dans le navigateur
+            const rawData = sessionStorage.getItem('itinesioClientData');
+            
+            // Si pas de données (quelqu'un accède à la page directement), on met des trucs par défaut
+            let data = {
+                destination: "votre destination",
+                prenom: "Voyageur",
+                nb_nuits: "7",
+                nb_voyageurs: "2",
+                type_sejour: "decouverte",
+                budget_max_pers: "1500",
+                statut_hotel: "a_proposer"
+            };
+
+            if (rawData) {
+                data = JSON.parse(rawData);
+            }
+
+            // Dictionnaire des styles pour faire plus joli
+            const stylesMap = {
+                'decouverte': 'Culture & Découverte',
+                'romantique': 'Lune de miel / Romantique',
+                'aventure': 'Aventure & Sensations',
+                'chill': 'Détente absolue',
+                'gastronomique': 'Exploration Gastronomique',
+                'insolite': 'Expériences Insolites'
+            };
+
+            const styleTexte = stylesMap[data.type_sejour] || data.type_sejour;
+
+            // Mise à jour de tous les textes d'en-tête
+            document.getElementById('destination').innerText = data.destination;
+            document.getElementById('dest-recap').innerText = data.destination;
+            document.getElementById('dest-price').innerText = data.destination;
+            document.getElementById('client-name').innerText = data.prenom;
+            document.getElementById('trip-style-text').innerText = styleTexte;
+            
+            const txtNuits = data.nb_nuits ? `${data.nb_nuits} nuits` : `Durée libre`;
+            const txtVoyageurs = data.nb_voyageurs ? `${data.nb_voyageurs} voyageurs` : `En solo`;
+            document.getElementById('user-profile').innerText = `${txtNuits} • ${txtVoyageurs} • ${styleTexte}`;
+
+            const txtBudget = data.budget_max_pers ? `${data.budget_max_pers}€/pers` : `Budget flexible`;
+            const txtHotel = data.statut_hotel === "deja_reserve" ? "Hôtel déjà booké" : "Recherche d'hôtel";
+            document.getElementById('user-budget').innerText = `${txtBudget} • ${txtHotel}`;
+
+            // --- INJECTION DYNAMIQUE DES RECOMMANDATIONS ---
+            const container = document.getElementById('dynamic-recommendations');
+            
+            // On nettoie le nom de la destination pour la chercher dans notre mini base de données
+            // ex: "  ToKyO  " devient "tokyo"
+            const searchKey = data.destination.toLowerCase().trim();
+            
+            // On cherche si on a des données spécifiques
+            let userRecs = recommendationsDB[searchKey];
+            
+            // Si le client a tapé un pays qu'on a pas dans notre base fictive, on génère un résultat qui utilise SES infos du formulaire
+            if (!userRecs) {
+                userRecs = [
+                    { theme: "blue", icon: "fa-plane-arrival", title: `Arrivée à ${data.destination}`, note: "Top", source: "Itinesio", desc: `Commencez votre séjour orienté '${styleTexte}' par une immersion dans l'atmosphère locale.` },
+                    { theme: "orange", icon: "fa-compass", title: "Exploration sur-mesure", note: "Secret", source: "Local", desc: `Nous avons déniché des pépites parfaites pour vos ${txtNuits}, en respectant votre contrainte de ${txtBudget}.` },
+                    { theme: "emerald", icon: "fa-star", title: "Activité Incontournable", note: "5/5", source: "Guide", desc: "L'activité phare de la région, totalement adaptée pour " + txtVoyageurs + "." }
+                ];
+            }
+
+            // On construit le HTML final
+            let htmlContent = '<div class="timeline-line"></div>'; // On garde la ligne verticale
+            userRecs.forEach(rec => {
+                htmlContent += buildRecommendation(rec);
+            });
+            
+            // On l'injecte dans la page
+            container.innerHTML = htmlContent;
+        }
+
+        // On lance la fonction quand la page a fini de charger
         window.onload = updateUI;
     </script>
 </body>
