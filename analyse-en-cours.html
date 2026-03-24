@@ -61,7 +61,7 @@
     </style>
 </head>
 
-<body class="bg-itinesio-base text-itinesio-text antialiased selection:bg-itinesio-dark selection:text-white overflow-x-hidden pb-32">
+<body class="bg-itinesio-base text-itinesio-text antialiased overflow-x-hidden pb-32">
 
     <nav class="fixed top-0 left-0 right-0 z-[60] glass-nav transition-all duration-300">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
@@ -79,9 +79,8 @@
 
     <div id="full-menu" class="fixed inset-0 z-[55] bg-white/98 backdrop-blur-xl flex flex-col items-center justify-center">
         <nav class="flex flex-col items-center gap-8">
-            <a href="/" class="menu-link font-serif text-3xl md:text-5xl !text-itinesio-dark hover:text-itinesio-primary transition-colors">Accueil</a>
-            <a href="/creer" class="menu-link font-serif text-3xl md:text-5xl !text-itinesio-dark hover:text-itinesio-primary transition-colors">Nouvel Itinéraire</a>
-            <a href="/destinations" class="menu-link font-serif text-3xl md:text-5xl !text-itinesio-dark hover:text-itinesio-primary transition-colors">Destinations</a>
+            <a href="/" class="font-serif text-3xl md:text-5xl !text-itinesio-dark hover:text-itinesio-primary transition-colors">Accueil</a>
+            <a href="/creer" class="font-serif text-3xl md:text-5xl !text-itinesio-dark hover:text-itinesio-primary transition-colors">Nouvel Itinéraire</a>
         </nav>
     </div>
 
@@ -94,7 +93,7 @@
                 </h1>
 
                 <p id="status-subtitle" style="color:#64748b;font-size:15px;line-height:1.5;max-width:400px;margin:0 auto 40px auto; min-height: 45px;">
-                    Recherche des meilleures destinations...
+                    Connexion sécurisée en cours...
                 </p>
 
                 <div style="position:relative;width:220px;height:220px;margin:0 auto 30px auto;">
@@ -140,72 +139,31 @@
                 </div>
             </div>
         </section>
-
-        <div class="w-full bg-slate-50 py-12 px-4">
-            <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="bg-blue-100 p-2 rounded-lg text-blue-600">
-                            <i data-lucide="compass" class="w-5 h-5"></i>
-                        </div>
-                        <h3 class="font-bold text-slate-900">Le saviez-vous ?</h3>
-                    </div>
-                    <p class="text-sm text-slate-600 leading-relaxed">
-                        L'intelligence d'Itinesio analyse plus de 10 000 points de données pour créer un parcours qui vous correspond vraiment.
-                    </p>
-                </div>
-                <div class="bg-blue-600 p-6 rounded-2xl shadow-sm text-white">
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="bg-white/20 p-2 rounded-lg">
-                            <i data-lucide="shield-check" class="w-5 h-5"></i>
-                        </div>
-                        <h3 class="font-bold">Sécurité garantie</h3>
-                    </div>
-                    <p class="text-sm text-blue-100 leading-relaxed">
-                        Vos préférences sont cryptées et utilisées uniquement pour votre personnalisation.
-                    </p>
-                </div>
-            </div>
-        </div>
     </main>
-
-    <footer class="bg-white border-t border-slate-100 py-12 text-center">
-        <span class="font-serif text-2xl font-bold text-itinesio-dark">Itinesio</span>
-        <p class="text-xs text-slate-400 mt-4">© 2026 Itinesio Travel Lab. Bon voyage !</p>
-    </footer>
 
     <script>
         lucide.createIcons();
 
-        // --- GESTION MENU ---
+        // --- MENU ---
         const menuBtn = document.getElementById("menu-btn");
         const menuOverlay = document.getElementById("full-menu");
-        let isMenuOpen = false;
-
         menuBtn.addEventListener("click", () => {
-            isMenuOpen = !isMenuOpen;
-            menuOverlay.classList.toggle("menu-active", isMenuOpen);
-            menuBtn.innerHTML = isMenuOpen ? '<i data-lucide="x" class="w-6 h-6"></i>' : '<i data-lucide="menu" class="w-6 h-6"></i>';
+            const isOpen = menuOverlay.classList.toggle("menu-active");
+            menuBtn.innerHTML = isOpen ? '<i data-lucide="x" class="w-6 h-6"></i>' : '<i data-lucide="menu" class="w-6 h-6"></i>';
             lucide.createIcons();
         });
 
-        // --- POLLING & PROGRESS SCRIPT ---
+        // --- POLLING & LOGIQUE TEMPORELLE ---
         document.addEventListener("DOMContentLoaded", () => {
             const params = new URLSearchParams(window.location.search);
             const jobId = params.get("jobId");
 
+            // CONFIGURATION TEMPS
             const POLL_URL = "https://fagoul.app.n8n.cloud/webhook/polling?jobId=";
-            const MAX_WAIT_TIME = 25 * 1000; 
-            const POLL_INTERVAL = 3000;
-            const TIMEOUT_DURATION = 35000; 
-
-            const loadingSteps = [
-                { pct: 0,  text: "Initialisation des algorithmes..." },
-                { pct: 20, text: "Analyse de vos préférences..." },
-                { pct: 50, text: "Calcul des temps de trajet..." },
-                { pct: 80, text: "Sélection des meilleures pépites..." },
-                { pct: 95, text: "Finalisation de votre carnet..." }
-            ];
+            const INITIAL_LOADING_TIME = 30000; // 30s pour les premiers 99%
+            const TRAFFIC_MARGIN_TIME = 15000;  // 15s de marge (total 45s)
+            const START_POLLING_AFTER = 15000; // Commence après 15s
+            const POLL_INTERVAL = 5000;         // Toutes les 5s
 
             const startTime = Date.now();
             const progressCircle = document.getElementById("progress-circle");
@@ -214,107 +172,120 @@
             
             const btnContainer = document.getElementById("success-btn-container");
             const accessBtn = document.getElementById("access-btn");
-            const title = document.getElementById("status-title");
             const subtitle = document.getElementById("status-subtitle");
             const delayedContainer = document.getElementById("delayed-container");
             const timeoutBar = document.getElementById("timeout-bar");
 
-            let progressInterval = null;
-            let pollInterval = null;
-            let timeoutInterval = null;
-            let isHighDemandActive = false;
-            let isTimeoutDead = false;
+            let progressInterval, pollInterval, trafficInterval;
+            let pollingStarted = false;
+            let isFinished = false;
 
-            function startProgress() {
+            const loadingSteps = [
+                { pct: 0,  text: "Vérification de l'analyse..." },
+                { pct: 20, text: "Analyse de vos préférences..." },
+                { pct: 50, text: "Calcul des meilleures options..." },
+                { pct: 80, text: "Sélection des hébergements..." },
+                { pct: 95, text: "Finalisation du carnet de route..." }
+            ];
+
+            // 1. Démarrage de la barre de progression visuelle (30 premières secondes)
+            function startUI() {
                 progressInterval = setInterval(() => {
-                    if (isTimeoutDead || btnContainer.style.display === "block") return;
-
+                    if (isFinished) return;
                     const elapsed = Date.now() - startTime;
-                    let p = Math.min((elapsed / MAX_WAIT_TIME) * 100, 99);
-
-                    if (p >= 99 && !isHighDemandActive) {
-                        isHighDemandActive = true;
-                        triggerHighDemand();
-                    }
-
+                    
+                    // On gère la barre jusqu'à 99% sur les 30 premières secondes
+                    let p = Math.min((elapsed / INITIAL_LOADING_TIME) * 100, 99);
+                    
                     const offset = circumference - (p / 100) * circumference;
                     progressCircle.style.strokeDashoffset = offset;
                     progressText.textContent = Math.floor(p) + "%";
 
+                    // Changement de texte
                     const step = [...loadingSteps].reverse().find(s => p >= s.pct);
-                    if (step && subtitle.innerText !== step.text && !isHighDemandActive) {
+                    if (step && subtitle.innerText !== step.text && p < 99) {
                         subtitle.innerText = step.text;
+                    }
+
+                    // Lancer le polling après 15 secondes
+                    if (elapsed >= START_POLLING_AFTER && !pollingStarted) {
+                        pollingStarted = true;
+                        startPollingLoop();
+                    }
+
+                    // Si on arrive à 30s et toujours pas fini -> Mode Traffic Haut
+                    if (elapsed >= INITIAL_LOADING_TIME && !delayedContainer.style.display) {
+                        triggerHighTrafficUI();
                     }
                 }, 1000);
             }
 
-            function triggerHighDemand() {
+            // 2. Le Polling
+            async function checkStatus() {
+                if (!jobId || isFinished) return;
+                try {
+                    const res = await fetch(POLL_URL + encodeURIComponent(jobId));
+                    const data = await res.json();
+                    if (data.status === "ready" && data.downloadUrl) {
+                        showSuccess(data.downloadUrl);
+                    }
+                } catch (e) { console.error("Polling error", e); }
+            }
+
+            function startPollingLoop() {
+                checkStatus(); // Requête immédiate à la 15ème seconde
+                pollInterval = setInterval(checkStatus, POLL_INTERVAL);
+            }
+
+            // 3. Interface Traffic Haut (entre 30s et 45s)
+            function triggerHighTrafficUI() {
                 subtitle.style.color = "#f59e0b";
                 subtitle.innerText = "Recherche approfondie en cours...";
                 delayedContainer.style.display = "block";
                 setTimeout(() => { delayedContainer.style.opacity = "1"; }, 50);
 
-                let timeoutElapsed = 0;
-                timeoutInterval = setInterval(() => {
-                    timeoutElapsed += 100;
-                    const pct = (timeoutElapsed / TIMEOUT_DURATION) * 100;
+                let trafficElapsed = 0;
+                trafficInterval = setInterval(() => {
+                    trafficElapsed += 100;
+                    const pct = (trafficElapsed / TRAFFIC_MARGIN_TIME) * 100;
                     timeoutBar.style.width = pct + "%";
 
-                    if (timeoutElapsed >= TIMEOUT_DURATION) {
-                        stopAll();
-                        isTimeoutDead = true;
-                        document.getElementById("delay-wait-content").style.display = "none";
-                        document.getElementById("delay-fail-content").style.display = "block";
+                    if (trafficElapsed >= TRAFFIC_MARGIN_TIME) {
+                        failTimeout();
                     }
                 }, 100);
             }
 
-            async function checkStatus() {
-                if (!jobId || isTimeoutDead) return;
+            function showSuccess(url) {
+                isFinished = true;
+                clearInterval(progressInterval);
+                clearInterval(pollInterval);
+                clearInterval(trafficInterval);
 
-                try {
-                    const res = await fetch(POLL_URL + encodeURIComponent(jobId));
-                    if (!res.ok) return;
-                    
-                    const data = await res.json();
-                    
-                    // CORRECTION ICI : On vérifie le statut "ready" et la présence de downloadUrl
-                    if (data.status === "ready" && data.downloadUrl) {
-                        showSuccess(data.downloadUrl);
-                    }
-                } catch (e) {
-                    console.error("Erreur Polling:", e);
-                }
-            }
-
-            function showSuccess(finalUrl) {
-                stopAll();
-                
-                // UI Update
                 progressCircle.style.strokeDashoffset = 0;
                 progressCircle.style.stroke = "#10b981";
                 progressText.textContent = "100%";
                 
-                title.innerHTML = "Votre voyage est prêt !";
+                document.getElementById("status-title").innerHTML = "Votre voyage est prêt !";
                 subtitle.style.display = "none";
                 delayedContainer.style.display = "none";
 
-                // Mise à jour du bouton avec l'URL S3
-                accessBtn.href = finalUrl;
-                
+                accessBtn.href = url;
                 btnContainer.style.display = "block";
                 setTimeout(() => { btnContainer.style.opacity = "1"; }, 50);
             }
 
-            function stopAll() {
+            function failTimeout() {
+                isFinished = true;
                 clearInterval(pollInterval);
-                clearInterval(progressInterval);
-                clearInterval(timeoutInterval);
+                document.getElementById("delay-wait-content").style.display = "none";
+                document.getElementById("delay-fail-content").style.display = "block";
             }
 
-            // Lancement
-            startProgress();
-            pollInterval = setInterval(checkStatus, POLL_INTERVAL);
+            // INITIALISATION : Une requête immédiate au chargement/refresh
+            checkStatus(); 
+            // Puis on lance la logique temporelle
+            startUI();
         });
     </script>
 </body>
