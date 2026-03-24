@@ -36,7 +36,6 @@
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05); 
         }
 
-        /* Barre de progression */
         .progress-container {
             position: fixed;
             top: 72px;
@@ -53,13 +52,11 @@
             transition: width 0.5s ease;
         }
 
-        /* --- ÉTATS SÉLECTIONNÉS --- */ 
         input:checked + .style-card {
             border-color: #4F46E5;
             background-color: #EEF2FF;
         }
 
-        /* Couleurs spécifiques par Mood */
         input[value="romantique"]:checked + .style-card { border-color: #EC4899; background-color: #FDF2F8; }
         input[value="aventure"]:checked + .style-card { border-color: #10B981; background-color: #ECFDF5; }
         input[value="chill"]:checked + .style-card { border-color: #0EA5E9; background-color: #F0F9FF; }
@@ -106,7 +103,6 @@
 
         <form id="itinesio-form" class="space-y-10"> 
              
-            <!-- SECTION 1: IDENTITÉ --> 
             <div class="glass-card p-8 shadow-sm step-section" data-step="1"> 
                 <div class="grid md:grid-cols-2 gap-6"> 
                     <div class="space-y-2"> 
@@ -120,7 +116,6 @@
                 </div> 
             </div> 
 
-            <!-- SECTION 2: MOOD --> 
             <div class="space-y-4 step-section" data-step="2"> 
                 <label class="text-[11px] font-bold uppercase text-slate-400 tracking-wider ml-5">Quel est votre "Mood" ?</label> 
                 <div class="grid grid-cols-2 md:grid-cols-3 gap-4"> 
@@ -169,7 +164,6 @@
                 </div> 
             </div> 
 
-            <!-- SECTION 3: HÉBERGEMENT (NOUVEAU) -->
             <div class="space-y-4 step-section" data-step="3"> 
                 <label class="text-[11px] font-bold uppercase text-slate-400 tracking-wider ml-5">Type d'hébergement</label> 
                 <div class="grid grid-cols-2 gap-4"> 
@@ -197,48 +191,17 @@
                             </div>
                         </div> 
                     </label> 
-                    <label class="relative cursor-pointer"> 
-                        <input type="radio" name="hebergement" value="van" class="peer hidden"> 
-                        <div class="style-card p-6 glass-card flex items-center gap-4"> 
-                            <div class="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-600">
-                                <i class="fas fa-caravan text-xl"></i>
-                            </div>
-                            <div class="text-left">
-                                <p class="text-sm font-bold">Van aménagé</p>
-                                <p class="text-[10px] text-slate-400 uppercase">Liberté totale</p>
-                            </div>
-                        </div> 
-                    </label> 
-                    <label class="relative cursor-pointer"> 
-                        <input type="radio" name="hebergement" value="habitant" class="peer hidden"> 
-                        <div class="style-card p-6 glass-card flex items-center gap-4"> 
-                            <div class="w-12 h-12 rounded-full bg-amber-50 flex items-center justify-center text-amber-600">
-                                <i class="fas fa-people-roof text-xl"></i>
-                            </div>
-                            <div class="text-left">
-                                <p class="text-sm font-bold">Chez l'habitant</p>
-                                <p class="text-[10px] text-slate-400 uppercase">Immersion locale</p>
-                            </div>
-                        </div> 
-                    </label> 
                 </div> 
             </div> 
 
-            <!-- SECTION 4: ALIMENTATION (NOUVEAU) -->
             <div class="glass-card p-8 shadow-sm space-y-4 step-section" data-step="4">
                 <div class="flex items-center justify-between">
                     <label class="text-[11px] font-bold uppercase text-slate-400 tracking-wider">Préférences Alimentaires</label>
                     <span class="px-3 py-1 bg-indigo-50 text-indigo-600 text-[10px] font-bold rounded-full">Sourcing Expert</span>
                 </div>
                 <textarea name="preferences_food" placeholder="Végétarien, allergies, fan de street-food ou restaurants étoilés ? Dites-nous tout..." class="w-full p-5 rounded-2xl bg-slate-50 border border-slate-100 focus:bg-white focus:ring-2 focus:ring-indigo-100 transition outline-none text-sm min-h-[100px]"></textarea>
-                <div class="flex items-center gap-4 text-[10px] text-slate-400 italic">
-                    <p><i class="fas fa-check-circle text-indigo-400 mr-1"></i> Guide du Routard</p>
-                    <p><i class="fas fa-check-circle text-indigo-400 mr-1"></i> Michelin</p>
-                    <p><i class="fas fa-check-circle text-indigo-400 mr-1"></i> Blogs Locaux</p>
-                </div>
             </div>
 
-            <!-- SECTION 5: LOGISTIQUE --> 
             <div class="glass-card p-8 shadow-sm space-y-6 step-section" data-step="5"> 
                 <div class="grid md:grid-cols-2 gap-8"> 
                     <div class="space-y-4"> 
@@ -269,22 +232,29 @@
     </main> 
 
     <script> 
+        // --- LOGIQUE JOB ID ITINESIO ---
+        function itinesioGenerateJobId() {
+            const randomPart = Math.random().toString(36).substring(2, 10);
+            const timePart = Date.now().toString(36);
+            return "job_" + timePart + "_" + randomPart;
+        }
+
+        // Génération au chargement de la page
+        const currentJobId = itinesioGenerateJobId();
+        try { 
+            localStorage.setItem("itinesio_jobId", currentJobId); 
+            console.log("Itinesio JobId généré :", currentJobId);
+        } catch(e) { console.error("LocalStorage non disponible", e); }
+
         const form = document.getElementById('itinesio-form'); 
         const btn = document.getElementById('submit-btn'); 
         const progressBar = document.getElementById('progress');
-        const inputs = document.querySelectorAll('.step-input, input[type="radio"], textarea, input[type="number"]');
 
         // Gestion de la barre de progression
         function updateProgress() {
-            const sections = document.querySelectorAll('.step-section');
-            let filledCount = 0;
-            
-            // On calcule le progrès en fonction du nombre de champs remplis
             const requiredFields = form.querySelectorAll('[required]');
             let validRequired = 0;
             requiredFields.forEach(f => { if(f.value) validRequired++; });
-            
-            // Formule simple pour la barre
             const progress = (validRequired / requiredFields.length) * 100;
             progressBar.style.width = `${progress}%`;
         }
@@ -298,25 +268,22 @@
 
             const formData = new FormData(form); 
             const data = Object.fromEntries(formData.entries()); 
+            
+            // On injecte le jobId dans les données envoyées au webhook
+            data.jobId = currentJobId;
 
             try { 
                 // Envoi vers le Webhook n8n
-                fetch("https://fagoul.app.n8n.cloud/webhook/test", { 
+                await fetch("https://fagoul.app.n8n.cloud/webhook/test", { 
                     method: 'POST', 
                     headers: { 'Content-Type': 'application/json' }, 
                     body: JSON.stringify(data) 
                 }).catch(err => console.error("Webhook Error:", err)); 
 
-                // Préparation des paramètres de redirection
-                const params = new URLSearchParams({ 
-                    destination: data.destination, 
-                    nom: data.prenom,
-                    mood: data.type_sejour,
-                    hebergement: data.hebergement
-                }); 
-                 
+                // Redirection vers la page d'analyse avec le jobId dans l'URL
                 setTimeout(() => { 
-                    window.location.href = `itineraire.html?${params.toString()}`; 
+                    const targetUrl = `/analyse-en-cours?jobId=${encodeURIComponent(currentJobId)}`;
+                    window.location.href = targetUrl; 
                 }, 1500); 
 
             } catch (error) { 
