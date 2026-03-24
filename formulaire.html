@@ -168,13 +168,13 @@
                 <label class="text-[11px] font-bold uppercase text-slate-400 tracking-wider ml-5">Type d'hébergement</label> 
                 <div class="grid grid-cols-2 gap-4"> 
                     <label class="relative cursor-pointer"> 
-                        <input type="radio" name="hebergement" value="luxe" class="peer hidden" checked> 
+                        <input type="radio" name="hebergement" value="hotel" class="peer hidden" checked> 
                         <div class="style-card p-6 glass-card flex items-center gap-4"> 
                             <div class="w-12 h-12 rounded-full bg-indigo-50 flex items-center justify-center text-indigo-600">
                                 <i class="fas fa-hotel text-xl"></i>
                             </div>
                             <div class="text-left">
-                                <p class="text-sm font-bold">Hôtel de Luxe</p>
+                                <p class="text-sm font-bold">Hôtel</p>
                                 <p class="text-[10px] text-slate-400 uppercase">Confort & Spa</p>
                             </div>
                         </div> 
@@ -188,6 +188,30 @@
                             <div class="text-left">
                                 <p class="text-sm font-bold">Airbnb Cosy</p>
                                 <p class="text-[10px] text-slate-400 uppercase">Comme à la maison</p>
+                            </div>
+                        </div> 
+                    </label> 
+                    <label class="relative cursor-pointer"> 
+                        <input type="radio" name="hebergement" value="vanne" class="peer hidden"> 
+                        <div class="style-card p-6 glass-card flex items-center gap-4"> 
+                            <div class="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-600">
+                                <i class="fas fa-caravan text-xl"></i>
+                            </div>
+                            <div class="text-left">
+                                <p class="text-sm font-bold">Vanne</p>
+                                <p class="text-[10px] text-slate-400 uppercase">Liberté totale</p>
+                            </div>
+                        </div> 
+                    </label> 
+                    <label class="relative cursor-pointer"> 
+                        <input type="radio" name="hebergement" value="habitant" class="peer hidden"> 
+                        <div class="style-card p-6 glass-card flex items-center gap-4"> 
+                            <div class="w-12 h-12 rounded-full bg-amber-50 flex items-center justify-center text-amber-600">
+                                <i class="fas fa-people-roof text-xl"></i>
+                            </div>
+                            <div class="text-left">
+                                <p class="text-sm font-bold">Chez l'habitant</p>
+                                <p class="text-[10px] text-slate-400 uppercase">Immersion locale</p>
                             </div>
                         </div> 
                     </label> 
@@ -239,7 +263,6 @@
             return "job_" + timePart + "_" + randomPart;
         }
 
-        // Génération au chargement de la page
         const currentJobId = itinesioGenerateJobId();
         try { 
             localStorage.setItem("itinesio_jobId", currentJobId); 
@@ -250,7 +273,6 @@
         const btn = document.getElementById('submit-btn'); 
         const progressBar = document.getElementById('progress');
 
-        // Gestion de la barre de progression
         function updateProgress() {
             const requiredFields = form.querySelectorAll('[required]');
             let validRequired = 0;
@@ -268,19 +290,15 @@
 
             const formData = new FormData(form); 
             const data = Object.fromEntries(formData.entries()); 
-            
-            // On injecte le jobId dans les données envoyées au webhook
             data.jobId = currentJobId;
 
             try { 
-                // Envoi vers le Webhook n8n
                 await fetch("https://fagoul.app.n8n.cloud/webhook/test", { 
                     method: 'POST', 
                     headers: { 'Content-Type': 'application/json' }, 
                     body: JSON.stringify(data) 
                 }).catch(err => console.error("Webhook Error:", err)); 
 
-                // Redirection vers la page d'analyse avec le jobId dans l'URL
                 setTimeout(() => { 
                     const targetUrl = `/analyse-en-cours?jobId=${encodeURIComponent(currentJobId)}`;
                     window.location.href = targetUrl; 
@@ -292,7 +310,6 @@
             } 
         }); 
         
-        // Initialisation
         updateProgress();
     </script> 
 </body> 
