@@ -44,7 +44,7 @@
             box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
         }
 
-        /* Style des boutons Radio (Mood) */
+        /* Style des boutons Radio (Mood & Hébergement) */
         .mood-card {
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -167,6 +167,40 @@
                 </div>
             </div>
 
+            <div class="space-y-4">
+                <label class="text-xs font-bold uppercase text-slate-400 tracking-wider ml-2">Quel type d'hébergement préférez-vous ?</label>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <label class="relative">
+                        <input type="radio" name="type_hebergement" value="hotel" class="mood-radio hidden" checked>
+                        <div class="mood-card glass-card p-6 flex flex-col items-center text-center gap-3">
+                            <i class="fas fa-hotel text-2xl text-blue-500"></i>
+                            <span class="text-sm font-bold text-slate-700">Hôtel</span>
+                        </div>
+                    </label>
+                    <label class="relative">
+                        <input type="radio" name="type_hebergement" value="airbnb" class="mood-radio hidden">
+                        <div class="mood-card glass-card p-6 flex flex-col items-center text-center gap-3">
+                            <i class="fab fa-airbnb text-2xl text-rose-500"></i>
+                            <span class="text-sm font-bold text-slate-700">Airbnb</span>
+                        </div>
+                    </label>
+                    <label class="relative">
+                        <input type="radio" name="type_hebergement" value="chez_habitant" class="mood-radio hidden">
+                        <div class="mood-card glass-card p-6 flex flex-col items-center text-center gap-3">
+                            <i class="fas fa-house-user text-2xl text-emerald-500"></i>
+                            <span class="text-sm font-bold text-slate-700">Chez l'habitant</span>
+                        </div>
+                    </label>
+                    <label class="relative">
+                        <input type="radio" name="type_hebergement" value="van" class="mood-radio hidden">
+                        <div class="mood-card glass-card p-6 flex flex-col items-center text-center gap-3">
+                            <i class="fas fa-caravan text-2xl text-amber-600"></i>
+                            <span class="text-sm font-bold text-slate-700">Van</span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
             <div class="glass-card p-8">
                 <div class="grid md:grid-cols-3 gap-8">
                     <div class="space-y-4">
@@ -224,7 +258,6 @@
     </main>
 
     <script>
-        // Logique de Job ID
         function generateJobId() {
             return "job_" + Date.now().toString(36) + "_" + Math.random().toString(36).substring(2, 7);
         }
@@ -234,7 +267,6 @@
         const btn = document.getElementById('submit-btn');
         const progressBar = document.getElementById('progress');
 
-        // Barre de progression basée sur les champs remplis
         form.addEventListener('input', () => {
             const required = form.querySelectorAll('[required]');
             let valid = 0;
@@ -242,7 +274,6 @@
             progressBar.style.width = (valid / required.length * 100) + "%";
         });
 
-        // Soumission
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Analyse IA en cours...';
