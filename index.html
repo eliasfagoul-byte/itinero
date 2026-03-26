@@ -3,38 +3,264 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Itinesio - L'IA de votre voyage sur-mesure</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <title>Itinesio | Smart AI, Real Memories</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@500;800;900&family=Playfair+Display:ital,wght@1,600&family=Inter:wght@400;500;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #FDFDFD;
-            color: #1E293B;
+            background-color: #FAFAFA;
+            color: #111827;
             scroll-behavior: smooth;
         }
 
-        h1, h2, h3 {
-            font-family: 'Outfit', sans-serif;
+        .gradient-text {
+            background: linear-gradient(135deg, #2563EB, #000000);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .font-tagline {
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
+        .premium-bg {
+            background-color: #0F172A;
+            background-image: radial-gradient(circle at top right, rgba(37, 99, 235, 0.1), transparent 40%),
+                              radial-gradient(circle at bottom left, rgba(37, 99, 235, 0.05), transparent 40%);
         }
 
-        .bg-hero {
-            background: radial-gradient(circle at top right, rgba(79, 70, 229, 0.04), transparent),
-                        radial-gradient(circle at bottom left, rgba(224, 122, 95, 0.04), transparent);
+        .doc-shadow {
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
         }
-
-        .btn-primary {
-            background: #4F46E5;
-            transition: all 0.3s ease;
+        
+        .doc-shadow:hover {
+            transform: translateY(-10px);
         }
+    </style>
+</head>
+<body class="antialiased">
 
+    <nav class="w-full bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-slate-100">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="font-black text-xl tracking-tighter text-slate-900">
+                ITINESIO<span class="text-blue-600">.AI</span>
+            </div>
+            <a href="#demarrer" class="bg-black text-white text-sm font-bold px-5 py-2 rounded-full hover:bg-slate-800 transition">
+                Créer mon itinéraire
+            </a>
+        </div>
+    </nav>
+
+    <header class="max-w-4xl mx-auto px-6 py-24 text-center">
+        <div class="inline-flex items-center gap-2 bg-blue-50 text-blue-700 text-xs font-bold tracking-widest uppercase px-4 py-2 rounded-full mb-8">
+            <i class="fa-solid fa-bolt"></i> Propulsé par l'IA
+        </div>
+        <h1 class="text-5xl md:text-7xl font-black tracking-tight mb-6 leading-tight">
+            Voyagez comme un initié,<br>
+            <span class="gradient-text">organisé par l'expertise.</span>
+        </h1>
+        <p class="text-lg md:text-xl text-slate-500 font-medium mb-10 max-w-2xl mx-auto leading-relaxed">
+            Fini les heures passées à lire des blogs obsolètes. Itinesio croise les données de milliers de sources pour vous générer un dossier logistique ultra-précis, adapté à votre budget et à vos dates.
+        </p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a href="#demarrer" class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg px-8 py-4 rounded-2xl shadow-lg shadow-blue-600/30 transition-all flex items-center justify-center gap-3">
+                Commencer maintenant <i class="fa-solid fa-arrow-right"></i>
+            </a>
+            <p class="text-xs font-bold text-slate-400 uppercase tracking-widest"><i class="fa-solid fa-clock mr-1"></i> Analyse en 60 secondes</p>
+        </div>
+    </header>
+
+    <section class="max-w-6xl mx-auto px-6 py-16">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl font-extrabold mb-4">La méthode Itinesio en 3 étapes</h2>
+            <p class="text-slate-500">Un processus clinique pour un résultat parfait.</p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-8 relative">
+            <div class="hidden md:block absolute top-12 left-20 right-20 h-0.5 bg-slate-100 z-0"></div>
+            
+            <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm relative z-10">
+                <div class="w-16 h-16 bg-slate-900 text-white rounded-2xl flex items-center justify-center text-2xl font-black mb-6">1</div>
+                <h3 class="text-xl font-bold mb-3">Diagnostic de vos envies</h3>
+                <p class="text-slate-500 text-sm leading-relaxed">Remplissez notre formulaire intelligent. Destination, style de voyage, budget exact et personnes concernées.</p>
+            </div>
+            <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm relative z-10">
+                <div class="w-16 h-16 bg-blue-600 text-white rounded-2xl flex items-center justify-center text-2xl font-black mb-6">2</div>
+                <h3 class="text-xl font-bold mb-3">Analyse Multi-Sources IA</h3>
+                <p class="text-slate-500 text-sm leading-relaxed">Notre algorithme scanne la météo en direct, les avis Michelin, Google Maps et les guides locaux pour filtrer le meilleur.</p>
+            </div>
+            <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm relative z-10">
+                <div class="w-16 h-16 bg-slate-900 text-white rounded-2xl flex items-center justify-center text-2xl font-black mb-6">3</div>
+                <h3 class="text-xl font-bold mb-3">Réception du Dossier</h3>
+                <p class="text-slate-500 text-sm leading-relaxed">Téléchargez instantanément votre Pack Premium en PDF. Un itinéraire heure par heure prêt à l'emploi.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-slate-50 py-24">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-extrabold mb-4">Aperçu de votre Dossier Premium</h2>
+                <p class="text-slate-500">Ce n'est pas qu'une liste, c'est un véritable assistant de poche.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="doc-shadow rounded-2xl overflow-hidden border-4 border-white bg-white">
+                    <img src="https://images.unsplash.com/photo-1512314889357-e157c22f938d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Planning sur mesure" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h4 class="font-bold text-lg mb-2"><i class="fa-solid fa-list-check text-blue-600 mr-2"></i>Planning Chrono</h4>
+                        <p class="text-sm text-slate-500">Un déroulé heure par heure logique géographiquement.</p>
+                    </div>
+                </div>
+                <div class="doc-shadow rounded-2xl overflow-hidden border-4 border-white bg-white">
+                    <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Cartographie et liens" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h4 class="font-bold text-lg mb-2"><i class="fa-solid fa-location-dot text-blue-600 mr-2"></i>Cartographie GPS</h4>
+                        <p class="text-sm text-slate-500">Tous les liens Google Maps inclus pour chaque étape.</p>
+                    </div>
+                </div>
+                <div class="doc-shadow rounded-2xl overflow-hidden border-4 border-white bg-white">
+                    <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Lieux secrets" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h4 class="font-bold text-lg mb-2"><i class="fa-solid fa-key text-blue-600 mr-2"></i>Lieux Secrets</h4>
+                        <p class="text-sm text-slate-500">Les restaurants et points de vue ignorés des touristes.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="premium-bg text-white py-24">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <div class="inline-block bg-white/10 border border-white/20 text-xs font-bold tracking-widest uppercase px-4 py-2 rounded-full mb-6">
+                    Le Pack Voyageur Complet
+                </div>
+                <h2 class="text-4xl font-extrabold mb-4">Que contient l'analyse payante ?</h2>
+                <p class="text-slate-400 text-lg">La garantie d'un voyage sans imprévu, calculé avec une précision d'orfèvre.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white/5 border border-white/10 p-6 rounded-3xl backdrop-blur-sm flex items-start gap-4">
+                    <div class="w-12 h-12 bg-blue-500/20 text-blue-400 rounded-xl flex items-center justify-center text-xl shrink-0"><i class="fa-solid fa-clock"></i></div>
+                    <div>
+                        <h4 class="font-bold text-xl mb-2">Plan Heure par Heure</h4>
+                        <p class="text-slate-400 text-sm">Finies les journées vides ou trop chargées. Chaque journée est millimétrée avec les temps de trajets réels entre chaque lieu.</p>
+                    </div>
+                </div>
+                
+                <div class="bg-white/5 border border-white/10 p-6 rounded-3xl backdrop-blur-sm flex items-start gap-4">
+                    <div class="w-12 h-12 bg-orange-500/20 text-orange-400 rounded-xl flex items-center justify-center text-xl shrink-0"><i class="fa-solid fa-cloud-sun"></i></div>
+                    <div>
+                        <h4 class="font-bold text-xl mb-2">Météo en Temps Réel Intégrée</h4>
+                        <p class="text-slate-400 text-sm">L'IA s'adapte. On ne vous enverra pas faire une randonnée un jour de pluie. La météo locale exacte est incluse dans le rapport.</p>
+                    </div>
+                </div>
+
+                <div class="bg-white/5 border border-white/10 p-6 rounded-3xl backdrop-blur-sm flex items-start gap-4">
+                    <div class="w-12 h-12 bg-purple-500/20 text-purple-400 rounded-xl flex items-center justify-center text-xl shrink-0"><i class="fa-solid fa-link"></i></div>
+                    <div>
+                        <h4 class="font-bold text-xl mb-2">Liens de Réservations Directs</h4>
+                        <p class="text-slate-400 text-sm">Un clic pour réserver votre table ou votre activité. Plus besoin de chercher le site officiel, tout est sourcé pour vous.</p>
+                    </div>
+                </div>
+
+                <div class="bg-white/5 border border-white/10 p-6 rounded-3xl backdrop-blur-sm flex items-start gap-4">
+                    <div class="w-12 h-12 bg-green-500/20 text-green-400 rounded-xl flex items-center justify-center text-xl shrink-0"><i class="fa-solid fa-layer-group"></i></div>
+                    <div>
+                        <h4 class="font-bold text-xl mb-2">Multi-Sources Certifiées</h4>
+                        <p class="text-slate-400 text-sm">Nous ne nous basons pas sur un seul guide. L'algorithme croise Michelin, Le Routard, Google Avis et les données locales secrètes.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="#demarrer" class="inline-block bg-white text-black font-black text-lg px-10 py-4 rounded-2xl hover:bg-slate-200 transition">
+                    Débloquer mon pack à partir de 5€
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="max-w-6xl mx-auto px-6 py-24">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl font-extrabold mb-4">Ils ont optimisé leur voyage</h2>
+            <p class="text-slate-500">Déjà plus de 2,500 analyses générées ce mois-ci.</p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-6">
+            <div class="bg-white border border-slate-100 p-8 rounded-3xl shadow-sm">
+                <div class="flex text-yellow-400 text-sm mb-4"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                <p class="text-slate-700 italic mb-6">"Je suis parti à Rome et j'ai évité tous les pièges à touristes. Le fait d'avoir la météo prévue et les restos secrets du quartier a sauvé notre séjour."</p>
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-slate-200 rounded-full bg-[url('https://i.pravatar.cc/100?u=marc')] bg-cover"></div>
+                    <div>
+                        <p class="font-bold text-sm">Marc D.</p>
+                        <p class="text-[10px] text-slate-400 uppercase font-bold">Pack : Rome, Italie</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white border border-slate-100 p-8 rounded-3xl shadow-sm">
+                <div class="flex text-yellow-400 text-sm mb-4"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                <p class="text-slate-700 italic mb-6">"Le gain de temps est colossal. Les liens Google Maps direct vers les activités m'ont évité de me perdre. Ça vaut 10 fois le prix du rapport."</p>
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-slate-200 rounded-full bg-[url('https://i.pravatar.cc/100?u=sophie')] bg-cover"></div>
+                    <div>
+                        <p class="font-bold text-sm">Sophie L.</p>
+                        <p class="text-[10px] text-slate-400 uppercase font-bold">Pack : Bali, Indonésie</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white border border-slate-100 p-8 rounded-3xl shadow-sm">
+                <div class="flex text-yellow-400 text-sm mb-4"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                <p class="text-slate-700 italic mb-6">"Bluffant ! L'IA a même inclus une activité en intérieur le jeudi après-midi parce qu'il prévoyait de la pluie. Une organisation sans faille."</p>
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-slate-200 rounded-full bg-[url('https://i.pravatar.cc/100?u=julien')] bg-cover"></div>
+                    <div>
+                        <p class="font-bold text-sm">Julien M.</p>
+                        <p class="text-[10px] text-slate-400 uppercase font-bold">Pack : Londres, UK</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-slate-50 py-24">
+        <div class="max-w-3xl mx-auto px-6">
+            <h2 class="text-3xl font-extrabold mb-12 text-center">Tout savoir sur Itinesio</h2>
+            
+            <div class="space-y-4">
+                <div class="bg-white border border-slate-200 rounded-2xl p-6">
+                    <h4 class="font-bold text-lg mb-2 text-slate-900">Combien de temps dure l'analyse de mon voyage ?</h4>
+                    <p class="text-slate-500 text-sm leading-relaxed">Généralement, notre Intelligence Artificielle génère votre rapport complet en moins de 60 secondes après validation de votre demande. Vous le recevez directement par email et sur votre espace.</p>
+                </div>
+                
+                <div class="bg-white border border-slate-200 rounded-2xl p-6">
+                    <h4 class="font-bold text-lg mb-2 text-slate-900">Mes informations et mon paiement sont-ils sécurisés ?</h4>
+                    <p class="text-slate-500 text-sm leading-relaxed">Totalement. Nous utilisons <strong>Stripe</strong>, le leader mondial des paiements en ligne. Nous ne stockons aucune donnée bancaire. Vos informations de voyage sont cryptées dans nos bases de données privées.</p>
+                </div>
+
+                <div class="bg-white border border-slate-200 rounded-2xl p-6">
+                    <h4 class="font-bold text-lg mb-2 text-slate-900">D'où proviennent vos recommandations ?</h4>
+                    <p class="text-slate-500 text-sm leading-relaxed">L'algorithme Itinesio ne se fie pas à une seule source. Il croise les données des guides reconnus (Michelin, etc.), les notes Google en temps réel, et des bases de données locales pour vous garantir des lieux ouverts et qualitatifs.</p>
+                </div>
+
+                <div class="bg-white border border-slate-200 rounded-2xl p-6">
+                    <h4 class="font-bold text-lg mb-2 text-slate-900">Comment la météo est-elle calculée ?</h4>
+                    <p class="text-slate-500 text-sm leading-relaxed">Nous sommes connectés aux API météorologiques mondiales. L'itinéraire est adapté en fonction des prévisions exactes de votre semaine de départ pour optimiser vos activités.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-white border-t border-slate-100 py-12">
+        <div class="max-w-6xl mx-auto px-6 text-center">
+            <div class="font-black text-xl tracking-tighter text-slate-900 mb-4">
+                ITINESIO<span class="text-blue-600">.AI</span>
+            </div>
+            <p class="text-xs text-slate-400 uppercase tracking-widest font-bold">© 2026 - Tous droits réservés.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
         .btn-primary:hover {
             background: #4338CA;
             transform: translateY(-1px);
