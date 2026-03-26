@@ -7,7 +7,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@600&family=Manrope:wght@400;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@600&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet" />
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -32,260 +32,247 @@
                         sans: ['"DM Sans"', "sans-serif"],
                         manrope: ['"Manrope"', "sans-serif"],
                     },
-                    boxShadow: {
-                        soft: "0 30px 60px -15px rgba(30, 41, 59, 0.15)",
-                        luxury: "0 0 0 1px rgba(255,255,255,0.4) inset, 0 20px 40px -20px rgba(0,0,0,0.1)",
-                    },
                 },
             },
         };
     </script>
 
     <style>
-        ::-webkit-scrollbar { width: 0px; background: transparent; }
-        .text-itinesio-dark { color: #1E293B !important; }
-        .glass-nav {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(30, 41, 59, 0.05);
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.05);
         }
-        @keyframes fadeIn { from {opacity:0;transform:translateY(10px);} to {opacity:1;transform:translateY(0);} }
-        #status-title, #status-subtitle { animation: fadeIn 0.6s ease forwards; }
-        
-        #full-menu {
-            transition: opacity 0.4s ease, visibility 0.4s;
-            opacity: 0; visibility: hidden; pointer-events: none;
+
+        /* Animation de l'avion sur la trajectoire */
+        @keyframes planeFly {
+            0% { transform: translate(-10px, 0) rotate(0deg); }
+            50% { transform: translate(0, -5px) rotate(2deg); }
+            100% { transform: translate(10px, 0) rotate(0deg); }
         }
-        #full-menu.menu-active { opacity: 1; visibility: visible; pointer-events: auto; }
+        .animate-plane { animation: planeFly 3s ease-in-out infinite alternate; }
+
+        /* Nuages flottants */
+        @keyframes float {
+            0% { transform: translateX(-10%); opacity: 0; }
+            20% { opacity: 0.4; }
+            80% { opacity: 0.4; }
+            100% { transform: translateX(110%); opacity: 0; }
+        }
+        .cloud {
+            position: absolute;
+            background: white;
+            border-radius: 50px;
+            opacity: 0;
+            filter: blur(8px);
+            animation: float 15s linear infinite;
+        }
+
+        /* Barre de progression stylisée */
+        .progress-line-bg { height: 6px; background: #e2e8f0; border-radius: 10px; position: relative; overflow: hidden; }
+        .progress-line-fill { 
+            height: 100%; 
+            background: linear-gradient(90deg, #2563eb, #60a5fa); 
+            border-radius: 10px; 
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
     </style>
 </head>
 
-<body class="bg-itinesio-base text-itinesio-text antialiased overflow-x-hidden pb-32">
+<body class="bg-itinesio-base text-itinesio-text antialiased font-manrope">
 
-    <nav class="fixed top-0 left-0 right-0 z-[60] glass-nav transition-all duration-300">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="/" class="flex items-center gap-2">
-                <div class="bg-itinesio-primary p-1.5 rounded-lg text-white">
-                    <i data-lucide="map" class="w-6 h-6"></i>
-                </div>
-                <span class="font-serif text-xl text-itinesio-dark font-semibold tracking-tight">Itinesio</span>
-            </a>
-            <button id="menu-btn" class="text-itinesio-dark hover:text-itinesio-primary transition-colors p-2 z-[70]">
-                <i data-lucide="menu" class="w-6 h-6"></i>
-            </button>
+    <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <div class="cloud w-24 h-8 top-1/4" style="animation-delay: 0s;"></div>
+        <div class="cloud w-32 h-10 top-1/2" style="animation-delay: 5s;"></div>
+        <div class="cloud w-20 h-6 top-3/4" style="animation-delay: 10s;"></div>
+    </div>
+
+    <nav class="fixed top-0 left-0 right-0 z-[60] px-6 py-4 flex justify-between items-center bg-white/70 backdrop-blur-md">
+        <div class="flex items-center gap-2">
+            <div class="bg-itinesio-primary p-1.5 rounded-lg text-white">
+                <i data-lucide="map" class="w-6 h-6"></i>
+            </div>
+            <span class="font-serif text-xl text-itinesio-dark font-semibold">Itinesio</span>
         </div>
     </nav>
 
-    <div id="full-menu" class="fixed inset-0 z-[55] bg-white/98 backdrop-blur-xl flex flex-col items-center justify-center">
-        <nav class="flex flex-col items-center gap-8">
-            <a href="/" class="font-serif text-3xl md:text-5xl !text-itinesio-dark hover:text-itinesio-primary transition-colors">Accueil</a>
-            <a href="/creer" class="font-serif text-3xl md:text-5xl !text-itinesio-dark hover:text-itinesio-primary transition-colors">Nouvel Itinéraire</a>
-        </nav>
-    </div>
+    <main class="relative z-10 min-h-screen flex items-center justify-center p-6">
+        <div class="max-w-xl w-full">
+            
+            <div class="glass-card rounded-3xl p-8 md:p-12 text-center relative overflow-hidden">
+                
+                <div class="mb-8 relative inline-block">
+                    <div class="absolute inset-0 bg-itinesio-primary/10 blur-3xl rounded-full"></div>
+                    <div id="icon-box" class="relative bg-white w-20 h-20 rounded-2xl shadow-xl flex items-center justify-center mx-auto text-itinesio-primary animate-plane">
+                        <i data-lucide="plane-takeoff" class="w-10 h-10" id="main-icon"></i>
+                    </div>
+                </div>
 
-    <main class="pt-20">
-        <section style="font-family:'Manrope',sans-serif;text-align:center;padding:40px 0 0 0;min-height:80vh;display:flex;flex-direction:column;">
-            <div id="status-container" style="flex:1; display:flex; flex-direction:column; justify-content:center; padding: 20px;">
-
-                <h1 id="status-title" style="font-size:26px;font-weight:700;margin-bottom:12px;color:#1e293b;">
-                    ✈ Nous créons votre voyage...
+                <h1 id="status-title" class="text-2xl md:text-3xl font-bold text-itinesio-dark mb-3 tracking-tight">
+                    Préparation de votre escale...
                 </h1>
-
-                <p id="status-subtitle" style="color:#64748b;font-size:15px;line-height:1.5;max-width:400px;margin:0 auto 40px auto; min-height: 45px;">
-                    Connexion sécurisée en cours...
+                
+                <p id="status-subtitle" class="text-itinesio-muted text-base mb-10 min-h-[1.5em] transition-all duration-500">
+                    Initialisation du moteur de recherche...
                 </p>
 
-                <div style="position:relative;width:220px;height:220px;margin:0 auto 30px auto;">
-                    <svg viewBox="0 0 100 100" style="transform:rotate(-90deg);width:100%;height:100%;">
-                        <circle cx="50" cy="50" r="45" stroke="#e2e8f0" stroke-width="8" fill="none" />
-                        <circle id="progress-circle" cx="50" cy="50" r="45" stroke="#2563eb" stroke-width="8"
-                            fill="none" stroke-linecap="round"
-                            stroke-dasharray="282.6" stroke-dashoffset="282.6"
-                            style="transition: stroke-dashoffset 1s linear;" />
-                    </svg>
-                    <div id="progress-text" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:24px;font-weight:700;color:#1e293b;">
-                        0%
+                <div class="space-y-4 mb-8">
+                    <div class="flex justify-between items-end text-sm font-bold text-itinesio-dark">
+                        <span id="progress-label" class="uppercase tracking-widest text-[10px] text-itinesio-primary">Progression</span>
+                        <span id="progress-text">0%</span>
+                    </div>
+                    <div class="progress-line-bg">
+                        <div id="progress-bar" class="progress-line-fill" style="width: 0%"></div>
                     </div>
                 </div>
 
-                <div id="delayed-container" style="display:none; opacity:0; transition: opacity 0.5s ease; max-width: 380px; margin: 0 auto 30px auto;">
-                    <div id="delay-wait-content">
-                        <p style="color:#d97706; background: #fffbeb; border: 1px solid #fcd34d; padding: 12px; border-radius: 8px; font-size: 14px; line-height: 1.4; margin-bottom: 12px;">
-                            ⚠️ <b>Forte affluence sur nos serveurs</b><br>
-                            Finalisation de votre itinéraire sur-mesure...
+                <div id="delayed-container" class="hidden opacity-0 transform translate-y-2 transition-all duration-500">
+                    <div class="bg-amber-50 border border-amber-100 p-4 rounded-xl flex items-start gap-3 text-left">
+                        <i data-lucide="info" class="w-5 h-5 text-amber-500 shrink-0 mt-0.5"></i>
+                        <p class="text-amber-800 text-sm leading-relaxed">
+                            <strong>Forte affluence :</strong> Nous peaufinons les derniers détails pour vous garantir le meilleur tarif. Encore quelques secondes...
                         </p>
-                        <div style="width: 100%; height: 6px; background: #e2e8f0; border-radius: 4px; overflow: hidden; position: relative;">
-                            <div id="timeout-bar" style="width: 0%; height: 100%; background: #d97706; transition: width 0.2s linear;"></div>
-                        </div>
-                    </div>
-
-                    <div id="delay-fail-content" style="display:none;">
-                        <p style="color:#b91c1c; background: #fef2f2; border: 1px solid #fecaca; padding: 12px; border-radius: 8px; font-size: 14px; line-height: 1.4; margin-bottom: 15px;">
-                            ❌ <b>Un petit contretemps</b><br>
-                            Nous n'avons pas pu générer l'itinéraire. Veuillez rafraîchir la page.
-                        </p>
-                        <a href="javascript:location.reload()" style="display:inline-block; border: none; background: #2563eb; color: white; padding: 12px 28px; border-radius: 50px; text-decoration: none; font-size: 15px; font-weight: 700;">
-                            ↻ Réessayer
-                        </a>
                     </div>
                 </div>
 
-                <div id="success-btn-container" style="display:none; opacity:0; transform:translateY(10px); transition:all 0.5s ease;">
-                    <p style="color:#059669; font-weight:700; margin-bottom:16px;">✅ Itinéraire prêt pour le décollage !</p>
-                    <a id="access-btn" href="#" target="_blank" style="background-color:#2563eb; color:white; padding:16px 32px; border-radius:50px; text-decoration:none; font-weight:700; font-size:16px; box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3); display:inline-block;">
-                        Ouvrir mon analyse
+                <div id="success-container" class="hidden opacity-0 transform scale-95 transition-all duration-500">
+                    <div class="mb-6 py-2 px-4 bg-emerald-50 text-emerald-700 rounded-full text-sm font-bold inline-flex items-center gap-2">
+                        <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+                        Votre itinéraire est prêt !
+                    </div>
+                    <a id="access-btn" href="#" target="_blank" class="w-full bg-itinesio-primary hover:bg-blue-700 text-white py-4 px-8 rounded-2xl font-bold text-lg shadow-lg shadow-blue-200 transition-all flex items-center justify-center gap-3">
+                        Voir mon voyage <i data-lucide="arrow-right" class="w-5 h-5"></i>
                     </a>
                 </div>
+
+                <div id="fail-container" class="hidden text-center">
+                    <p class="text-red-500 mb-6 text-sm">Oups ! Une turbulence a perturbé la connexion.</p>
+                    <button onclick="location.reload()" class="bg-itinesio-dark text-white py-3 px-8 rounded-xl font-bold hover:bg-black transition-colors">
+                        Réessayer
+                    </button>
+                </div>
+
             </div>
-        </section>
+
+            <p class="text-center mt-8 text-itinesio-muted text-xs uppercase tracking-widest">
+                Analyse IA sécurisée par Itinesio engine 
+            </p>
+        </div>
     </main>
 
     <script>
         lucide.createIcons();
 
-        // --- MENU ---
-        const menuBtn = document.getElementById("menu-btn");
-        const menuOverlay = document.getElementById("full-menu");
-        menuBtn.addEventListener("click", () => {
-            const isOpen = menuOverlay.classList.toggle("menu-active");
-            menuBtn.innerHTML = isOpen ? '<i data-lucide="x" class="w-6 h-6"></i>' : '<i data-lucide="menu" class="w-6 h-6"></i>';
-            lucide.createIcons();
-        });
-
-        // --- POLLING & LOGIQUE TEMPORELLE ---
         document.addEventListener("DOMContentLoaded", () => {
             const params = new URLSearchParams(window.location.search);
             const jobId = params.get("jobId");
 
-            // CONFIGURATION TEMPS
+            // --- CONFIGURATION ---
             const POLL_URL = "https://fagoul.app.n8n.cloud/webhook/polling?jobId=";
-            const INITIAL_LOADING_TIME = 30000; // 30s pour les premiers 99%
-            const TRAFFIC_MARGIN_TIME = 15000;  // 15s de marge (total 45s)
-            const START_POLLING_AFTER = 15000; // Commence après 15s
-            const POLL_INTERVAL = 5000;         // Toutes les 5s
-
-            const startTime = Date.now();
-            const progressCircle = document.getElementById("progress-circle");
-            const progressText = document.getElementById("progress-text");
-            const circumference = 2 * Math.PI * 45;
+            const TOTAL_TIMEOUT = 45000; // 45s max
+            const POLLING_START = 5000;   // Commence tôt pour l'effet "waouh" si rapide
             
-            const btnContainer = document.getElementById("success-btn-container");
-            const accessBtn = document.getElementById("access-btn");
+            const progressBar = document.getElementById("progress-bar");
+            const progressText = document.getElementById("progress-text");
             const subtitle = document.getElementById("status-subtitle");
-            const delayedContainer = document.getElementById("delayed-container");
-            const timeoutBar = document.getElementById("timeout-bar");
+            const mainIcon = document.getElementById("main-icon");
+            const iconBox = document.getElementById("icon-box");
 
-            let progressInterval, pollInterval, trafficInterval;
-            let pollingStarted = false;
             let isFinished = false;
+            const startTime = Date.now();
 
-            const loadingSteps = [
-                { pct: 0,  text: "Vérification de l'analyse..." },
-                { pct: 20, text: "Analyse de vos préférences..." },
-                { pct: 50, text: "Calcul des meilleures options..." },
-                { pct: 80, text: "Sélection des hébergements..." },
-                { pct: 95, text: "Finalisation du carnet de route..." }
+            const steps = [
+                { pct: 15, text: "Exploration des meilleures destinations..." },
+                { pct: 40, text: "Optimisation du carnet de route..." },
+                { pct: 70, text: "Sélection des pépites locales..." },
+                { pct: 90, text: "Génération de votre guide sur-mesure..." }
             ];
 
-            // 1. Démarrage de la barre de progression visuelle (30 premières secondes)
-            function startUI() {
-                progressInterval = setInterval(() => {
-                    if (isFinished) return;
-                    const elapsed = Date.now() - startTime;
-                    
-                    // On gère la barre jusqu'à 99% sur les 30 premières secondes
-                    let p = Math.min((elapsed / INITIAL_LOADING_TIME) * 100, 99);
-                    
-                    const offset = circumference - (p / 100) * circumference;
-                    progressCircle.style.strokeDashoffset = offset;
-                    progressText.textContent = Math.floor(p) + "%";
+            // 1. Simulation visuelle
+            const updateUI = () => {
+                if (isFinished) return;
+                
+                const elapsed = Date.now() - startTime;
+                let p = Math.min((elapsed / (TOTAL_TIMEOUT * 0.8)) * 100, 98);
+                
+                progressBar.style.width = p + "%";
+                progressText.innerText = Math.floor(p) + "%";
 
-                    // Changement de texte
-                    const step = [...loadingSteps].reverse().find(s => p >= s.pct);
-                    if (step && subtitle.innerText !== step.text && p < 99) {
-                        subtitle.innerText = step.text;
-                    }
+                const currentStep = [...steps].reverse().find(s => p >= s.pct);
+                if (currentStep && subtitle.innerText !== currentStep.text) {
+                    subtitle.classList.add('opacity-0');
+                    setTimeout(() => {
+                        subtitle.innerText = currentStep.text;
+                        subtitle.classList.remove('opacity-0');
+                    }, 300);
+                }
 
-                    // Lancer le polling après 15 secondes
-                    if (elapsed >= START_POLLING_AFTER && !pollingStarted) {
-                        pollingStarted = true;
-                        startPollingLoop();
-                    }
+                if (elapsed > 25000) {
+                    const delayed = document.getElementById("delayed-container");
+                    delayed.classList.remove("hidden");
+                    setTimeout(() => delayed.classList.remove("opacity-0"), 10);
+                }
 
-                    // Si on arrive à 30s et toujours pas fini -> Mode Traffic Haut
-                    if (elapsed >= INITIAL_LOADING_TIME && !delayedContainer.style.display) {
-                        triggerHighTrafficUI();
-                    }
-                }, 1000);
-            }
+                if (elapsed < TOTAL_TIMEOUT) {
+                    requestAnimationFrame(updateUI);
+                } else {
+                    showFail();
+                }
+            };
 
-            // 2. Le Polling
-            async function checkStatus() {
-                if (!jobId || isFinished) return;
+            // 2. Polling Réel
+            const checkStatus = async () => {
+                if (isFinished || !jobId) return;
                 try {
                     const res = await fetch(POLL_URL + encodeURIComponent(jobId));
                     const data = await res.json();
                     if (data.status === "ready" && data.downloadUrl) {
                         showSuccess(data.downloadUrl);
                     }
-                } catch (e) { console.error("Polling error", e); }
-            }
+                } catch (e) { console.error("Polling error"); }
+            };
 
-            function startPollingLoop() {
-                checkStatus(); // Requête immédiate à la 15ème seconde
-                pollInterval = setInterval(checkStatus, POLL_INTERVAL);
-            }
-
-            // 3. Interface Traffic Haut (entre 30s et 45s)
-            function triggerHighTrafficUI() {
-                subtitle.style.color = "#f59e0b";
-                subtitle.innerText = "Recherche approfondie en cours...";
-                delayedContainer.style.display = "block";
-                setTimeout(() => { delayedContainer.style.opacity = "1"; }, 50);
-
-                let trafficElapsed = 0;
-                trafficInterval = setInterval(() => {
-                    trafficElapsed += 100;
-                    const pct = (trafficElapsed / TRAFFIC_MARGIN_TIME) * 100;
-                    timeoutBar.style.width = pct + "%";
-
-                    if (trafficElapsed >= TRAFFIC_MARGIN_TIME) {
-                        failTimeout();
-                    }
-                }, 100);
-            }
-
-            function showSuccess(url) {
+            const showSuccess = (url) => {
                 isFinished = true;
-                clearInterval(progressInterval);
-                clearInterval(pollInterval);
-                clearInterval(trafficInterval);
-
-                progressCircle.style.strokeDashoffset = 0;
-                progressCircle.style.stroke = "#10b981";
-                progressText.textContent = "100%";
+                progressBar.style.width = "100%";
+                progressText.innerText = "100%";
                 
-                document.getElementById("status-title").innerHTML = "Votre voyage est prêt !";
-                subtitle.style.display = "none";
-                delayedContainer.style.display = "none";
+                // Update UI pour le succès
+                iconBox.classList.remove('animate-plane');
+                iconBox.classList.add('bg-emerald-500', 'text-white');
+                mainIcon.setAttribute('data-lucide', 'check');
+                lucide.createIcons();
 
-                accessBtn.href = url;
-                btnContainer.style.display = "block";
-                setTimeout(() => { btnContainer.style.opacity = "1"; }, 50);
-            }
+                document.getElementById("status-title").innerText = "Votre voyage est prêt !";
+                subtitle.classList.add("hidden");
+                document.getElementById("delayed-container").classList.add("hidden");
+                
+                const successContainer = document.getElementById("success-container");
+                successContainer.classList.remove("hidden");
+                document.getElementById("access-btn").href = url;
+                setTimeout(() => {
+                    successContainer.classList.remove("opacity-0", "scale-95");
+                }, 100);
+            };
 
-            function failTimeout() {
+            const showFail = () => {
+                if (isFinished) return;
                 isFinished = true;
-                clearInterval(pollInterval);
-                document.getElementById("delay-wait-content").style.display = "none";
-                document.getElementById("delay-fail-content").style.display = "block";
-            }
+                subtitle.classList.add("hidden");
+                document.getElementById("delayed-container").classList.add("hidden");
+                document.getElementById("fail-container").classList.remove("hidden");
+            };
 
-            // INITIALISATION : Une requête immédiate au chargement/refresh
-            checkStatus(); 
-            // Puis on lance la logique temporelle
-            startUI();
+            // Lancement
+            requestAnimationFrame(updateUI);
+            setTimeout(() => {
+                checkStatus();
+                const pollInterval = setInterval(() => {
+                    if (isFinished) clearInterval(pollInterval);
+                    checkStatus();
+                }, 4000);
+            }, POLLING_START);
         });
     </script>
 </body>
