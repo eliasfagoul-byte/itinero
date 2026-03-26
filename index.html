@@ -10,20 +10,20 @@
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
         
         body {
-            font-family: 'Poppins', sans-serif; /* Police plus douce, plus 'voyage' */
+            font-family: 'Poppins', sans-serif;
             background-color: #FAFAFA;
             color: #1A1D24;
             scroll-behavior: smooth;
         }
 
         .gradient-text {
-            background: linear-gradient(135deg, #3B82F6, #10B981); /* Bleu ocean -> Vert lagon */
+            background: linear-gradient(135deg, #3B82F6, #10B981);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         .premium-bg {
-            background-color: #10141D; /* Noir bleu très profond */
+            background-color: #10141D;
             background-image: radial-gradient(circle at top right, rgba(16, 185, 129, 0.1), transparent 40%),
                               radial-gradient(circle at bottom left, rgba(59, 130, 246, 0.05), transparent 40%);
         }
@@ -38,7 +38,6 @@
             box-shadow: 0 25px 50px -10px rgba(0,0,0,0.1);
         }
 
-        /* Hero Background inspirant */
         .hero-bg {
             background-image: linear-gradient(to bottom, rgba(250,250,250,0.9), rgba(250,250,250,1)), 
                               url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
@@ -57,7 +56,7 @@
                     Itinesio<span class="text-emerald-500">.ai</span>
                 </div>
             </div>
-            <a href="#demarrer" class="bg-slate-950 text-white text-sm font-semibold px-6 py-2.5 rounded-full hover:bg-slate-800 transition shadow-md">
+            <a href="formulaire.html" class="bg-slate-950 text-white text-sm font-semibold px-6 py-2.5 rounded-full hover:bg-slate-800 transition shadow-md">
                 Créer mon évasion
             </a>
         </div>
@@ -75,8 +74,8 @@
             <p class="text-lg md:text-xl text-slate-600 font-medium mb-12 max-w-2xl mx-auto leading-relaxed">
                 Oubliez le stress de la planification. Notre IA parcourt des milliers de sources pour vous concevoir un dossier logistique ultra-précis, prêt à l'emploi et adapté à vos rêves.
             </p>
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-5" id="demarrer">
-                <a href="#demarrer" class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg px-10 py-4 rounded-2xl shadow-lg shadow-blue-600/30 transition-all flex items-center justify-center gap-3">
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-5">
+                <a href="formulaire.html" class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg px-10 py-4 rounded-2xl shadow-lg shadow-blue-600/30 transition-all flex items-center justify-center gap-3">
                     Commencer l'aventure <i class="fa-solid fa-compass animate-spin-slow"></i>
                 </a>
                 <p class="text-sm font-semibold text-slate-400"><i class="fa-solid fa-bolt mr-1 text-emerald-400"></i> Planification en 60s</p>
@@ -128,7 +127,7 @@
                     </div>
                 </div>
                 <div class="card-shadow rounded-2xl overflow-hidden bg-white">
-                    <img src="https://images.unsplash.com/photo-1569336415962-a4bd6867d3f2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Cartographie et liens" class="w-full h-60 object-cover">
+                    <img src="https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="GPS & Réservations" class="w-full h-60 object-cover">
                     <div class="p-6">
                         <div class="flex items-center gap-3 mb-3">
                             <div class="w-8 h-8 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center"><i class="fa-solid fa-map-location-dot text-sm"></i></div>
@@ -196,79 +195,9 @@
             </div>
             
             <div class="text-center mt-16">
-                <a href="#demarrer" class="inline-block bg-white hover:bg-slate-100 text-slate-950 font-extrabold text-lg px-12 py-4.5 rounded-2xl transition shadow-xl">
+                <a href="formulaire.html" class="inline-block bg-white hover:bg-slate-100 text-slate-950 font-extrabold text-lg px-12 py-4.5 rounded-2xl transition shadow-xl">
                     Débloquer mon pack dès 5€
                 </a>
-            </div>
-        </div>
-    </section>
-
-    <section class="max-w-6xl mx-auto px-6 py-24">
-        <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight mb-4">Ils ont voyagé l'esprit léger</h2>
-            <p class="text-slate-500 text-lg">Plus de 3,000 évasions optimisées ce mois-ci.</p>
-        </div>
-        <div class="grid md:grid-cols-3 gap-6">
-            <div class="bg-white border border-slate-100 p-8 rounded-3xl card-shadow">
-                <div class="flex text-emerald-500 text-sm mb-5"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                <p class="text-slate-700 italic mb-7 text-sm leading-relaxed">"Je suis parti à Rome et j'ai évité tous les pièges à touristes. Le fait d'avoir la météo intégrée et les restos secrets a sauvé notre séjour. Bluffant."</p>
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-full bg-[url('https://i.pravatar.cc/100?u=marc')] bg-cover"></div>
-                    <div>
-                        <p class="font-semibold text-sm text-slate-950">Marc D.</p>
-                        <p class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Pack : Rome, Italie</p>
-                    </div>
-                </div>
-            </div>
-            <div class="bg-white border border-slate-100 p-8 rounded-3xl card-shadow bg-blue-50/30 border-blue-100">
-                <div class="flex text-emerald-500 text-sm mb-5"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                <p class="text-slate-800 italic mb-7 text-sm leading-relaxed">"Gain de temps colossal. Les liens Google Maps direct vers les activités m'ont évité de me perdre. Et les adresses secrètes... juste waouh. Ça vaut 10x le prix."</p>
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-full bg-[url('https://i.pravatar.cc/100?u=sophie')] bg-cover"></div>
-                    <div>
-                        <p class="font-semibold text-sm text-slate-950">Sophie L.</p>
-                        <p class="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Pack : Bali, Indonésie</p>
-                    </div>
-                </div>
-            </div>
-            <div class="bg-white border border-slate-100 p-8 rounded-3xl card-shadow">
-                <div class="flex text-emerald-500 text-sm mb-5"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                <p class="text-slate-700 italic mb-7 text-sm leading-relaxed">"Incroyable ! L'IA a même inclus une activité en intérieur le jeudi parce qu'il prévoyait de la pluie. Une organisation sans faille pour nos 5 jours à Londres."</p>
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-full bg-[url('https://i.pravatar.cc/100?u=julien')] bg-cover"></div>
-                    <div>
-                        <p class="font-semibold text-sm text-slate-950">Julien M.</p>
-                        <p class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Pack : Londres, UK</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="bg-white py-24 border-t border-slate-100">
-        <div class="max-w-3xl mx-auto px-6">
-            <h2 class="text-3xl font-extrabold tracking-tight mb-12 text-center text-slate-950">Tout savoir sur Itinesio</h2>
-            
-            <div class="space-y-5">
-                <div class="bg-slate-50 border border-slate-100 rounded-2xl p-6 hover:border-blue-100">
-                    <h4 class="font-bold text-lg mb-2 text-slate-950">Combien de temps dure l'analyse de mon voyage ?</h4>
-                    <p class="text-slate-600 text-sm leading-relaxed">Généralement, notre Intelligence Artificielle génère votre rapport complet en moins de 60 secondes après validation de votre demande. Vous le recevez directement par email.</p>
-                </div>
-                
-                <div class="bg-slate-50 border border-slate-100 rounded-2xl p-6 hover:border-blue-100">
-                    <h4 class="font-bold text-lg mb-2 text-slate-950">Mes informations et mon paiement sont-ils sécurisés ?</h4>
-                    <p class="text-slate-600 text-sm leading-relaxed">Totalement. Nous utilisons Stripe, le leader mondial, pour les transactions. Nous ne stockons aucune donnée bancaire. Vos infos de voyage sont cryptées.</p>
-                </div>
-
-                <div class="bg-slate-50 border border-slate-100 rounded-2xl p-6 hover:border-blue-100">
-                    <h4 class="font-bold text-lg mb-2 text-slate-950">D'où proviennent vos recommandations ?</h4>
-                    <p class="text-slate-600 text-sm leading-relaxed">L'algorithme Itinesio croise les données de guides certifiés, les notes Google en temps réel et des bases de données locales secrètes pour vous garantir des lieux ouverts et de qualité.</p>
-                </div>
-
-                <div class="bg-slate-50 border border-slate-100 rounded-2xl p-6 hover:border-blue-100">
-                    <h4 class="font-bold text-lg mb-2 text-slate-950">Comment la météo est-elle calculée ?</h4>
-                    <p class="text-slate-600 text-sm leading-relaxed">Nous sommes connectés aux API météo mondiales. Votre itinéraire est optimisé selon les prévisions exactes de votre semaine de départ.</p>
-                </div>
             </div>
         </div>
     </section>
