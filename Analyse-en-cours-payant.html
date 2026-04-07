@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Génération de votre dossier - Itinesio.ai</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #ffffff;
+            color: #1e293b;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .loader-container {
+            width: 100%;
+            max-width: 400px;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .progress-bar-bg {
+            background: #f1f5f9;
+            height: 6px;
+            width: 100%;
+            border-radius: 10px;
+            margin: 2.5rem 0;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            background: linear-gradient(90deg, #3b82f6, #10b981);
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 10px rgba(59, 130, 246, 0.2);
+        }
+
+        .status-text {
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.25em;
+            color: #94a3b8;
+            min-height: 20px;
+        }
+
+        .ai-core {
+            position: relative;
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 2.5rem;
+        }
+
+        .ai-ring {
+            position: absolute;
+            inset: 0;
+            border: 2px solid #f1f5f9;
+            border-top: 2px solid #3b82f6;
+            border-radius: 50%;
+            animation: spin 2s linear infinite;
+        }
+
+        .ai-ring-inner {
+            position: absolute;
+            inset: 18px;
+            border: 2px solid #f1f5f9;
+            border-bottom: 2px solid #10b981;
+            border-radius: 50%;
+            animation: spin-reverse 1.5s linear infinite;
+        }
+
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        @keyframes spin-reverse { 100% { transform: rotate(-360deg); } }
+
+        .fade-in { 
+            animation: fadeIn 1s ease-out forwards; 
+        }
+
+        @keyframes fadeIn { 
+            from { opacity: 0; transform: translateY(15px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+
+        .brand-logo {
+            font-size: 14px;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            color: #0f172a;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="loader-container">
+        <!-- Animation IA -->
+        <div class="ai-core">
+            <div class="ai-ring"></div>
+            <div class="ai-ring-inner"></div>
+            <div class="absolute inset-0 flex items-center justify-center">
+                <i class="fa-solid fa-paper-plane text-blue-600 text-xl animate-pulse"></i>
+            </div>
+        </div>
+
+        <div class="fade-in">
+            <div class="inline-flex items-center gap-2 text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest mb-4 border border-emerald-100">
+                <i class="fa-solid fa-shield-check"></i> Paiement Validé
+            </div>
+            <h2 class="text-2xl font-black text-slate-900 mb-2 tracking-tight">Génération du Dossier</h2>
+            <p class="text-slate-400 text-sm mb-2 px-4">Notre IA compile vos itinéraires personnalisés et les données logistiques.</p>
+        </div>
+
+        <!-- Barre de progression -->
+        <div class="progress-bar-bg">
+            <div id="progress-fill" class="progress-bar-fill"></div>
+        </div>
+
+        <!-- Libellé d'état -->
+        <div id="status-label" class="status-text">Initialisation des calculs...</div>
+
+        <!-- Footer Logo -->
+        <div class="fixed bottom-12 left-0 right-0 text-center opacity-40">
+            <span class="brand-logo uppercase tracking-[0.4em]">Itinesio<span class="text-emerald-500">.ai</span></span>
+        </div>
+    </div>
+
+    <script>
+        const steps = [
+            { p: 15, t: "Extraction de votre profil..." },
+            { p: 30, t: "Sélection des meilleures adresses..." },
+            { p: 45, t: "Optimisation des trajets GPS..." },
+            { p: 65, t: "Vérification des prévisions météo..." },
+            { p: 80, t: "Formatage du rapport premium..." },
+            { p: 92, t: "Finalisation du dossier..." },
+            { p: 100, t: "Terminé. Préparation de l'affichage..." }
+        ];
+
+        let currentStep = 0;
+        const fill = document.getElementById('progress-fill');
+        const label = document.getElementById('status-label');
+
+        function updateProgress() {
+            if (currentStep < steps.length) {
+                const step = steps[currentStep];
+                fill.style.width = step.p + "%";
+                label.innerText = step.t;
+                
+                currentStep++;
+                
+                // Délai aléatoire pour simuler une réflexion réelle de l'IA
+                const nextDelay = Math.random() * (1500 - 800) + 800; 
+                
+                if (currentStep === steps.length) {
+                    setTimeout(() => {
+                        // Simulation de redirection vers la page finale
+                        console.log("Redirection vers : thanks_page.html");
+                        // window.location.href = 'thanks_page.html'; 
+                    }, 2000);
+                } else {
+                    setTimeout(updateProgress, nextDelay);
+                }
+            }
+        }
+
+        // Lancer la séquence après un léger délai initial
+        window.onload = () => {
+            setTimeout(updateProgress, 800);
+        };
+    </script>
+</body>
+</html>
