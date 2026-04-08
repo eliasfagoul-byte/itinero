@@ -172,17 +172,14 @@
                 const response = await fetch(`${POLLING_URL}?jobId=${jobId}`);
                 let data = await response.json();
                 
-                // n8n envoie souvent un tableau, on extrait le premier élément
                 if (Array.isArray(data)) data = data[0];
 
-                // CORRECTION ICI : On vérifie 'downloadUrl' car c'est ce que ton n8n envoie
                 if (data.downloadUrl || data.status === 'ready' || data.status === 'completed') {
                     progress = 100;
                     fill.style.width = "100%";
                     label.innerText = "Dossier prêt ! Redirection...";
                     
                     setTimeout(() => {
-                        // On redirige vers la valeur de downloadUrl
                         window.location.href = data.downloadUrl; 
                     }, 1500);
                 } else {
@@ -205,7 +202,9 @@
                 label.style.color = "red";
                 return;
             }
-            setTimeout(checkStatus, 30000);
+            // Changé à 55 secondes (55000ms) pour le premier polling
+            setTimeout(checkStatus, 55000);
+            
             label.innerText = "Préparation de l'environnement...";
             progress = 10;
             fill.style.width = "10%";
