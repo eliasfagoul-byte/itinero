@@ -139,7 +139,7 @@
         // 1. CONFIGURATION ET CONTEXTE
         const POLLING_URL = "https://fagoul.app.n8n.cloud/webhook/polling-payant";
         const urlParams = new URLSearchParams(window.location.search);
-        const jobId = urlParams.get('jobId'); // Assure-toi que Stripe renvoie bien jobId dans l'URL
+        const jobId = urlParams.get('jobId'); 
         const destination = urlParams.get('destination') || "votre voyage";
         const prenom = urlParams.get('nom') || "Voyageur";
 
@@ -159,36 +159,42 @@
         ];
 
         let progress = 0;
+        let startTime = Date.now();
+        const MAX_DURATION = 120000; // 2 minutes en millisecondes
 
         // 2. FONCTION DE POLLING (APPEL N8N)
         async function checkStatus() {
+            // Arrêt si on dépasse 2 minutes
+            if (Date.now() - startTime > MAX_DURATION) {
+                label.innerText = "Délai dépassé. Veuillez contacter le support.";
+                label.style.color = "#ef4444";
+                return;
+            }
+
             try {
-                // On appelle n8n en envoyant le jobId
                 const response = await fetch(`${POLLING_URL}?jobId=${jobId}`);
                 const data = await response.json();
 
-                // Si n8n répond que c'est prêt
                 if (data.status === 'completed' || data.done === true || data.url) {
                     progress = 100;
                     fill.style.width = "100%";
                     label.innerText = "Dossier prêt ! Redirection...";
                     
                     setTimeout(() => {
-                        window.location.href = data.url; // Redirige vers le PDF ou la page finale
+                        window.location.href = data.url; 
                     }, 1500);
                 } else {
-                    // Sinon, on continue de faire progresser la barre visuellement
                     if (progress < 90) {
                         progress += Math.random() * 5;
                         fill.style.width = progress + "%";
                         label.innerText = messages[Math.floor(Math.random() * messages.length)];
                     }
-                    // On recommence dans 3 secondes
-                    setTimeout(checkStatus, 3000);
+                    // On recommence toutes les 5 secondes (5000ms)
+                    setTimeout(checkStatus, 5000);
                 }
             } catch (error) {
                 console.error("Erreur polling:", error);
-                // En cas d'erreur, on réessaye quand même
+                // En cas d'erreur, on réessaye toutes les 5 secondes
                 setTimeout(checkStatus, 5000);
             }
         }
@@ -200,7 +206,13 @@
                 label.style.color = "red";
                 return;
             }
-            checkStatus();
+            // Premier poll après 30 secondes (30000ms)
+            setTimeout(checkStatus, 30000);
+            
+            // Animation visuelle de départ immédiate pour ne pas laisser la barre à 0% pendant 30s
+            label.innerText = "Préparation de l'environnement...";
+            progress = 10;
+            fill.style.width = "10%";
         };
     </script>
 </body>
