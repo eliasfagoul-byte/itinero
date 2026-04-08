@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Votre Évasion - Itinesio.ai</title>
+    <title>Génération de votre dossier - Itinesio.ai</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -11,258 +11,197 @@
         
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #fcfcfd;
+            background-color: #ffffff;
             color: #1e293b;
-            scroll-behavior: smooth;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
         }
 
-        .itinesio-card {
-            background: #ffffff;
-            border-radius: 1.5rem;
-            border: 1px solid #f1f5f9;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.02);
+        .loader-container {
+            width: 100%;
+            max-width: 450px;
+            padding: 2rem;
+            text-align: center;
         }
 
-        .timeline-dot {
-            width: 10px;
-            height: 10px;
-            background: #3b82f6;
-            border: 2px solid #ffffff;
-            border-radius: 50%;
-            box-shadow: 0 0 0 4px #eff6ff;
-            z-index: 10;
-        }
-
-        .timeline-line {
-            position: absolute;
-            left: 20px;
-            top: 0;
-            bottom: 0;
-            width: 1px;
+        .progress-bar-bg {
             background: #f1f5f9;
+            height: 8px;
+            width: 100%;
+            border-radius: 10px;
+            margin: 2.5rem 0;
+            overflow: hidden;
         }
 
-        .summary-item {
+        .progress-bar-fill {
+            background: linear-gradient(90deg, #2563eb, #10b981);
+            height: 100%;
+            width: 0%;
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 10px rgba(59, 130, 246, 0.2);
+        }
+
+        .status-text {
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: #64748b;
+            min-height: 24px;
+        }
+
+        .ai-core {
             position: relative;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 2.5rem;
         }
 
-        .summary-item:not(:last-child)::after {
-            content: '';
+        .ai-ring {
             position: absolute;
-            right: -2rem;
-            top: 20%;
-            bottom: 20%;
-            width: 1px;
-            background-color: #f1f5f9;
+            inset: 0;
+            border: 3px solid #f1f5f9;
+            border-top: 3px solid #3b82f6;
+            border-radius: 50%;
+            animation: spin 2s linear infinite;
         }
 
-        @media (max-width: 768px) {
-            .summary-item:not(:last-child)::after { display: none; }
+        .ai-ring-inner {
+            position: absolute;
+            inset: 20px;
+            border: 3px solid #f1f5f9;
+            border-bottom: 3px solid #10b981;
+            border-radius: 50%;
+            animation: spin-reverse 1.5s linear infinite;
         }
 
-        @media print {
-            .no-print { display: none !important; }
-            body { background: white; }
-            .itinesio-card { border: 1px solid #eee; box-shadow: none; border-radius: 1rem; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        @keyframes spin-reverse { 100% { transform: rotate(-360deg); } }
+
+        .fade-in { 
+            animation: fadeIn 0.8s ease-out forwards; 
+        }
+
+        @keyframes fadeIn { 
+            from { opacity: 0; transform: translateY(10px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+
+        .brand-logo {
+            font-size: 14px;
+            font-weight: 800;
+            letter-spacing: 0.4em;
+            color: #0f172a;
         }
     </style>
 </head>
-<body class="antialiased">
+<body>
 
-    <!-- Navigation -->
-    <nav class="bg-white/80 backdrop-blur-md border-b border-gray-100 px-6 py-4 flex justify-between items-center sticky top-0 z-50 no-print">
-        <div class="flex items-center gap-2">
-            <div class="bg-blue-600 p-2 rounded-xl">
-                <i class="fa-solid fa-paper-plane text-white text-xs"></i>
-            </div>
-            <span class="text-xl font-extrabold tracking-tight text-slate-900">Itinesio<span class="text-emerald-500">.ai</span></span>
-        </div>
-        <div class="flex items-center gap-4">
-            <button onclick="window.print()" class="bg-slate-900 text-white px-5 py-2 rounded-full text-[11px] font-bold hover:bg-slate-800 transition flex items-center gap-2 tracking-wider uppercase">
-                <i class="fa-solid fa-file-pdf"></i> Exporter
-            </button>
-        </div>
-    </nav>
-
-    <!-- Header Remerciements -->
-    <header class="max-w-4xl mx-auto px-6 pt-16 pb-12 text-center">
-        <div class="inline-flex items-center gap-2 text-emerald-600 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] mb-4 bg-emerald-50/50 border border-emerald-100">
-            <i class="fa-solid fa-check"></i> Dossier Premium
-        </div>
-        <h1 class="text-4xl md:text-5xl font-black text-slate-900 mb-6 tracking-tight">
-            Merci pour votre achat.
-        </h1>
-        <p class="text-slate-400 text-lg font-medium max-w-xl mx-auto leading-relaxed">
-            Votre itinéraire sur-mesure est prêt. Découvrez chaque étape sélectionnée par notre IA.
-        </p>
-    </header>
-
-    <!-- Corps de l'Analyse -->
-    <main class="max-w-4xl mx-auto px-6 pb-32">
-        
-        <!-- RÉSUMÉ CLIENT MINIMALISTE -->
-        <div class="itinesio-card p-10 mb-20">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-16">
-                <!-- Destination -->
-                <div class="summary-item group">
-                    <div class="flex items-center gap-3 mb-3 text-blue-600">
-                        <i class="fa-solid fa-location-dot text-sm"></i>
-                        <span class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 group-hover:text-blue-600 transition-colors">Destination</span>
-                    </div>
-                    <p id="v-destination" class="text-xl font-bold text-slate-900 tracking-tight leading-tight">Chargement...</p>
-                </div>
-
-                <!-- Dates -->
-                <div class="summary-item group">
-                    <div class="flex items-center gap-3 mb-3 text-blue-600">
-                        <i class="fa-solid fa-calendar text-sm"></i>
-                        <span class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 group-hover:text-blue-600 transition-colors">Période</span>
-                    </div>
-                    <p id="v-dates" class="text-xl font-bold text-slate-900 tracking-tight leading-tight">---</p>
-                </div>
-
-                <!-- Budget -->
-                <div class="group">
-                    <div class="flex items-center gap-3 mb-3 text-emerald-500">
-                        <i class="fa-solid fa-wallet text-sm"></i>
-                        <span class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 group-hover:text-emerald-500 transition-colors">Budget Estimé</span>
-                    </div>
-                    <p id="v-budget" class="text-xl font-bold text-slate-900 tracking-tight leading-tight">---</p>
-                </div>
+    <div class="loader-container">
+        <div class="ai-core">
+            <div class="ai-ring"></div>
+            <div class="ai-ring-inner"></div>
+            <div class="absolute inset-0 flex items-center justify-center">
+                <i class="fa-solid fa-wand-magic-sparkles text-blue-600 text-2xl animate-pulse"></i>
             </div>
         </div>
 
-        <!-- Itinéraire Heure par Heure -->
-        <div class="mb-12 flex items-center gap-4">
-            <h3 class="text-xs font-black uppercase tracking-[0.3em] text-slate-400">Le Programme</h3>
-            <div class="flex-grow h-[1px] bg-slate-100"></div>
+        <div class="fade-in">
+            <div class="inline-flex items-center gap-2 text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest mb-6 border border-emerald-100">
+                <i class="fa-solid fa-check-circle"></i> Paiement Confirmé
+            </div>
+            
+            <h2 class="text-2xl font-black text-slate-900 mb-2 tracking-tight">
+                Génération de votre dossier <br/>
+                <span id="display-destination" class="text-blue-600 capitalize">Premium</span>
+            </h2>
+            
+            <p id="context-text" class="text-slate-400 text-sm mb-2 px-6 leading-relaxed">
+                Analyse IA en cours pour <span id="display-name" class="font-bold text-slate-600">...</span>
+            </p>
         </div>
 
-        <div id="itinerary-container" class="space-y-20">
-            <!-- Injecté par JS -->
+        <div class="progress-bar-bg">
+            <div id="progress-fill" class="progress-bar-fill"></div>
         </div>
 
-        <!-- Section "Pourquoi nous" -->
-        <section class="mt-40 pt-20 border-t border-slate-100">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-24">
-                <div class="text-center md:text-left">
-                    <div class="text-blue-600 mb-4 text-xl"><i class="fa-solid fa-microchip"></i></div>
-                    <h4 class="font-bold text-slate-900 mb-2">IA Experte</h4>
-                    <p class="text-xs text-slate-400 leading-relaxed">Algorithmes entraînés sur des milliers de retours voyageurs.</p>
-                </div>
-                <div class="text-center md:text-left">
-                    <div class="text-emerald-500 mb-4 text-xl"><i class="fa-solid fa-map"></i></div>
-                    <h4 class="font-bold text-slate-900 mb-2">GPS Intégré</h4>
-                    <p class="text-xs text-slate-400 leading-relaxed">Tous les lieux sont géo-localisés pour faciliter vos déplacements.</p>
-                </div>
-                <div class="text-center md:text-left">
-                    <div class="text-orange-500 mb-4 text-xl"><i class="fa-solid fa-clock"></i></div>
-                    <h4 class="font-bold text-slate-900 mb-2">Flux optimisé</h4>
-                    <p class="text-xs text-slate-400 leading-relaxed">Ordre logique des visites pour minimiser les temps de trajet.</p>
-                </div>
-            </div>
+        <div id="status-label" class="status-text italic">Initialisation de l'IA...</div>
 
-            <!-- Avis Clients -->
-            <div class="text-center mb-10">
-                <h3 class="text-xs font-black uppercase tracking-[0.3em] text-slate-400">Témoignages</h3>
-            </div>
-            <div id="reviews-container" class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Injecté par JS -->
-            </div>
-        </section>
-
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-white border-t border-slate-100 py-16 no-print">
-        <div class="max-w-4xl mx-auto px-6 text-center">
-            <span class="text-[10px] font-black text-slate-300 uppercase tracking-[0.5em]">Itinesio.ai &bull; 2026</span>
+        <div class="fixed bottom-12 left-0 right-0 text-center opacity-30">
+            <span class="brand-logo uppercase">Itinesio<span class="text-emerald-500">.ai</span></span>
         </div>
-    </footer>
+    </div>
 
     <script>
-        // DONNÉES VARIABLES
-        const voyageData = {
-            destination: "Bali - Ubud & Canggu",
-            dates: "12 au 22 Mai 2026",
-            budget: "1 850 € / pers",
-            itinerary: [
-                {
-                    day: "01",
-                    title: "L'Arrivée Tropicale",
-                    steps: [
-                        { time: "10:30", act: "Atterrissage à Denpasar", desc: "Accueil privé et transfert vers votre première villa." },
-                        { time: "13:00", act: "Installation & Lunch", desc: "Déjeuner healthy au bord de la piscine." },
-                        { time: "16:00", act: "Massage Balinais", desc: "Soin traditionnel de 60 min pour récupérer du vol." }
-                    ]
-                },
-                {
-                    day: "02",
-                    title: "Spiritualité & Culture",
-                    steps: [
-                        { time: "08:30", act: "Temple Tirta Empul", desc: "Rituel de purification matinal loin de la foule." },
-                        { time: "11:00", act: "Marche des Rizières", desc: "Balade panoramique à Tegalalang." }
-                    ]
+        // 1. CONFIGURATION ET CONTEXTE
+        const POLLING_URL = "https://fagoul.app.n8n.cloud/webhook/polling-payant";
+        const urlParams = new URLSearchParams(window.location.search);
+        const jobId = urlParams.get('jobId'); // Assure-toi que Stripe renvoie bien jobId dans l'URL
+        const destination = urlParams.get('destination') || "votre voyage";
+        const prenom = urlParams.get('nom') || "Voyageur";
+
+        document.getElementById('display-destination').innerText = destination;
+        document.getElementById('display-name').innerText = prenom;
+
+        const fill = document.getElementById('progress-fill');
+        const label = document.getElementById('status-label');
+
+        const messages = [
+            "Authentification de la session...",
+            "Analyse de vos préférences...",
+            "Calcul des trajets optimaux...",
+            "Sélection des perles rares...",
+            "Génération du dossier PDF HD...",
+            "Finalisation des recommandations..."
+        ];
+
+        let progress = 0;
+
+        // 2. FONCTION DE POLLING (APPEL N8N)
+        async function checkStatus() {
+            try {
+                // On appelle n8n en envoyant le jobId
+                const response = await fetch(`${POLLING_URL}?jobId=${jobId}`);
+                const data = await response.json();
+
+                // Si n8n répond que c'est prêt
+                if (data.status === 'completed' || data.done === true || data.url) {
+                    progress = 100;
+                    fill.style.width = "100%";
+                    label.innerText = "Dossier prêt ! Redirection...";
+                    
+                    setTimeout(() => {
+                        window.location.href = data.url; // Redirige vers le PDF ou la page finale
+                    }, 1500);
+                } else {
+                    // Sinon, on continue de faire progresser la barre visuellement
+                    if (progress < 90) {
+                        progress += Math.random() * 5;
+                        fill.style.width = progress + "%";
+                        label.innerText = messages[Math.floor(Math.random() * messages.length)];
+                    }
+                    // On recommence dans 3 secondes
+                    setTimeout(checkStatus, 3000);
                 }
-            ],
-            reviews: [
-                { user: "Marie D.", text: "Une organisation parfaite du début à la fin. L'IA a vraiment compris nos attentes.", rating: 5 },
-                { user: "Thomas L.", text: "Le planning heure par heure est un vrai plus, ça enlève tout le stress du voyage.", rating: 5 }
-            ]
+            } catch (error) {
+                console.error("Erreur polling:", error);
+                // En cas d'erreur, on réessaye quand même
+                setTimeout(checkStatus, 5000);
+            }
+        }
+
+        // 3. LANCEMENT
+        window.onload = () => {
+            if (!jobId) {
+                label.innerText = "Erreur : ID de session manquant";
+                label.style.color = "red";
+                return;
+            }
+            checkStatus();
         };
-
-        // RENDU DYNAMIQUE
-        document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('v-destination').innerText = voyageData.destination;
-            document.getElementById('v-dates').innerText = voyageData.dates;
-            document.getElementById('v-budget').innerText = voyageData.budget;
-
-            const itinContainer = document.getElementById('itinerary-container');
-            voyageData.itinerary.forEach(day => {
-                let html = `
-                    <div class="relative">
-                        <div class="flex items-center gap-6 mb-12">
-                            <span class="text-4xl font-black text-slate-100">${day.day}</span>
-                            <h3 class="text-2xl font-bold text-slate-900">${day.title}</h3>
-                        </div>
-                        <div class="relative pl-10 ml-5">
-                            <div class="timeline-line"></div>
-                            <div class="space-y-12">
-                                ${day.steps.map(step => `
-                                    <div class="relative">
-                                        <div class="absolute -left-[35px] top-1.5 timeline-dot"></div>
-                                        <div>
-                                            <span class="text-[10px] font-black text-blue-600 uppercase tracking-widest block mb-1">${step.time}</span>
-                                            <h4 class="text-lg font-bold text-slate-900 mb-1">${step.act}</h4>
-                                            <p class="text-sm text-slate-400 leading-relaxed">${step.desc}</p>
-                                        </div>
-                                    </div>
-                                `).join('')}
-                            </div>
-                        </div>
-                    </div>
-                `;
-                itinContainer.innerHTML += html;
-            });
-
-            const revContainer = document.getElementById('reviews-container');
-            voyageData.reviews.forEach(r => {
-                let stars = '';
-                for(let i=0; i<r.rating; i++) {
-                    stars += '<i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>';
-                }
-
-                revContainer.innerHTML += `
-                    <div class="p-8 rounded-2xl bg-slate-50/50 border border-slate-100">
-                        <div class="flex gap-1 mb-4">
-                            ${stars}
-                        </div>
-                        <p class="text-sm text-slate-500 italic mb-4 leading-relaxed">"${r.text}"</p>
-                        <span class="text-[10px] font-black text-slate-900 uppercase tracking-widest">${r.user}</span>
-                    </div>
-                `;
-            });
-        });
     </script>
 </body>
 </html>
