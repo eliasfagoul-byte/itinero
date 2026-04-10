@@ -77,14 +77,14 @@
         }
     </style>
 </head>
-<body class="antialiased bg-slate-50/50">
+<body class="antialiased bg-slate-50/50 min-h-screen flex flex-col">
 
     <nav class="w-full bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-slate-100">
         <div class="max-w-5xl mx-auto px-6 py-4 flex justify-between items-center">
            <a href="index.html" class="flex items-center gap-2 hover:opacity-80 transition">
-    <img src="logo.png" alt="Logo Itinesio" class="w-10 h-10 object-contain">
-    <div class="font-bold text-xl tracking-tight text-slate-950">Itinesio <span class="text-emerald-500">.ai</span></div>
-</a>
+                <img src="logo.png" alt="Logo Itinesio" class="w-10 h-10 object-contain" onerror="this.style.display='none'; this.nextElementSibling.style.marginLeft='0';">
+                <div class="font-bold text-xl tracking-tight text-slate-950">Itinesio <span class="text-emerald-500">.ai</span></div>
+            </a>
             <a href="index.html" class="text-sm font-bold text-slate-400 hover:text-blue-600 transition flex items-center gap-2">
                 <i class="fas fa-arrow-left"></i> Retour
             </a>
@@ -92,16 +92,16 @@
         <div class="progress-bar" id="progress"></div>
     </nav>
 
-    <main class="max-w-4xl mx-auto pt-12 pb-24 px-6">
+    <main class="max-w-4xl mx-auto pt-12 pb-24 px-6 flex-1 w-full">
         
-        <div class="text-center mb-12">
+        <div id="form-header" class="text-center mb-12 transition-all duration-300">
             <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight text-slate-900 mb-4">
                 Configurez votre <span class="gradient-text">évasion.</span>
             </h1>
             <p class="text-slate-500 font-medium">L'IA Itinesio a besoin de quelques détails pour sourcer le meilleur.</p>
         </div>
 
-        <form id="itinesio-form" class="space-y-8">
+        <form id="itinesio-form" class="space-y-8 transition-all duration-300">
             
             <div class="glass-card p-8">
                 <div class="flex items-center gap-3 mb-6">
@@ -256,6 +256,22 @@
                 <i class="fa-solid fa-sparkles"></i>
             </button>
         </form>
+
+        <div id="success-state" class="hidden flex-col items-center justify-center py-16 md:py-32 text-center opacity-0 transition-opacity duration-500">
+            <div class="w-24 h-24 bg-emerald-50 rounded-full flex items-center justify-center mb-6 border-4 border-white shadow-xl shadow-emerald-100">
+                <i class="fa-solid fa-check text-4xl text-emerald-500"></i>
+            </div>
+            <h2 class="text-3xl md:text-5xl font-extrabold text-slate-900 mb-4 tracking-tight">
+                Merci <span id="display-prenom" class="gradient-text"></span> !
+            </h2>
+            <p class="text-slate-500 font-medium text-lg mb-10">Vos critères ont bien été pris en compte.</p>
+            
+            <div class="flex items-center gap-3 text-blue-600 font-bold bg-blue-50/80 border border-blue-100 px-6 py-4 rounded-2xl shadow-sm">
+                <i class="fas fa-circle-notch fa-spin text-xl"></i>
+                <span class="tracking-wide">Redirection vers votre espace...</span>
+            </div>
+        </div>
+
     </main>
 
     <script>
@@ -265,9 +281,11 @@
         const currentJobId = generateJobId();
 
         const form = document.getElementById('itinesio-form');
-        const btn = document.getElementById('submit-btn');
+        const formHeader = document.getElementById('form-header');
+        const successState = document.getElementById('success-state');
         const progressBar = document.getElementById('progress');
 
+        // Barre de progression
         form.addEventListener('input', () => {
             const required = form.querySelectorAll('[required]');
             let valid = 0;
@@ -275,36 +293,51 @@
             progressBar.style.width = (valid / required.length * 100) + "%";
         });
 
+        // Soumission du formulaire
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
-            // Étape 1 : Changement visuel au clic (Chargement)
-            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Analyse IA en cours...';
-            btn.disabled = true;
 
+            // 1. On masque le formulaire et le titre immédiatement
+            form.style.display = 'none';
+            formHeader.style.display = 'none';
+
+            // 2. On récupère le prénom pour personnaliser le message
             const formData = new FormData(form);
+            const userPrenom = formData.get('prenom');
+            if(userPrenom) {
+                document.getElementById('display-prenom').textContent = userPrenom;
+            }
+
+            // 3. On affiche l'écran de succès avec un fondu
+            successState.classList.remove('hidden');
+            successState.classList.add('flex');
+            setTimeout(() => {
+                successState.classList.remove('opacity-0');
+            }, 50);
+
+            // Préparation des données
             const data = Object.fromEntries(formData.entries());
             data.jobId = currentJobId;
 
             try {
-                // Envoi des données
+                // Envoi des données vers n8n en arrière-plan
+                // L'utilisateur regarde l'écran "Redirection en cours..." pendant que ça charge !
                 await fetch("https://fagoul.app.n8n.cloud/webhook/test", {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data)
                 });
 
-                // Étape 2 : Succès de l'envoi -> Message de remerciement et redirection imminente
-                btn.innerHTML = '<i class="fa-solid fa-check text-emerald-400"></i> Merci ! Redirection en cours...';
-                
-                // On passe à 2000ms (2 secondes) pour laisser au client le temps de lire le message
-                setTimeout(() => {
-                    window.location.href = `/analyse-en-cours?jobId=${encodeURIComponent(currentJobId)}`;
-                }, 2000); 
+                // Une fois que n8n a répondu "OK", on redirige
+                window.location.href = `/analyse-en-cours?jobId=${encodeURIComponent(currentJobId)}`;
 
             } catch (error) {
-                // Gestion d'erreur en cas de problème de réseau
-                btn.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Erreur de connexion, veuillez réessayer';
-                btn.disabled = false;
+                // Si la connexion internet saute, on remet le formulaire et on prévient le client
+                successState.classList.add('hidden');
+                successState.classList.remove('flex', 'opacity-0');
+                form.style.display = 'block';
+                formHeader.style.display = 'block';
+                alert("Une erreur de connexion est survenue. Veuillez vérifier votre réseau et réessayer.");
             }
         });
     </script>
