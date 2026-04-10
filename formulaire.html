@@ -277,6 +277,7 @@
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
+            // Étape 1 : Changement visuel au clic (Chargement)
             btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Analyse IA en cours...';
             btn.disabled = true;
 
@@ -285,17 +286,24 @@
             data.jobId = currentJobId;
 
             try {
+                // Envoi des données
                 await fetch("https://fagoul.app.n8n.cloud/webhook/test", {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data)
                 });
 
+                // Étape 2 : Succès de l'envoi -> Message de remerciement et redirection imminente
+                btn.innerHTML = '<i class="fa-solid fa-check text-emerald-400"></i> Merci ! Redirection en cours...';
+                
+                // On passe à 2000ms (2 secondes) pour laisser au client le temps de lire le message
                 setTimeout(() => {
                     window.location.href = `/analyse-en-cours?jobId=${encodeURIComponent(currentJobId)}`;
-                }, 1500);
+                }, 2000); 
+
             } catch (error) {
-                btn.innerHTML = 'Erreur lors de la connexion';
+                // Gestion d'erreur en cas de problème de réseau
+                btn.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Erreur de connexion, veuillez réessayer';
                 btn.disabled = false;
             }
         });
